@@ -15,62 +15,79 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
 
+const data: {
+  title: string;
+  items: {
+    href: string;
+    list: string;
+  }[];
+}[] = [
+  {
+    title: "Shop",
+    items: [
+      { href: "", list: "ALL" },
+      { href: "", list: "TOP" },
+      { href: "", list: "BOTTOM" },
+      { href: "", list: "ACC" },
+    ],
+  },
+  {
+    title: "Service",
+    items: [
+      { href: "", list: "Notice" },
+      { href: "", list: "Review" },
+      { href: "", list: "Q&A" },
+      { href: "", list: "FAQ" },
+    ],
+  },
+];
+
 const NavBar = () => {
   return (
-    <>
-      <NavigationMenu>
-        <NavigationMenuList>
-          <NavigationMenuItem>
-            <NavigationMenuTrigger className="w-[102px] bg-white bg-opacity-0 text-black dark:text-white text-xl font-bold font-nav whitespace-nowrap">
-              Shop
-            </NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <ul className="flex flex-col p-3 gap-1 w-[102px] bg-opacity-10 bg-white">
-                <ListItem href="/docs">ALL</ListItem>
-                <ListItem href="/docs/installation">TOP</ListItem>
-                <ListItem href="/docs/primitives/typography">BOTTOM</ListItem>
-                <ListItem href="/docs/primitives/typography">ACC</ListItem>
-              </ul>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuTrigger className="w-[102px] bg-white bg-opacity-0 text-black dark:text-white text-xl font-bold font-nav whitespace-nowrap">
-              Service
-            </NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <ul className="flex flex-col p-3 gap-1 w-[102px] bg-opacity-10 bg-white">
-                <ListItem href="/docs">Notice</ListItem>
-                <ListItem href="/docs/installation">Review</ListItem>
-                <ListItem href="/docs/primitives/typography">Q&A</ListItem>
-                <ListItem href="/docs/primitives/typography">FAQ</ListItem>
-              </ul>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-        </NavigationMenuList>
-      </NavigationMenu>
-      {/* <div className="justify-center items-start gap-[70px] inline-flex">
-          <div className="text-black dark:text-white text-xl font-bold font-nav whitespace-nowrap">
-            Shop
-          </div>
-          <div className="text-black dark:text-white text-xl font-bold font-nav whitespace-nowrap">
-            Service
-          </div>
-          <div>
-            <span className="text-black dark:text-white text-xl font-bold font-nav whitespace-nowrap">
-              Cart (
-            </span>
-            <span className="text-black dark:text-white text-base font-normal font-num">
-              0
-            </span>
-            <span className="text-black dark:text-white text-xl font-bold font-nav whitespace-nowrap">
-              )
-            </span>
-          </div>
-          <div className="text-black dark:text-white text-xl font-bold font-nav whitespace-nowrap">
-            Log in
-          </div>
-        </div> */}
-    </>
+    <div className="justify-center items-start gap-[50px] flex">
+      {data.map((args, i) => (
+        <>
+          <NavigationMenu key={i}>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className="w-[102px] bg-white bg-opacity-0 text-black dark:text-white text-xl font-bold font-nav whitespace-nowrap">
+                  {args.title}
+                </NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="flex flex-col p-3 gap-1 w-[102px] bg-opacity-10 bg-white">
+                    {args.items.map((arg, j) => (
+                      <ListItem key={j} href={arg.href}>
+                        {arg.list}
+                      </ListItem>
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+        </>
+      ))}
+      <Button
+        variant={"ghost"}
+        className="flex items-center justify-center hover:bg-opacity-0 hover:bg-white"
+      >
+        <span className="text-black dark:text-white text-xl font-bold font-nav whitespace-nowrap">
+          Cart (
+        </span>
+        <span className="text-black dark:text-white text-base font-normal font-num">
+          0
+        </span>
+        <span className="text-black dark:text-white text-xl font-bold font-nav whitespace-nowrap">
+          )
+        </span>
+      </Button>
+      <Button
+        variant={"ghost"}
+        className="text-black dark:text-white text-xl font-bold font-nav whitespace-nowrap hover:bg-opacity-0 hover:bg-white"
+      >
+        Log in
+      </Button>
+    </div>
   );
 };
 
@@ -90,7 +107,7 @@ const ListItem = React.forwardRef<
           href=""
           {...props}
         >
-          <p className="text-center line-clamp-2 leading-snug font-nav font-semibold text-sm text-black">
+          <p className="text-center line-clamp-2 leading-snug font-nav font-semibold text-sm text-black dark:text-white">
             {children}
           </p>
         </Link>
