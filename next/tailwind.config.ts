@@ -14,6 +14,7 @@ const config = {
       nav: "var(--nav-font)",
       body: "var(--body-font)",
       num: "var(--num-font)",
+      pre: "var(--pre-font)",
     },
     container: {
       center: true,

@@ -1,24 +1,32 @@
 import { X } from "lucide-react";
 import Link from "next/link";
+import ShopMenu from "./_components/shopmenu";
 
 const MenuPage = () => {
   return (
     <div className="w-full h-full bg-white dark:bg-black flex flex-col pl-[34px] pt-[97px] gap-[41px] relative">
-      <div className="text-black dark:text-white text-xl font-bold font-nav">
-        Shop
-      </div>
-      <div>
-        <div className="text-black dark:text-white text-xl font-bold font-nav">
+      <ShopMenu />
+      <div className="flex flex-col">
+        <Link
+          href={"/mobile/notice"}
+          className="text-black dark:text-white text-xl font-bold font-nav"
+        >
           Notice
-        </div>
-        <div className="text-black dark:text-white text-xl font-bold font-nav">
+        </Link>
+        <Link
+          href={"/mobile/QnA"}
+          className="text-black dark:text-white text-xl font-bold font-nav"
+        >
           Q&A
-        </div>
-        <div className="text-black dark:text-white text-xl font-bold font-nav">
+        </Link>
+        <Link
+          href={"/mobile/FAQ"}
+          className="text-black dark:text-white text-xl font-bold font-nav"
+        >
           FAQ
-        </div>
+        </Link>
       </div>
-      <div>
+      <div className="flex flex-col">
         <div className="text-black dark:text-white text-xl font-bold font-nav">
           Login
         </div>
