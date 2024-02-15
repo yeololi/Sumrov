@@ -3,7 +3,7 @@ import Header from "./_components/header";
 
 const MobilePage = () => {
   return (
-    <main className="relative">
+    <div className="relative">
       <Header />
       <img
         src="/images/mobile/main.png"
@@ -11,7 +11,7 @@ const MobilePage = () => {
         className="w-[375px] h-[812px]"
       />
       <Footer />
-    </main>
+    </div>
   );
 };
 
