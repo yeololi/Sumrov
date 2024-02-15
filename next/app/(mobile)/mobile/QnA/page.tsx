@@ -53,7 +53,7 @@ const QnAPage = () => {
               <div className="flex flex-col gap-2">
                 <div className="flex ml-[9px] mt-1 items-center gap-1">
                   <Lock className="w-3.5 h-3.5" />
-                  <div className="text-zinc-800 text-[13px] font-medium font-body">
+                  <div className="text-zinc-800 dark:text-white text-[13px] font-medium font-body">
                     문의
                   </div>
                 </div>

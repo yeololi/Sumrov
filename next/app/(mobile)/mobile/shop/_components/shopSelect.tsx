@@ -38,7 +38,9 @@ const ShopSelect = () => {
           className="flex items-center cursor-pointer"
           onClick={isCollapsed ? resetWidth : collapse}
         >
-          <div className="text-black text-xs font-medium font-nav">All</div>
+          <div className="text-black text-xs font-medium font-nav dark:text-white">
+            All
+          </div>
           <ChevronRight className="w-2 h-2" />
         </div>
 
@@ -49,10 +51,18 @@ const ShopSelect = () => {
             isResetting && "transition-all ease-in-out duration-300"
           )}
         >
-          <div className="text-black text-xs font-medium font-nav">All</div>
-          <div className="text-black text-xs font-medium font-nav">Top</div>
-          <div className="text-black text-xs font-medium font-nav">Bottom</div>
-          <div className="text-black text-xs font-medium font-nav">Acc</div>
+          <div className="text-black text-xs font-medium font-nav dark:text-white">
+            All
+          </div>
+          <div className="text-black text-xs font-medium font-nav dark:text-white">
+            Top
+          </div>
+          <div className="text-black text-xs font-medium font-nav dark:text-white">
+            Bottom
+          </div>
+          <div className="text-black text-xs font-medium font-nav dark:text-white">
+            Acc
+          </div>
         </div>
       </div>
     </>

@@ -12,7 +12,7 @@ const ShopPage = () => {
   return (
     <>
       <Header />
-      <div className="w-full flex flex-col justify-center items-center pt-[101px] px-4">
+      <div className="w-full flex flex-col dark:bg-black justify-center items-center pt-[101px] px-4">
         <ShopSelect />
         <div className="mt-[25px] gap-[25px] flex flex-col">
           {data.map((args, i) => (
@@ -27,13 +27,13 @@ const ShopPage = () => {
                     src="https://via.placeholder.com/162x213"
                   />
                   <div className="w-[114px] h-[35px] flex flex-col items-center">
-                    <div className="text-black text-[11px] font-medium font-body">
+                    <div className="text-black dark:text-white text-[11px] font-medium font-body">
                       Lorem ipsum dolor sit
                     </div>
-                    <div className="text-black text-[8px] font-medium font-body">
+                    <div className="text-black dark:text-white text-[8px] font-medium font-body">
                       Lorem ipsum dolor
                     </div>
-                    <div className="text-black text-[10px] font-medium font-body">
+                    <div className="text-black dark:text-white text-[10px] font-medium font-body">
                       Lorem ipsum
                     </div>
                   </div>
@@ -43,7 +43,7 @@ const ShopPage = () => {
           ))}
         </div>
         <div className="mt-[89px] pb-[49px] border-b flex justify-center items-center w-full border-black border-opacity-25">
-          <div className="text-black text-[11px] font-medium font-body">
+          <div className="text-black dark:text-white text-[11px] font-medium font-body">
             Load more (1/1)
           </div>
         </div>

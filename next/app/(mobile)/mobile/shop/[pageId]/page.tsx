@@ -7,24 +7,24 @@ const ShopDetailPage = () => {
   return (
     <>
       <Header />
-      <div className="bg-neutral-50 flex flex-col items-center pb-8 border-b border-black border-opacity-25">
-        <div className="text-black text-[17px] font-semibold font-nav tracking-widest mt-[120px]">
+      <div className="bg-neutral-50 dark:bg-black text-white flex flex-col items-center pb-8 border-b border-black border-opacity-25 dark:border-white mb-[35px]">
+        <div className="text-black dark:text-white text-[17px] font-semibold font-nav tracking-widest mt-[120px]">
           DETAIL
         </div>
-        <div className="mt-[29px] flex flex-col">
+        <div className="w-[300px] mt-[29px] flex flex-col items-center">
           <img
             className="w-[300px] h-[400px] border border-black"
             src="https://via.placeholder.com/300x400"
           />
-          <div className="justify-start items-start gap-[5px] mt-[12.21px] flex">
-            <div className="w-[13px] h-[13px] bg-black" />
+          <div className="justify-start items-start gap-[5px] mt-[12.21px] flex w-full">
+            <div className="w-[13px] h-[13px] bg-black dark:bg-white" />
             <div className="w-[13px] h-[13px] bg-rose-500" />
             <div className="w-[13px] h-[13px] bg-green-600" />
           </div>
-          <div className="text-black text-[13px] font-medium font-pre mt-[12px]">
+          <div className="text-black dark:text-white w-full text-[13px] font-medium font-pre mt-[12px]">
             Lorem ipsum dolor sit (BLACK, RED, GREEN)
           </div>
-          <div className="w-[315px] mt-[53px] text-neutral-600 text-[8px] font-normal font-pre">
+          <div className="w-[315px] mt-[53px] text-neutral-600 dark:text-white text-[8px] font-normal font-pre">
             -로램잇섬 로램잇섬 Lorem ipsum dolor sit amet 로램잇섬 로램잇섬 로램
             로램 Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet,
             consectetuer
@@ -45,11 +45,11 @@ const ShopDetailPage = () => {
         <div className="w-[350px] h-0 border-2 border-neutral-300 mt-4" />
 
         <div className="flex flex-col items-center mt-3">
-          <div className="justify-start items-start gap-5 flex w-full">
-            <div className="text-black text-[11px] font-semibold font-pre">
+          <div className="justify-start items-start gap-5 flex w-[289px]">
+            <div className="text-black dark:text-white text-[11px] font-semibold font-pre">
               판매가
             </div>
-            <div className="text-black text-[11px] font-semibold font-pre">
+            <div className="text-black dark:text-white text-[11px] font-semibold font-pre">
               KRW 10,000
             </div>
           </div>
@@ -58,7 +58,7 @@ const ShopDetailPage = () => {
               색상
             </div>
             <Select>
-              <SelectTrigger className="rounded-sm w-60 h-[26px] text-neutral-600 text-[11px] font-normal font-pre">
+              <SelectTrigger className="dark:bg-neutral-50 rounded-sm w-60 h-[26px] text-neutral-600 text-[11px] font-normal font-pre">
                 -[필수] 옵션을 선택해 주세요-
               </SelectTrigger>
             </Select>
@@ -68,41 +68,54 @@ const ShopDetailPage = () => {
               사이즈
             </div>
             <Select>
-              <SelectTrigger className="rounded-sm w-60 h-[26px] text-neutral-600 text-[11px] font-normal font-pre">
+              <SelectTrigger className="dark:bg-neutral-50 rounded-sm w-60 h-[26px] text-neutral-600 text-[11px] font-normal font-pre">
                 -[필수] 옵션을 선택해 주세요-
               </SelectTrigger>
             </Select>
           </div>
           {true && (
             <>
-              <div className="w-[350px] h-0 border-2 border-neutral-300 mt-4" />
+              <div className="w-[350px] h-0 border-2 border-neutral-300  mt-4" />
               <div className="w-[299px] flex mt-3 flex-col">
                 <div className="flex flex-col">
-                  <div className="text-neutral-600 text-[10px] font-normal font-pre">
+                  <div className="text-neutral-600 dark:text-neutral-400 text-[10px] font-normal font-pre">
                     Lorem ipsum dolor sit
                   </div>
-                  <div className="text-neutral-600 text-[10px] font-normal font-pre">
+                  <div className="text-neutral-600 dark:text-neutral-400 text-[10px] font-normal font-pre">
                     -블랙/S
                   </div>
                 </div>
-                <div className="text-black text-[11px] font-semibold font-pre flex justify-end w-full">
+                <div className="text-black dark:text-white text-[11px] font-semibold font-pre flex justify-end w-full">
                   KRW 10,000
                 </div>
                 <div className="flex gap-1">
                   <input
                     placeholder="1"
-                    className="text-[10px] font-normal font-pre w-[37px] h-[18px] pl-2 rounded-sm border border-neutral-300"
+                    className="text-[10px] font-normal font-pre w-[37px] h-[18px] pl-2 rounded-sm border border-neutral-300 dark:bg-white"
                   />
 
                   <div className="w-[18px] h-[18px]">
-                    <Plus className="w-[18px] h-[18px] bg-neutral-300 rounded-sm" />
+                    <Plus className="w-[18px] h-[18px] dark:text-black bg-neutral-300 rounded-sm" />
                   </div>
                   <div className="w-[18px] h-[18px]">
-                    <Minus className="w-[18px] h-[18px] bg-neutral-300 rounded-sm" />
+                    <Minus className="w-[18px] h-[18px] dark:text-black bg-neutral-300 rounded-sm" />
                   </div>
                 </div>
               </div>
               <div className="w-[350px] h-0 border-2 border-neutral-300 mt-4" />
+              <div className="mt-[17px] w-[299px] h-3.5 justify-center items-start gap-[167px] inline-flex">
+                <div className="dark:text-white text-[11px] font-semibold font-pre">
+                  총상품금액
+                </div>
+                <div className="w-[84px] flex justify-center items-center">
+                  <div className="text-blue-500 text-[11px] font-semibold font-pre">
+                    KRW 10,000
+                  </div>
+                  <div className="text-blue-500 text-[10px] font-normal font-pre">
+                    (1개)
+                  </div>
+                </div>
+              </div>
             </>
           )}
           <div className="flex mt-[39px]">
@@ -139,21 +152,21 @@ const ShopDetailPage = () => {
           <div className="items-center flex-col flex w-full gap-[3px]">
             <div className="flex-col justify-center gap-2.5 flex  mt-[76.21px]">
               <Select>
-                <SelectTrigger className="w-[315px] h-[26px] bg-white border rounded-none border-neutral-300 text-neutral-600 text-[11px] font-normal font-pre ">
+                <SelectTrigger className="w-[315px] h-[26px] bg-white border dark:bg-black dark:text-neutral-300 rounded-none border-neutral-300 text-neutral-600 text-[11px] font-normal font-pre ">
                   -결제 안내-
                 </SelectTrigger>
               </Select>
             </div>
             <div className="flex-col justify-start items-start gap-2.5 inline-flex">
               <Select>
-                <SelectTrigger className="w-[315px] h-[26px] bg-white border rounded-none border-neutral-300 text-neutral-600 text-[11px] font-normal font-pre ">
+                <SelectTrigger className="w-[315px] h-[26px] bg-white border dark:bg-black dark:text-neutral-300 rounded-none border-neutral-300 text-neutral-600 text-[11px] font-normal font-pre ">
                   -배송 안내-
                 </SelectTrigger>
               </Select>
             </div>
             <div className="flex-col justify-start items-start gap-2.5 inline-flex">
               <Select>
-                <SelectTrigger className="w-[315px] h-[26px] bg-white border rounded-none border-neutral-300 text-neutral-600 text-[11px] font-normal font-pre ">
+                <SelectTrigger className="w-[315px] h-[26px] bg-white border dark:bg-black dark:text-neutral-300 rounded-none border-neutral-300 text-neutral-600 text-[11px] font-normal font-pre ">
                   -교환/환불 안내-
                 </SelectTrigger>
               </Select>
