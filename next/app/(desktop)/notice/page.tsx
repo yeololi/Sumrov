@@ -42,7 +42,10 @@ const NoticePage = () => {
                 </div>
               </div>
               {data.map((arg, i) => (
-                <div className="h-10 w-full border-b border-gray-200 justify-center items-center inline-flex">
+                <div
+                  key={i}
+                  className="h-10 w-full border-b border-gray-200 justify-center items-center inline-flex"
+                >
                   <div className="w-[70px] h-[30px] justify-center items-center flex">
                     <div className="text-black dark:text-neutral-50 text-xs font-light font-body uppercase">
                       12

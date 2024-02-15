@@ -240,6 +240,7 @@ const Label = React.forwardRef<
     </div>
   );
 });
+Label.displayName = "Label";
 
 const Input = React.forwardRef<
   React.ElementRef<"input">,
@@ -256,5 +257,6 @@ const Input = React.forwardRef<
     />
   );
 });
+Input.displayName = "Input";
 
 export default PatmentPage;
