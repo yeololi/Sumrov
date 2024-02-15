@@ -17,7 +17,7 @@ const PatmentPage = () => {
         </Link>
       </div>
 
-      <div className="w-full flex flex-col mt-[25px] items-center">
+      <div className="w-full flex flex-col pt-[25px] items-center bg-neutral-900">
         <div className="w-[336px] h-7 border-b border-gray-200">
           <div className="dark:text-white text-black text-[13px] font-medium font-pre">
             배송지
@@ -150,11 +150,11 @@ const PatmentPage = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col w-full px-[20px] pb-[30px] border border-gray-200">
+        <div className="flex flex-col w-[335px] pb-[30px] border-b border-gray-200">
           <div className="text-black dark:text-white text-[13px] my-[22px] flex justify-start w-full font-medium font-pre">
             결제수단
           </div>
-          <div className="w-[335px] h-[109px] bg-white dark:bg-black border border-gray-200 pl-[18px] pt-[22px]">
+          <div className="w-[335px] h-[109px] bg-white dark:bg-black border dark:border-none border-gray-200 pl-[18px] pt-[22px]">
             <RadioGroup defaultValue="option-one" className="flex flex-col">
               <div className="flex gap-[31px]">
                 <div className="flex items-center space-x-2">
@@ -188,7 +188,7 @@ const PatmentPage = () => {
             </RadioGroup>
           </div>
         </div>
-        <div className="flex flex-col w-full px-[20px] pb-[30px] border border-gray-200">
+        <div className="flex flex-col w-[335px] pb-[30px] border-b border-gray-200">
           <div className="text-black dark:text-white text-[13px] my-[22px] flex justify-start w-full font-medium font-pre">
             현금영수증
           </div>
@@ -217,7 +217,7 @@ const PatmentPage = () => {
           구매조건 확인 및 결제진행 동의 <br />
           주문 내용을 확인하였으며 약관에 동의합니다.
         </div>
-        <Button className="w-[335px] h-[41px] rounded-none mb-[61px] text-medium font-pre text-white dark:text-black">
+        <Button className="w-[335px] h-[41px] rounded-none mb-[61px] text-[13px] font-medium font-pre text-white dark:text-black">
           결제하기
         </Button>
       </div>

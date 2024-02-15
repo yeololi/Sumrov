@@ -9,12 +9,12 @@ const Header = () => {
         <Link href={"/mobile/menu"}>
           <Menu className="w-[20px] h-[20px] dark:text-white" />
         </Link>
-        <div className="flex items-center">
+        <Link href={"/mobile"} className="flex items-center">
           <img className="w-[13px] h-[13px] mr-1" src="/images/logo.png" />
           <div className="dark:text-white text-black text-[15px] font-semibold font-nav">
             SUMROV
           </div>
-        </div>
+        </Link>
         <ModeToggle isMobile={true} />
       </div>
     </div>

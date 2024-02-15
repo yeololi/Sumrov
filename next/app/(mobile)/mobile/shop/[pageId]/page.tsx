@@ -7,7 +7,7 @@ const ShopDetailPage = () => {
   return (
     <>
       <Header />
-      <div className="bg-neutral-50 dark:bg-black text-white flex flex-col items-center pb-8 border-b border-black border-opacity-25 dark:border-white mb-[35px]">
+      <div className="bg-neutral-50 dark:bg-neutral-900 text-white flex flex-col items-center pb-8 border-b border-black border-opacity-25 dark:border-white mb-[35px]">
         <div className="text-black dark:text-white text-[17px] font-semibold font-nav tracking-widest mt-[120px]">
           DETAIL
         </div>

@@ -12,7 +12,7 @@ const ShopPage = () => {
   return (
     <>
       <Header />
-      <div className="w-full flex flex-col dark:bg-black justify-center items-center pt-[101px] px-4">
+      <div className="w-full flex flex-col dark:bg-neutral-900 justify-center items-center pt-[101px] px-4">
         <ShopSelect />
         <div className="mt-[25px] gap-[25px] flex flex-col">
           {data.map((args, i) => (

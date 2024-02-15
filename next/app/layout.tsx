@@ -58,7 +58,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body
-        className={`${cormorant_garamond.variable} ${adamina.variable} ${inter.variable} ${pretendard.variable} dark:bg-black`}
+        className={`${cormorant_garamond.variable} ${adamina.variable} ${inter.variable} ${pretendard.variable} dark:bg-neutral-900`}
       >
         <ThemeProvider
           attribute="class"

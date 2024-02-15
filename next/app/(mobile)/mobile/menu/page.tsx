@@ -4,7 +4,7 @@ import ShopMenu from "./_components/shopmenu";
 
 const MenuPage = () => {
   return (
-    <div className="w-full h-full bg-white dark:bg-black flex flex-col pl-[34px] pt-[97px] gap-[41px] relative">
+    <div className="w-full h-full bg-white dark:bg-neutral-900 flex flex-col pl-[34px] pt-[97px] gap-[41px] relative">
       <ShopMenu />
       <div className="flex flex-col">
         <Link

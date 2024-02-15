@@ -41,7 +41,7 @@ const QnAPage = () => {
           <div
             key={i}
             className={cn(
-              "w-full h-16 bg-white dark:bg-black border-gray-200 px-[18px] py-5px flex items-center justify-start",
+              "w-full h-16 bg-white dark:bg-neutral-900 border-gray-200 px-[18px] py-5px flex items-center justify-start",
               i == 0 ? "border-y" : "border-b"
             )}
           >

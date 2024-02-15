@@ -16,7 +16,7 @@ const NoticePage = () => {
           <div
             key={i}
             className={cn(
-              "w-full h-16 bg-white dark:bg-black border-gray-200 py-[15px] px-[16px]",
+              "w-full h-16 bg-white dark:bg-neutral-900 border-gray-200 py-[15px] px-[16px]",
               i == 0 ? "border-y" : "border-b"
             )}
           >
