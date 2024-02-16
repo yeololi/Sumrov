@@ -4,6 +4,7 @@ import {
   ChevronsLeft,
   ChevronsRight,
 } from "lucide-react";
+import Footer from "../_components/footer";
 import Header from "../_components/header";
 
 const data = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
@@ -12,7 +13,7 @@ const NoticePage = () => {
   return (
     <>
       <Header />
-      <div className="flex justify-center pt-[200px] pb-[91px]">
+      <div className="flex justify-center pt-[200px] pb-[91px] bg-neutral-50">
         <div className="w-[1040px] h-[719px] flex-col justify-start items-center gap-[70px] inline-flex">
           <div className="text-black dark:text-neutral-50 text-[32px] font-bold font-nav tracking-[3.20px]">
             NOTICE
@@ -81,6 +82,7 @@ const NoticePage = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };
