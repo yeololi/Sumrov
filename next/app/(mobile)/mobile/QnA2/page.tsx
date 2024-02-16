@@ -12,17 +12,15 @@ const QnAPage: React.FC = () => {
                 <div className="text-black dark:text-white text-[17px] font-semibold font-nav tracking-widest mt-[121px] mb-[54px]">
                     Q&A
                 </div>
-                <div className="w-[335px] h-[161px] inset-y-237 inset-x-3396 border border-1 border-gray-300">
-                    <div className="w-[333px] h-[51px] bg-gray-200 flex grid place-items-center">
+                <div className="w-[335px] flex items-center flex-col h-[161px] border border-1 border-gray-300">
+                    <div className="w-[333px] h-[51px] bg-gray-200 grid place-items-center border-b border-gray-300 mb-[6px]">
                         <div className="text-black text-center text-[17px] font-medium font-['Cormorant Garamond']">
                             비밀글 보기
                         </div>
                     </div>
                     <div className="w-[167px] h-[78px] flex-col justify-start items-center gap-1.5 inline-flex">
                         <div className="w-[17px] h-[17px] relative">
-                            <div className="w-[17px] h-[17px] left-0 top-0 absolute">
-                                <Lock />
-                            </div>
+                            <Lock className="w-[17px] h-[17px]" />
                         </div>
                         <div className="text-center text-black text-[11px] font-light font-['Cormorant Garamond']">
                             이 글은 비밀글입니다
