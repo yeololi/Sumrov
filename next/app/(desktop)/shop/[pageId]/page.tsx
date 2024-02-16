@@ -1,14 +1,18 @@
 import { Select, SelectTrigger } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 import {
   ChevronLeft,
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
   Lock,
+  Minus,
+  Plus,
 } from "lucide-react";
 import Header from "../../_components/header";
 
 const data = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
+const yes = true;
 
 const ShopPageDetail = () => {
   return (
@@ -26,7 +30,7 @@ const ShopPageDetail = () => {
                 <div className="flex-col justify-start items-start gap-5 flex">
                   <div className="flex-col justify-start items-start gap-2.5 flex">
                     <div className="justify-start items-start gap-[5px] inline-flex">
-                      <div className="w-3.5 h-3.5 bg-black" />
+                      <div className="w-3.5 h-3.5 bg-black dark:bg-white" />
                       <div className="w-3.5 h-3.5 bg-rose-500" />
                       <div className="w-3.5 h-3.5 bg-green-600" />
                     </div>
@@ -60,7 +64,12 @@ const ShopPageDetail = () => {
                     </div>
                   </div>
                 </div>
-                <div className="flex-col justify-center items-center gap-[75px] flex">
+                <div
+                  className={cn(
+                    "flex-col justify-center items-center gap-[75px] flex",
+                    yes && "gap-[30px]"
+                  )}
+                >
                   <div className="flex-col justify-center items-end gap-[15px] flex">
                     <div className="w-[318px] justify-between items-center inline-flex">
                       <div className="text-neutral-400 dark:text-zinc-100 text-[11px] font-normal font-pre">
@@ -83,6 +92,49 @@ const ShopPageDetail = () => {
                       </Select>
                     </div>
                   </div>
+                  {yes && (
+                    <>
+                      <div className="w-[299px] flex mt-3 flex-col">
+                        <div className="flex flex-col">
+                          <div className="text-neutral-600 dark:text-neutral-50 text-[10px] font-normal font-pre">
+                            Lorem ipsum dolor sit
+                          </div>
+                          <div className="text-neutral-600 dark:text-neutral-50 text-[10px] font-normal font-pre">
+                            -블랙/S
+                          </div>
+                        </div>
+                        <div className="text-black dark:text-white text-[11px] font-semibold font-pre flex justify-end w-full">
+                          KRW 10,000
+                        </div>
+                        <div className="flex gap-1">
+                          <input
+                            placeholder="1"
+                            className="text-[10px] font-normal font-pre w-[37px] h-[18px] pl-2 rounded-sm border border-neutral-300 dark:bg-neutral-900"
+                          />
+
+                          <div className="w-[18px] h-[18px]">
+                            <Plus className="w-[18px] h-[18px] dark:text-black bg-neutral-300 rounded-sm" />
+                          </div>
+                          <div className="w-[18px] h-[18px]">
+                            <Minus className="w-[18px] h-[18px] dark:text-black bg-neutral-300 rounded-sm" />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="w-[299px] h-3.5 justify-center items-start gap-[167px] inline-flex">
+                        <div className="dark:text-white text-[11px] font-semibold font-pre">
+                          총상품금액
+                        </div>
+                        <div className="w-[84px] flex justify-center items-center">
+                          <div className="text-blue-500 text-[11px] font-semibold font-pre">
+                            KRW 10,000
+                          </div>
+                          <div className="text-blue-500 text-[10px] font-normal font-pre">
+                            (1개)
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  )}
                   <div className="flex-col justify-start items-start gap-2.5 flex">
                     <div className="w-[315px] h-[41px] py-3.5 bg-neutral-900 dark:bg-zinc-600 justify-center items-center inline-flex">
                       <div className="text-neutral-50 text-[11px] font-medium font-body">
