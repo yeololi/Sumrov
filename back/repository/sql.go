@@ -16,7 +16,5 @@ func MySQLInit() *gorm.DB {
 	dsn := os.Getenv("DSN")
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
-	db.AutoMigrate()
-
 	return db
 }
