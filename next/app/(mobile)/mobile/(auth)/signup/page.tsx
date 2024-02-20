@@ -4,31 +4,38 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import axios from "axios";
 import Link from "next/link";
+import Script from "next/script";
 import Header from "../../_components/header";
 
-const SignUp = () => {
-  // const searchAddress = async () => {
-  //   const param = {
-  //     confmKey: process.env.NEXT_PUBLIC_ADDRESS_API_KEY,
-  //     returnUrl: "http://localhost:3000/mobile/signup",
-  //     resultType: "4",
-  //     useDetailAddr: "Y",
-  //   };
+declare global {
+  interface Window {
+    daum: any;
+  }
+}
 
-  //   const res = await axios
-  //     .get(
-  //       `/addressApi/addrlink/addrMobileLinkUrl.do?confmKey=${process.env.NEXT_PUBLIC_ADDRESS_API_KEY}&returnUrl=http://localhost:3000/mobile/signup`,
-  //       {
-  //         // params: param,
-  //       }
-  //     )
-  //     .then((response) => console.log(response))
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
+interface IAddr {
+  address: string;
+  zonecode: string;
+}
+
+const SignUp = () => {
+  const searchAddress = () => {
+    new window.daum.Postcode({
+      oncomplete: function (data: IAddr) {
+        (document.getElementById("address") as HTMLInputElement).value =
+          data.address;
+        (document.getElementById("zonecode") as HTMLInputElement).value =
+          data.zonecode;
+        document.getElementById("addrDetail")?.focus();
+      },
+    }).open();
+  };
   return (
     <>
+      <script
+        src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
+        async
+      />
       <Header />
       <div className="flex flex-col items-center pt-[139px] px-[19.5px] pb-[41px]">
         <div className="flex-col justify-start items-start gap-[31px] flex">
@@ -127,12 +134,13 @@ const SignUp = () => {
               <div className="flex flex-col gap-0.5">
                 <div className="flex gap-2">
                   <Input
-                    className="w-[106px] h-[34px] border-neutral-300 rounded-none dark:placeholder:text-neutral-400 dark:bg-zinc-800 dark:border-black  text-neutral-400 text-[13px] font-medium font-pre"
-                    placeholder="기본주소"
+                    className="w-[106px] h-[34px] border-neutral-300 rounded-none dark:placeholder:text-neutral-400 dark:bg-zinc-800 dark:border-black  text-neutral-900 text-[13px] font-medium font-pre"
+                    placeholder="우편번호"
                     type={"text"}
+                    id="zonecode"
                   />
                   <div
-                    onClick={() => {}}
+                    onClick={searchAddress}
                     className="cursor-pointer w-[106px] h-[34px] flex justify-center items-center bg-gray-200 rounded-none dark:placeholder:text-neutral-400 dark:bg-gray-200 dark:border-neutral-300  border border-neutral-300"
                   >
                     <div className="flex items-center dark:text-black justify-center text-black text-[13px] font-medium font-pre">
@@ -141,14 +149,16 @@ const SignUp = () => {
                   </div>
                 </div>
                 <Input
-                  className="w-[336px] h-[34px] border-neutral-300 rounded-none dark:placeholder:text-neutral-400 dark:bg-zinc-800 dark:border-black  text-neutral-400 text-[13px] font-medium font-pre"
+                  className="w-[336px] h-[34px] border-neutral-300 rounded-none dark:placeholder:text-neutral-400 dark:bg-zinc-800 dark:border-black text-neutral-900 text-[13px] font-medium font-pre"
                   placeholder="기본주소"
                   type={"text"}
+                  id="address"
                 />
                 <Input
-                  className="w-[336px] h-[34px] border-neutral-300 rounded-none dark:placeholder:text-neutral-400 dark:bg-zinc-800 dark:border-black  text-neutral-400 text-[13px] font-medium font-pre"
+                  className="w-[336px] h-[34px] border-neutral-300 rounded-none dark:placeholder:text-neutral-400 dark:bg-zinc-800 dark:border-black text-neutral-900 text-[13px] font-medium font-pre"
                   placeholder="상세주소 (선택)"
                   type={"text"}
+                  id="addrDetail"
                 />
               </div>
             </div>
