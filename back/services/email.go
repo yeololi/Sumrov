@@ -63,7 +63,14 @@ func MailSignUp(db *gorm.DB, c *gin.Context) {
 		Phone:  userDTO.Phone,
 	}
 
-	db.AutoMigrate(&entities.User{})
+	err = db.AutoMigrate(&entities.User{})
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
 
 	err = db.Create(&user).Error
 	if err != nil {
