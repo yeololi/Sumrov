@@ -71,7 +71,7 @@ func MailSignUp(db *gorm.DB, c *gin.Context) {
 		})
 		return
 	}
-	
+
 	err = db.Create(&user).Error
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
