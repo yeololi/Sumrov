@@ -2,8 +2,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import Footer from "../../_components/footer";
 import Header from "../../_components/header";
+import axios from "axios";
+import { FormEvent } from "react";
+import LoginForm from "./_components/loginForm";
 
 const Login = () => {
   return (
@@ -11,9 +13,9 @@ const Login = () => {
       <Header />
       <div className="flex flex-col items-center pt-[139px]">
         <div className="w-[336px] h-[356px] flex-col justify-start items-center gap-[19px] inline-flex">
-          <div className="flex-col justify-center items-center gap-4 flex">
+          <LoginForm>
             <div className="flex-col justify-center items-center gap-[23px] flex">
-              <div className="w-[336px] h-[65px] flex-col justify-center items-start gap-[15px] flex">
+              <div className="w-[336px] h-[65px] flex-col justify-center items-start gap-1 flex">
                 <Label className="dark:text-white text-black text-[13px] font-medium font-pre">
                   ID
                 </Label>
@@ -23,7 +25,7 @@ const Login = () => {
                   className="rounded-none dark:placeholder:text-neutral-400 dark:bg-zinc-800 border-neutral-300 dark:border-black"
                 />
               </div>
-              <div className="w-[336px] h-[65px] flex-col justify-center items-start gap-[15px] flex">
+              <div className="w-[336px] h-[65px] flex-col justify-center items-start gap-1 flex">
                 <Label className="dark:text-white text-black text-[13px] font-medium font-pre">
                   Password
                 </Label>
@@ -34,15 +36,18 @@ const Login = () => {
                 />
               </div>
             </div>
-            <div className="flex-col justify-center items-center gap-4 flex">
-              <Button className="dark:border dark:border-white text-white text-sm font-normal font-pre w-[336px] h-[43px] rounded-none bg-black">
+            <div className="flex-col justify-center items-center gap-2 flex">
+              <Button
+                type="submit"
+                className="dark:border dark:border-white text-white text-sm font-normal font-pre w-[336px] h-[43px] rounded-none bg-black"
+              >
                 Login
               </Button>
               <Button
                 variant={"outline"}
                 className="text-black text-sm font-normal font-pre w-[336px] h-[43px] rounded-none bg-white border border-neutral-300"
               >
-                Sign Up
+                <Link href={"/mobile/signup"}>Sign Up</Link>
               </Button>
             </div>
             <div className="justify-center items-center gap-[182px] inline-flex">
@@ -56,7 +61,7 @@ const Login = () => {
                 비회원으로 이용
               </div>
             </div>
-          </div>
+          </LoginForm>
           <div className="flex-col justify-start items-center gap-2 flex">
             <div className="justify-center items-center gap-[9px] inline-flex">
               <div className="w-[100px] h-[0px] border border-gray-200"></div>

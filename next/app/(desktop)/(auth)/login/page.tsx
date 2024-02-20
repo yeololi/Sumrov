@@ -49,7 +49,7 @@ const LoginPage = () => {
                     Sign Up
                   </Button>
                 </div>
-                <div className="w-[450px] px-[75px] justify-between items-center inline-flex">
+                <div className="w-[450px] px-[75px] mt-2 justify-between items-center inline-flex">
                   <Link
                     href={"/findId"}
                     className="text-black dark:text-neutral-50 text-[11px] font-normal font-pre"

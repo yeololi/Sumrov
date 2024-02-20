@@ -1,9 +1,32 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import axios from "axios";
+import Link from "next/link";
 import Header from "../../_components/header";
 
 const SignUp = () => {
+  // const searchAddress = async () => {
+  //   const param = {
+  //     confmKey: process.env.NEXT_PUBLIC_ADDRESS_API_KEY,
+  //     returnUrl: "http://localhost:3000/mobile/signup",
+  //     resultType: "4",
+  //     useDetailAddr: "Y",
+  //   };
+
+  //   const res = await axios
+  //     .get(
+  //       `/addressApi/addrlink/addrMobileLinkUrl.do?confmKey=${process.env.NEXT_PUBLIC_ADDRESS_API_KEY}&returnUrl=http://localhost:3000/mobile/signup`,
+  //       {
+  //         // params: param,
+  //       }
+  //     )
+  //     .then((response) => console.log(response))
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
   return (
     <>
       <Header />
@@ -101,14 +124,17 @@ const SignUp = () => {
                   주소
                 </div>
               </Label>
-              <div className="flex flex-col">
+              <div className="flex flex-col gap-0.5">
                 <div className="flex gap-2">
                   <Input
                     className="w-[106px] h-[34px] border-neutral-300 rounded-none dark:placeholder:text-neutral-400 dark:bg-zinc-800 dark:border-black  text-neutral-400 text-[13px] font-medium font-pre"
                     placeholder="기본주소"
                     type={"text"}
                   />
-                  <div className="w-[106px] h-[34px] flex justify-center items-center bg-gray-200 rounded-none dark:placeholder:text-neutral-400 dark:bg-gray-200 dark:border-neutral-300  border border-neutral-300">
+                  <div
+                    onClick={() => {}}
+                    className="cursor-pointer w-[106px] h-[34px] flex justify-center items-center bg-gray-200 rounded-none dark:placeholder:text-neutral-400 dark:bg-gray-200 dark:border-neutral-300  border border-neutral-300"
+                  >
                     <div className="flex items-center dark:text-black justify-center text-black text-[13px] font-medium font-pre">
                       주소검색
                     </div>

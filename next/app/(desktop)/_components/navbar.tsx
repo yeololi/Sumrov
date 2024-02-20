@@ -83,7 +83,7 @@ const NavBar = () => {
         variant={"ghost"}
         className="text-black dark:text-white text-xl font-bold font-nav whitespace-nowrap hover:bg-opacity-0 hover:bg-white"
       >
-        Log in
+        <Link href={"/login"}>Log in</Link>
       </Button>
     </div>
   );
