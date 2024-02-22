@@ -12,20 +12,22 @@ import (
 	"time"
 )
 
+// CreateToken은 주어진 사용자 ID에 대한 JWT 토큰을 생성합니다.
 func CreateToken(userId string) (string, error) {
 	var err error
 
 	err = godotenv.Load()
 	if err != nil {
-		panic("Error loading.env file")
+		panic("Error loading .env file")
 	}
 
-	secretKey := os.Getenv("SecretToken") // 이 키는 보안을 위해 안전하게 보관해야 합니다.
+	secretKey := os.Getenv("SecretToken")
 
 	atClaims := jwt.MapClaims{}
 	atClaims["authorized"] = true
 	atClaims["user_id"] = userId
-	atClaims["exp"] = time.Now().Add(time.Hour * 24).Unix() // 토큰 유효 시간은 24시간으로 설정했습니다. 필요에 따라 변경하세요.
+	atClaims["exp"] = time.Now().Add(time.Hour * 24).Unix()
+
 	at := jwt.NewWithClaims(jwt.SigningMethodHS256, atClaims)
 
 	token, err := at.SignedString([]byte(secretKey))
@@ -35,6 +37,7 @@ func CreateToken(userId string) (string, error) {
 	return token, nil
 }
 
+// MailSignUp은 새 사용자를 등록하고 데이터베이스에 저장합니다.
 func MailSignUp(db *gorm.DB, c *gin.Context) {
 	var userDTO entities.MailUserDTO
 
@@ -63,15 +66,6 @@ func MailSignUp(db *gorm.DB, c *gin.Context) {
 		Phone:  userDTO.Phone,
 	}
 
-	err = db.AutoMigrate(&entities.User{})
-
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": err.Error(),
-		})
-		return
-	}
-
 	err = db.Create(&user).Error
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -84,6 +78,7 @@ func MailSignUp(db *gorm.DB, c *gin.Context) {
 	})
 }
 
+// MailLogin은 사용자의 로그인을 처리하고 JWT 토큰을 반환합니다.
 func MailLogin(db *gorm.DB, c *gin.Context) {
 	var loginInfo entities.MailUserDTO
 	var user entities.User
@@ -98,7 +93,7 @@ func MailLogin(db *gorm.DB, c *gin.Context) {
 
 	if err := db.Where("id = ?", loginInfo.Id).First(&user).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": "id is not found",
+			"message": "ID is not found",
 		})
 		return
 	}
@@ -111,7 +106,7 @@ func MailLogin(db *gorm.DB, c *gin.Context) {
 		return
 	}
 
-	token, err := CreateToken(loginInfo.Id)
+	token, err := CreateToken(user.ID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not generate token"})
 		return
