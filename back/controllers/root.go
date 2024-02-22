@@ -5,7 +5,6 @@ import (
 	"back/services"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"net/http"
 	"time"
 )
 
@@ -14,31 +13,12 @@ func NewController(port string) {
 
 	r.Use(gin.Logger())
 	r.Use(cors.New(cors.Config{
-		AllowOrigins: []string{"http://localhost", "http://127.0.0.1", "http://112.159.30.237"},
+		AllowOrigins: []string{"http://112.159.30.237", "http://122.203.181.62", "http://175.114.18.77", "http://180.70.171.163"},
 		AllowMethods: []string{"GET", "POST", "PUT", "PATCH", "DELETE"},
 		MaxAge:       24 * time.Hour,
 	}))
 
 	// Access Control Middleware
-	r.Use(func(c *gin.Context) {
-		// 내 서버에 접근하는지 확인
-		requestIP := c.ClientIP()
-		// 허용된 IP 리스트
-		allowedIPs := []string{"127.0.0.1", "::1", "localhost", "112.159.30.237"}
-		isAllowed := false
-		for _, ip := range allowedIPs {
-			if requestIP == ip {
-				isAllowed = true
-				break
-			}
-		}
-		if !isAllowed {
-			c.JSON(http.StatusForbidden, gin.H{"error": "접근이 거부되었습니다."})
-			c.Abort()
-			return
-		}
-		c.Next()
-	})
 
 	rdb := repository.MySQLInit()
 	ndb := repository.MongoDBInit()
