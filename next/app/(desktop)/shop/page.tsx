@@ -14,11 +14,10 @@ import ShopMain from "./_compoenents/shopMain";
 const data: {}[] = [{}, {}, {}];
 
 const ShopPage = ({
-  searchParams,
+  searchParams: { category },
 }: {
   searchParams: { category: "all" | "top" | "bottom" | "acc" };
 }) => {
-  const category = searchParams.category;
   return (
     <>
       <Header />
