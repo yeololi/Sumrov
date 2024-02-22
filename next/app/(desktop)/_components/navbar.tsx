@@ -25,10 +25,10 @@ const data: {
   {
     title: "Shop",
     items: [
-      { href: "/shop", list: "ALL" },
-      { href: "/shop", list: "TOP" },
-      { href: "/shop", list: "BOTTOM" },
-      { href: "/shop", list: "ACC" },
+      { href: "/shop?category=all", list: "ALL" },
+      { href: "/shop?category=top", list: "TOP" },
+      { href: "/shop?category=bottom", list: "BOTTOM" },
+      { href: "/shop?category=acc", list: "ACC" },
     ],
   },
   {

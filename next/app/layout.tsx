@@ -56,7 +56,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
+    <html lang="ko" suppressHydrationWarning={true}>
       <body
         className={`${cormorant_garamond.variable} ${adamina.variable} ${inter.variable} ${pretendard.variable} dark:bg-neutral-900`}
       >
