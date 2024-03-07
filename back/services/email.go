@@ -114,3 +114,4 @@ func MailLogin(db *gorm.DB, c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"token": token})
 }
+0
