@@ -1,28 +1,26 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import axios from "axios";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 import { FormEvent } from "react";
 
 const LoginForm = () => {
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     try {
-      await fetch("/backend/auth/mail-login", {
-        method: "POST",
-        body: JSON.stringify({
-          email: e.currentTarget.email.value,
-          pw: e.currentTarget.password.value,
-        }),
-      })
-        .then((r) => r.json())
-        .then((response) => console.log(response))
-        .catch((err) => console.log(err));
+      const email = e.currentTarget.email.value;
+      const password = e.currentTarget.password.value;
+      const response = await signIn("credentials", {
+        email,
+        password,
+        redirect: true,
+        callbackUrl: "http://localhost:3000/mobile",
+      });
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 

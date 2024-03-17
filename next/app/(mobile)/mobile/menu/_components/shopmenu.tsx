@@ -4,6 +4,8 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { ElementRef, useRef, useState } from "react";
 
+const dataList = ["top", "bottom", "acc", "all"];
+
 const ShopMenu = () => {
   const modalRef = useRef<ElementRef<"div">>(null);
   const [isResetting, setIsResetting] = useState(false);
@@ -46,21 +48,15 @@ const ShopMenu = () => {
           isResetting && "transition-all ease-in-out duration-300"
         )}
       >
-        <Link
-          href={"/mobile/shop"}
-          className="text-black dark:text-white text-[13px] font-semibold font-nav"
-        >
-          TOP
-        </Link>
-        <div className="text-black dark:text-white text-[13px] font-semibold font-nav">
-          BOTTOM
-        </div>
-        <div className="text-black dark:text-white text-[13px] font-semibold font-nav">
-          ACC
-        </div>
-        <div className="text-black dark:text-white text-[13px] font-semibold font-nav">
-          ALL
-        </div>
+        {dataList.map((args, i) => (
+          <Link
+            key={i}
+            href={{ pathname: "/mobile/shop", query: { category: args } }}
+            className="text-black dark:text-white text-[13px] font-semibold font-nav"
+          >
+            {args.toUpperCase()}
+          </Link>
+        ))}
       </div>
     </div>
   );

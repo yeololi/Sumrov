@@ -5,6 +5,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import localFont from "next/font/local";
 import { Toaster } from "@/components/ui/toaster";
+import NextAuthProvider from "@/components/providers/NextAuthProvider";
 
 const cormorant_garamond = Cormorant_Garamond({
   weight: ["300", "400", "500", "600", "700"],
@@ -68,7 +69,7 @@ export default function RootLayout({
           disableTransitionOnChange
           storageKey="sumrov-theme-1"
         >
-          {children}
+          <NextAuthProvider>{children}</NextAuthProvider>
           <Toaster />
         </ThemeProvider>
       </body>

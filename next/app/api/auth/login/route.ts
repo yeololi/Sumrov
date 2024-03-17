@@ -9,8 +9,7 @@ interface RequestBody {
 
 export async function POST(request: Request) {
   const body: RequestBody = await request.json();
-
-  const db = (await clientPromise).db("SPAM-School-Page-refactoring");
+  const db = (await clientPromise).db("sumrov");
   const user = await db.collection("users").findOne({ email: body.email });
   if (user && (await bcrypt.compare(body.password, user.password))) {
     const { password, ...userWithoutPass } = user;
