@@ -1,13 +1,11 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
+import { Input } from "../_components/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
-import axios from "axios";
-import Link from "next/link";
-import Script from "next/script";
-import { FormEvent, FormEventHandler } from "react";
+
+import { FormEvent } from "react";
 import Header from "../../_components/header";
 
 declare global {
@@ -71,7 +69,7 @@ const SignUp = () => {
 
     if (!/^[가-힣]{2,10}$/.test(name)) {
       toast({
-        title: "이름이 아닙니다.",
+        title: "이름이 한글이 아닙니다.",
         variant: "destructive",
       });
       return;
@@ -83,7 +81,7 @@ const SignUp = () => {
       )
     ) {
       toast({
-        title: "이메일 형식이 아닙니다.",
+        title: "이메일 형식이 맞지 않습니다.",
         variant: "destructive",
       });
       return;
@@ -118,15 +116,19 @@ const SignUp = () => {
     const body = {
       name: name,
       email: email,
-      pw: password,
-      zonecode: zonecode,
-      adress: address,
+      password: password,
+      zonecode: +zonecode,
+      address: address,
       addrDetail: addrDetail,
-      phone: "010-1234-1245",
+      tel: tel,
     };
+    // console.log(body);
 
     try {
-      // await fetch("", { method: "POST", body: JSON.stringify(body) });
+      await fetch("/api/auth/signup", {
+        method: "POST",
+        body: JSON.stringify(body),
+      });
     } catch (error) {
       console.error(error);
     }
@@ -160,7 +162,7 @@ const SignUp = () => {
                 </div>
               </Label>
               <Input
-                className="w-[336px] h-[34px] border-neutral-300 rounded-none dark:placeholder:text-neutral-400 dark:bg-zinc-800 dark:border-black  text-neutral-400 text-[13px] font-medium font-pre"
+                className="w-[336px] h-[34px]"
                 placeholder="이름"
                 type={"text"}
                 id="name"
@@ -177,7 +179,7 @@ const SignUp = () => {
               </Label>
               <div className="justify-start items-center gap-1.5 inline-flex">
                 <Input
-                  className="w-[157px] h-[34px] border-neutral-300 rounded-none dark:placeholder:text-neutral-400 dark:bg-zinc-800 dark:border-black  text-neutral-400 text-[13px] font-medium font-pre"
+                  className="w-[157px] h-[34px]"
                   placeholder="이메일"
                   type={"text"}
                   id="email1"
@@ -186,7 +188,7 @@ const SignUp = () => {
                   @
                 </div>
                 <Input
-                  className="w-[157px] h-[34px] border-neutral-300 rounded-none dark:placeholder:text-neutral-400 dark:bg-zinc-800 dark:border-black  text-neutral-400 text-[13px] font-medium font-pre"
+                  className="w-[157px] h-[34px]"
                   placeholder="mail.com"
                   type={"text"}
                   id="email2"
@@ -203,14 +205,14 @@ const SignUp = () => {
                 </div>
               </Label>
               <Input
-                className="w-[336px] h-[34px] border-neutral-300 rounded-none dark:placeholder:text-neutral-400 dark:bg-zinc-800 dark:border-black  text-neutral-400 text-[13px] font-medium font-pre"
+                className="w-[336px] h-[34px]"
                 placeholder="비밀번호"
                 type={"password"}
                 id="password"
               />
             </div>
             <div className="text-neutral-400 text-[11px] font-medium font-pre">
-              (영문 대소문자/숫자/특수문자가 하나이상, 10~16자)
+              (영문/특수문자가 하나이상, 8~16자)
             </div>
             <div className="h-14 flex-col justify-start items-start gap-[9px] flex">
               <Label className=" flex gap-0.5">
@@ -222,10 +224,10 @@ const SignUp = () => {
                 </div>
               </Label>
               <Input
-                className="w-[336px] h-[34px] border-neutral-300 rounded-none dark:placeholder:text-neutral-400 dark:bg-zinc-800 dark:border-black  text-neutral-400 text-[13px] font-medium font-pre"
+                className="w-[336px] h-[34px]"
                 placeholder="비밀번호 확인"
                 type={"password"}
-                id="password-check"
+                id="passwordCheck"
               />
             </div>
           </div>
@@ -244,7 +246,7 @@ const SignUp = () => {
               <div className="flex flex-col gap-0.5">
                 <div className="flex gap-2">
                   <Input
-                    className="w-[106px] h-[34px] border-neutral-300 rounded-none dark:placeholder:text-neutral-400 dark:bg-zinc-800 dark:border-black text-neutral-400 text-[13px] font-medium font-pre"
+                    className="w-[106px] h-[34px]"
                     placeholder="우편번호"
                     type={"text"}
                     id="zonecode"
@@ -259,13 +261,13 @@ const SignUp = () => {
                   </div>
                 </div>
                 <Input
-                  className="w-[336px] h-[34px] border-neutral-300 rounded-none dark:placeholder:text-neutral-400 dark:bg-zinc-800 dark:border-black text-neutral-400 text-[13px] font-medium font-pre"
+                  className="w-[336px] h-[34px]"
                   placeholder="기본주소"
                   type={"text"}
                   id="address"
                 />
                 <Input
-                  className="w-[336px] h-[34px] border-neutral-300 rounded-none dark:placeholder:text-neutral-400 dark:bg-zinc-800 dark:border-black text-neutral-400 text-[13px] font-medium font-pre"
+                  className="w-[336px] h-[34px]"
                   placeholder="상세주소 (선택)"
                   type={"text"}
                   id="addrDetail"
@@ -278,7 +280,7 @@ const SignUp = () => {
               </div>
               <div className="justify-start items-center gap-1.5 inline-flex">
                 <Input
-                  className="w-[100px] h-[34px] border-neutral-300 rounded-none dark:placeholder:text-neutral-400 dark:bg-zinc-800 dark:border-black  text-neutral-400 text-[13px] font-medium font-pre"
+                  className="w-[100px] h-[34px]"
                   placeholder=""
                   type={"text"}
                   id="tel1"
@@ -287,7 +289,7 @@ const SignUp = () => {
                   -
                 </div>
                 <Input
-                  className="w-[100px] h-[34px] border-neutral-300 rounded-none dark:placeholder:text-neutral-400 dark:bg-zinc-800 dark:border-black  text-neutral-400 text-[13px] font-medium font-pre"
+                  className="w-[100px] h-[34px]"
                   placeholder=""
                   type={"text"}
                   id="tel2"
@@ -296,7 +298,7 @@ const SignUp = () => {
                   -
                 </div>
                 <Input
-                  className="w-[100px] h-[34px] border-neutral-300 rounded-none dark:placeholder:text-neutral-400 dark:bg-zinc-800 dark:border-black  text-neutral-400 text-[13px] font-medium font-pre"
+                  className="w-[100px] h-[34px]"
                   placeholder=""
                   type={"text"}
                   id="tel3"
