@@ -7,33 +7,38 @@ import Link from "next/link";
 import { FormEvent } from "react";
 
 const LoginForm = () => {
-  const onClick = async (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    await axios({
-      url: "/backend/auth/mail-login",
-      method: "POST",
-      data: {
-        id: "t23wedt",
-        pw: "asdfasdf",
-      },
-    })
-      .then((response) => console.log(response))
-      .catch((err) => console.log(err));
+    try {
+      await fetch("/backend/auth/mail-login", {
+        method: "POST",
+        body: JSON.stringify({
+          email: e.currentTarget.email.value,
+          pw: e.currentTarget.password.value,
+        }),
+      })
+        .then((r) => r.json())
+        .then((response) => console.log(response))
+        .catch((err) => console.log(err));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <>
       <form
-        onSubmit={onClick}
+        onSubmit={onSubmit}
         className="flex-col justify-center items-center gap-8 flex"
       >
         <div className="flex-col justify-center items-center gap-[23px] flex">
           <div className="w-[336px] h-[65px] flex-col justify-center items-start gap-1 flex">
             <Label className="dark:text-white text-black text-[13px] font-medium font-pre">
-              ID
+              Email
             </Label>
             <Input
+              id="email"
               placeholder="이메일"
               type={"email"}
               className="rounded-none dark:placeholder:text-neutral-400 dark:bg-zinc-800 border-neutral-300 dark:border-black"
@@ -44,6 +49,7 @@ const LoginForm = () => {
               Password
             </Label>
             <Input
+              id="password"
               placeholder="비밀번호"
               type={"password"}
               className="rounded-none dark:placeholder:text-neutral-400 dark:bg-zinc-800 border-neutral-300 dark:border-black"

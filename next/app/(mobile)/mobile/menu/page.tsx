@@ -27,9 +27,12 @@ const MenuPage = () => {
         </Link>
       </div>
       <div className="flex flex-col">
-        <div className="text-black dark:text-white text-xl font-bold font-nav">
+        <Link
+          href={"/mobile/login"}
+          className="text-black dark:text-white text-xl font-bold font-nav"
+        >
           Login
-        </div>
+        </Link>
         <div className="text-black dark:text-white text-xl font-semibold font-nav">
           Review
         </div>

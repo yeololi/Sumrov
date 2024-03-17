@@ -4,6 +4,7 @@ import { Cormorant_Garamond, Adamina, Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import localFont from "next/font/local";
+import { Toaster } from "@/components/ui/toaster";
 
 const cormorant_garamond = Cormorant_Garamond({
   weight: ["300", "400", "500", "600", "700"],
@@ -68,6 +69,7 @@ export default function RootLayout({
           storageKey="sumrov-theme-1"
         >
           {children}
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
