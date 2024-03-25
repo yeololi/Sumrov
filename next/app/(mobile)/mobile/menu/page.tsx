@@ -1,8 +1,13 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { X } from "lucide-react";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
+import LogoutButton from "./_components/logoutButton";
 import ShopMenu from "./_components/shopmenu";
 
-const MenuPage = () => {
+const MenuPage = async () => {
+  const session = await getServerSession(authOptions);
+
   return (
     <div className="w-full h-full bg-white dark:bg-neutral-900 flex flex-col pl-[34px] pt-[97px] gap-[41px] relative">
       <ShopMenu />
@@ -27,12 +32,16 @@ const MenuPage = () => {
         </Link>
       </div>
       <div className="flex flex-col">
-        <Link
-          href={"/mobile/login"}
-          className="text-black dark:text-white text-xl font-bold font-nav"
-        >
-          Login
-        </Link>
+        {session ? (
+          <LogoutButton />
+        ) : (
+          <Link
+            href={"/mobile/login"}
+            className="text-black dark:text-white text-xl font-bold font-nav"
+          >
+            Login
+          </Link>
+        )}
         <div className="text-black dark:text-white text-xl font-semibold font-nav">
           Review
         </div>

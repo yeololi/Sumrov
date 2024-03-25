@@ -1,6 +1,11 @@
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Adamina, Inter } from "next/font/google";
+import {
+  Cormorant_Garamond,
+  Adamina,
+  Inter,
+  Noto_Sans_KR,
+} from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import localFont from "next/font/local";
@@ -21,6 +26,11 @@ const adamina = Adamina({
 
 const inter = Inter({
   variable: "--body-font",
+  subsets: ["latin"],
+});
+
+const noto = Noto_Sans_KR({
+  variable: "--noto-font",
   subsets: ["latin"],
 });
 
@@ -60,7 +70,7 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning={true}>
       <body
-        className={`${cormorant_garamond.variable} ${adamina.variable} ${inter.variable} ${pretendard.variable} dark:bg-neutral-900`}
+        className={`${cormorant_garamond.variable} ${adamina.variable} ${inter.variable} ${pretendard.variable} ${noto.variable} dark:bg-neutral-900`}
       >
         <ThemeProvider
           attribute="class"

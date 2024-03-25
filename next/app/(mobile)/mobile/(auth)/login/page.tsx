@@ -16,9 +16,12 @@ const Login = () => {
             >
               find ID/Password
             </Link>
-            <div className="text-black dark:text-white text-[11px] font-normal font-pre">
+            <Link
+              href={"/mobile/nomember"}
+              className="text-black dark:text-white text-[11px] font-normal font-pre"
+            >
               비회원으로 이용
-            </div>
+            </Link>
           </div>
           <div className="flex-col justify-start items-center gap-2 flex">
             <div className="justify-center items-center gap-[9px] inline-flex">

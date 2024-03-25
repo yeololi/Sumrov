@@ -15,6 +15,7 @@ const config = {
       body: "var(--body-font)",
       num: "var(--num-font)",
       pre: "var(--pre-font)",
+      noto: "var(--noto-font)",
     },
     container: {
       center: true,

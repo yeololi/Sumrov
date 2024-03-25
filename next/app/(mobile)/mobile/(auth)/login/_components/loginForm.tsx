@@ -6,8 +6,13 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { FormEvent } from "react";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
 
 const LoginForm = () => {
+  const router = useRouter();
+  const { toast } = useToast();
+
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -16,11 +21,21 @@ const LoginForm = () => {
       const response = await signIn("credentials", {
         email,
         password,
-        redirect: true,
-        callbackUrl: "http://localhost:3000/mobile",
+        redirect: false,
       });
+
+      console.log(response);
+
+      if (response?.status === 401) {
+        toast({
+          title: "아이디 혹은 비밀번호가 일치하지 않습니다!",
+          variant: "destructive",
+        });
+      } else {
+        router.replace("/mobile");
+      }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
