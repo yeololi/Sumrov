@@ -1,7 +1,10 @@
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Footer from "../_components/footer";
+import React from "react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 const RegistrationPage = () => {
   return (
@@ -25,300 +28,146 @@ const RegistrationPage = () => {
             </div>
           </div>
         </div>
-        <div className="flex-col justify-start items-center gap-[74px] inline-flex">
-          <div className="h-[5045.33px] py-[50px] border border-stone-300 flex-col justify-center items-center flex">
-            <div className="flex-col justify-center items-center gap-[100px] flex">
+        <div className="flex-col justify-start items-center gap-[74px] flex">
+          <div className="border border-stone-300 border-t-0 flex-col justify-center items-center flex">
+            <div className="flex-col justify-center items-center gap-[100px] flex mt-[48px]">
               <div className="w-[700px] flex-col justify-center items-center gap-[50px] flex">
                 <div className="w-[700px] flex-col justify-between items-center flex">
-                  <div className="h-[22px] flex-col justify-center items-start gap-[25px] flex">
-                    <div className="text-center text-black text-lg font-medium font-['Inter']">
-                      상품 정보
-                    </div>
-                  </div>
                   <div className="w-[700px] justify-between items-center inline-flex">
-                    <div className="w-[109.47px] h-[50px] text-black text-sm font-normal font-['Inter']">
+                    <div className="text-black text-sm font-normal font-noto">
                       카테고리
                     </div>
-                    <div className="h-[35px] justify-center items-center gap-6 flex">
-                      <div className="h-[35px] pt-[5px] pb-1.5 bg-white justify-center items-center flex">
+                    <RadioGroup
+                      defaultValue="top"
+                      className="h-[35px] justify-center items-center gap-6 flex"
+                    >
+                      <div className="h-[35px] pt-[5px] pb-1.5 justify-center items-center flex">
                         <div className="grow shrink basis-0 self-stretch px-3 justify-start items-center gap-3 inline-flex">
-                          <div className="w-6 h-6 relative">
-                            <div className="w-6 h-6 left-0 top-0 absolute bg-zinc-300" />
-                          </div>
-                          <div className="text-black text-sm font-normal font-pre">
+                          <RadioGroupItem
+                            id="top"
+                            value="top"
+                            className="w-6 h-6"
+                          />
+                          <Label
+                            htmlFor="top"
+                            className="text-black text-sm font-normal font-pre cursor-pointer"
+                          >
                             TOP
-                          </div>
+                          </Label>
                         </div>
                       </div>
-                      <div className="p-[0.50px] bg-white justify-center items-center flex">
+                      <div className="p-[0.50px] justify-center items-center flex">
                         <div className="self-stretch px-3 justify-start items-center gap-3 inline-flex">
-                          <div className="w-6 h-6 relative">
-                            <div className="w-6 h-6 left-0 top-0 absolute bg-zinc-300" />
-                          </div>
-                          <div className="text-black text-sm font-normal font-pre">
+                          <RadioGroupItem
+                            id="bottom"
+                            value="bottom"
+                            className="w-6 h-6"
+                          />
+                          <Label
+                            htmlFor="bottom"
+                            className="text-black text-sm font-normal font-pre cursor-pointer"
+                          >
                             BOTTOM
-                          </div>
+                          </Label>
                         </div>
                       </div>
-                      <div className="pr-3 pt-[5px] pb-1.5 bg-white justify-start items-center flex">
+                      <div className="pr-3 pt-[5px] pb-1.5 justify-start items-center flex">
                         <div className="self-stretch px-3 justify-start items-center gap-3 inline-flex">
-                          <div className="w-6 h-6 relative">
-                            <div className="w-6 h-6 left-0 top-0 absolute bg-zinc-300" />
-                          </div>
-                          <div className="text-black text-sm font-normal font-pre">
+                          <RadioGroupItem
+                            id="acc"
+                            value="acc"
+                            className="w-6 h-6"
+                          />
+                          <Label
+                            htmlFor="acc"
+                            className="text-black text-sm font-normal font-pre cursor-pointer"
+                          >
                             ACC
-                          </div>
+                          </Label>
                         </div>
                       </div>
-                    </div>
+                    </RadioGroup>
                   </div>
-                  <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
-                  <div className="h-[438px] flex-col justify-start items-start gap-3 flex">
-                    <div className="w-[700px] justify-between items-center inline-flex">
-                      <div className="w-[109.47px] h-[50px] text-black text-sm font-normal font-['Inter']">
-                        상품명
-                      </div>
-                      <div className="w-[550px] h-[30px] bg-white rounded-sm border border-neutral-300" />
-                    </div>
-                    <div className="w-[700px] justify-between items-center inline-flex">
-                      <div className="w-[109.47px] h-[50px] text-black text-sm font-normal font-['Inter']">
-                        가격
-                      </div>
-                      <div className="w-[550px] h-[30px] bg-white rounded-sm border border-neutral-300" />
-                    </div>
-                    <div className="w-[700px] justify-between items-center inline-flex">
-                      <div className="w-[109.47px] h-[50px] text-black text-sm font-normal font-['Inter']">
-                        할인 정보
-                      </div>
-                      <div className="w-[550px] h-[30px] relative">
-                        <div className="w-[550px] h-[30px] left-0 top-0 absolute bg-white rounded-sm border border-neutral-300" />
-                        <div className="left-[12px] top-[6px] absolute text-neutral-300 text-sm font-normal font-['Inter']">
-                          (선택)
-                        </div>
-                      </div>
-                    </div>
-                    <div className="w-[700px] justify-between items-start inline-flex">
-                      <div className="w-[109.47px] h-[50px] text-black text-sm font-normal font-['Inter']">
-                        상세 정보
-                      </div>
-                      <div className="w-[550px] h-[252px] bg-white rounded-sm border border-neutral-300" />
-                    </div>
+                  <div className="h-[438px] flex-col justify-start items-start gap-6 mt-6 flex">
+                    <StandardForm
+                      title="상품명"
+                      className="w-[550px] h-[26px]"
+                    />
+
+                    <StandardForm title="가격" className="w-[550px] h-[26px]" />
+                    <StandardForm
+                      title="할인 정보"
+                      className="w-[550px] h-[26px]"
+                      placeholder="(상품)"
+                    />
+
+                    <StandardForm
+                      title="상세 정보"
+                      className="w-[550px] h-[252px]"
+                    />
                   </div>
                 </div>
                 <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
                 <div className="h-[145px] flex-col justify-center items-start gap-[23px] flex">
-                  <div className="w-[700px] justify-between items-center inline-flex">
-                    <div className="w-[109.47px] h-[50px] text-black text-sm font-normal font-['Inter']">
-                      사이즈 옵션
-                    </div>
-                    <div className="w-[550px] h-[30px] relative">
-                      <div className="w-[550px] h-[30px] left-0 top-0 absolute bg-white rounded-sm border border-neutral-300" />
-                      <div className="px-3 left-[505.50px] top-[8px] absolute justify-start items-center inline-flex">
-                        <div className="text-black text-xs font-light font-pre">
-                          추가
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <ActiveForm
+                    title="사이즈 옵션"
+                    className="w-[500px] h-[26px]"
+                  />
                   <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
-                  <div className="justify-start items-center gap-[23px] inline-flex">
+                  <div className="justify-start items-center flex">
                     <div className="justify-start items-center gap-6 flex">
-                      <div className="flex-col justify-center items-center gap-2.5 inline-flex">
-                        <div className="w-[100px] h-[26px] justify-center items-center inline-flex">
-                          <div className="w-[100px] h-[26px] relative flex-col justify-start items-start flex">
-                            <div className="w-[100px] h-[26px] bg-neutral-50 rounded-sm border border-neutral-300" />
-                            <div className="justify-center items-center gap-[19px] inline-flex">
-                              <div className="w-4 h-4 relative">
-                                <div className="w-4 h-4 left-0 top-0 absolute bg-zinc-300" />
-                              </div>
-                              <div className="text-neutral-600 text-[11px] font-normal font-pre">
-                                L
-                              </div>
-                              <div className="w-4 h-4 relative">
-                                <div className="w-4 h-4 left-0 top-0 absolute bg-zinc-300" />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex-col justify-start items-center gap-2.5 inline-flex">
-                        <div className="py-[5px] bg-neutral-50 rounded-sm border border-neutral-300 flex-col justify-start items-start gap-2.5 flex">
-                          <div className="px-2 justify-center items-center gap-[19px] inline-flex">
-                            <div className="w-4 h-4 relative">
-                              <div className="w-4 h-4 left-0 top-0 absolute bg-zinc-300" />
-                            </div>
-                            <div className="text-neutral-600 text-xs font-normal font-pre">
-                              M
-                            </div>
-                            <div className="w-4 h-4 relative">
-                              <div className="w-4 h-4 left-0 top-0 absolute bg-zinc-300" />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex-col justify-start items-center gap-2.5 inline-flex">
-                        <div className="py-[5px] bg-neutral-50 rounded-sm border border-neutral-300 flex-col justify-start items-start gap-2.5 flex">
-                          <div className="px-2 justify-center items-center gap-[19px] inline-flex">
-                            <div className="w-4 h-4 relative">
-                              <div className="w-4 h-4 left-0 top-0 absolute bg-zinc-300" />
-                            </div>
-                            <div className="text-neutral-600 text-xs font-normal font-pre">
-                              S
-                            </div>
-                            <div className="w-4 h-4 relative">
-                              <div className="w-4 h-4 left-0 top-0 absolute bg-zinc-300" />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      <Tag title="L" />
+                      <Tag title="M" />
+                      <Tag title="S" />
                     </div>
                   </div>
                   <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
                 </div>
                 <div className="h-[145px] flex-col justify-center items-start gap-[23px] flex">
-                  <div className="w-[700px] justify-between items-center inline-flex">
-                    <div className="w-[109.47px] h-[50px] text-black text-sm font-normal font-['Inter']">
-                      색상 옵션
-                    </div>
-                    <div className="w-[550px] h-[30px] relative">
-                      <div className="w-[550px] h-[30px] left-0 top-0 absolute bg-white rounded-sm border border-neutral-300" />
-                      <div className="px-3 left-[505.50px] top-[8px] absolute justify-start items-center inline-flex">
-                        <div className="text-black text-xs font-light font-pre">
-                          추가
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <ActiveForm
+                    title="색상 옵션"
+                    className="w-[500px] h-[26px]"
+                  />
                   <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
-                  <div className="justify-start items-center gap-6 inline-flex">
-                    <div className="flex-col justify-center items-center gap-2.5 inline-flex">
-                      <div className="w-[100px] h-[26px] justify-center items-center inline-flex">
-                        <div className="w-[100px] h-[26px] relative flex-col justify-start items-start flex">
-                          <div className="w-[100px] h-[26px] bg-neutral-50 rounded-sm border border-neutral-300" />
-                          <div className="justify-center items-center gap-[19px] inline-flex">
-                            <div className="w-4 h-4 relative">
-                              <div className="w-4 h-4 left-0 top-0 absolute bg-zinc-300" />
-                            </div>
-                            <div className="text-neutral-600 text-[11px] font-normal font-pre">
-                              블랙
-                            </div>
-                            <div className="w-4 h-4 relative">
-                              <div className="w-4 h-4 left-0 top-0 absolute bg-zinc-300" />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex-col justify-start items-center gap-2.5 inline-flex">
-                      <div className="py-[5px] bg-neutral-50 rounded-sm border border-neutral-300 flex-col justify-start items-start gap-2.5 flex">
-                        <div className="px-2 justify-center items-center gap-[19px] inline-flex">
-                          <div className="w-4 h-4 relative">
-                            <div className="w-4 h-4 left-0 top-0 absolute bg-zinc-300" />
-                          </div>
-                          <div className="text-neutral-600 text-xs font-normal font-pre">
-                            그레이
-                          </div>
-                          <div className="w-4 h-4 relative">
-                            <div className="w-4 h-4 left-0 top-0 absolute bg-zinc-300" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex-col justify-start items-center gap-2.5 inline-flex">
-                      <div className="py-[5px] bg-neutral-50 rounded-sm border border-neutral-300 flex-col justify-start items-start gap-2.5 flex">
-                        <div className="px-2 justify-center items-center gap-[19px] inline-flex">
-                          <div className="w-4 h-4 relative">
-                            <div className="w-4 h-4 left-0 top-0 absolute bg-zinc-300" />
-                          </div>
-                          <div className="text-neutral-600 text-xs font-normal font-pre">
-                            화이트
-                          </div>
-                          <div className="w-4 h-4 relative">
-                            <div className="w-4 h-4 left-0 top-0 absolute bg-zinc-300" />
-                          </div>
-                        </div>
-                      </div>
+                  <div className="justify-start items-center flex">
+                    <div className="justify-start items-center gap-6 flex">
+                      <Tag title="블랙" />
+                      <Tag title="그레이" />
+                      <Tag title="화이트" />
                     </div>
                   </div>
                   <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
                 </div>
                 <div className="h-[145px] flex-col justify-center items-start gap-[23px] flex">
-                  <div className="w-[700px] justify-between items-center inline-flex">
-                    <div className="w-[109.47px] h-[50px] text-black text-sm font-normal font-['Inter']">
-                      메인 이미지
-                    </div>
-                    <div className="w-[550px] h-[30px] relative">
-                      <div className="w-[550px] h-[30px] left-0 top-0 absolute bg-white rounded-sm border border-neutral-300" />
-                      <div className="left-[12px] top-[8px] absolute text-neutral-300 text-xs font-light font-pre">
-                        하나의 이미지만 가능
-                      </div>
-                      <div className="px-3 left-[494.50px] top-[8px] absolute justify-start items-center inline-flex">
-                        <div className="text-black text-xs font-light font-pre">
-                          업로드
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <ActiveForm
+                    title="메인 이미지"
+                    className="w-[500px] h-[26px]"
+                  />
                   <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
-                  <div className="justify-start items-center gap-[23px] inline-flex">
-                    <div className="flex-col justify-center items-center gap-2.5 inline-flex">
-                      <div className="w-[100px] h-[26px] relative">
-                        <div className="w-[100px] h-[26px] left-0 top-0 absolute bg-neutral-50 rounded-sm border border-neutral-300" />
-                        <div className="left-[6px] top-[6px] absolute text-neutral-600 text-[11px] font-normal font-pre">
-                          IMAGE-1
-                        </div>
-                        <div className="w-4 h-4 left-[76.50px] top-[5px] absolute">
-                          <div className="w-4 h-4 left-0 top-0 absolute bg-zinc-300" />
-                        </div>
-                      </div>
+                  <div className="justify-start items-center flex">
+                    <div className="justify-start items-center gap-6 flex">
+                      <Tag title="IMAGE-1" />
                     </div>
                   </div>
                   <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
                 </div>
                 <div className="h-[145px] flex-col justify-center items-start gap-[23px] flex">
-                  <div className="w-[700px] justify-between items-center inline-flex">
-                    <div className="w-[109.47px] h-[50px] text-black text-sm font-normal font-['Inter']">
-                      상세 이미지
-                    </div>
-                    <div className="w-[550px] h-[30px] relative">
-                      <div className="w-[550px] h-[30px] left-0 top-0 absolute bg-white rounded-sm border border-neutral-300" />
-                      <div className="px-3 left-[494.50px] top-[8px] absolute justify-start items-center inline-flex">
-                        <div className="text-black text-xs font-light font-pre">
-                          업로드
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <ActiveForm
+                    title="상세 이미지"
+                    className="w-[500px] h-[26px]"
+                  />
                   <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
-                  <div className="justify-start items-center gap-[23px] inline-flex">
-                    <div className="flex-col justify-center items-center gap-2.5 inline-flex">
-                      <div className="w-[100px] h-[26px] relative">
-                        <div className="w-[100px] h-[26px] left-0 top-0 absolute bg-neutral-50 rounded-sm border border-neutral-300" />
-                        <div className="left-[6px] top-[6px] absolute text-neutral-600 text-[11px] font-normal font-pre">
-                          IMAGE-1
-                        </div>
-                        <div className="w-4 h-4 left-[76.50px] top-[5px] absolute">
-                          <div className="w-4 h-4 left-0 top-0 absolute bg-zinc-300" />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex-col justify-center items-center gap-2.5 inline-flex">
-                      <div className="w-[100px] h-[26px] relative">
-                        <div className="w-[100px] h-[26px] left-0 top-0 absolute bg-neutral-50 rounded-sm border border-neutral-300" />
-                        <div className="left-[6px] top-[6px] absolute text-neutral-600 text-[11px] font-normal font-pre">
-                          IMAGE-2
-                        </div>
-                        <div className="w-4 h-4 left-[76.50px] top-[5px] absolute">
-                          <div className="w-4 h-4 left-0 top-0 absolute bg-zinc-300" />
-                        </div>
-                      </div>
+                  <div className="justify-start items-center flex">
+                    <div className="justify-start items-center gap-6 flex">
+                      <Tag title="IMAGE-1" />
+                      <Tag title="IMAGE-2" />
                     </div>
                   </div>
                   <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
                 </div>
               </div>
               <div className="flex-col justify-center items-center gap-[74px] flex">
-                <div className="text-center text-black text-[22px] font-medium font-['Inter']">
+                <div className="text-center text-black text-[22px] font-medium font-noto">
                   미리보기
                 </div>
                 <div className="flex-col justify-start items-center gap-[72px] flex">
@@ -398,12 +247,12 @@ const RegistrationPage = () => {
                         </div>
                         <div className="flex-col justify-start items-start gap-2.5 flex">
                           <div className="w-[315px] h-[41px] py-3.5 bg-neutral-900 justify-center items-center inline-flex">
-                            <div className="text-neutral-50 text-[11px] font-medium font-['Inter']">
+                            <div className="text-neutral-50 text-[11px] font-medium font-noto">
                               Buy it Now
                             </div>
                           </div>
                           <div className="w-[315px] h-[41px] py-3.5 border border-neutral-900 justify-center items-center inline-flex">
-                            <div className="text-black text-[11px] font-medium font-['Inter']">
+                            <div className="text-black text-[11px] font-medium font-noto">
                               Add to Cart
                             </div>
                           </div>
@@ -456,7 +305,7 @@ const RegistrationPage = () => {
             </div>
           </div>
           <div className="w-[700px] h-[50px] px-[234px] py-[9px] bg-black justify-center items-center gap-2.5 inline-flex">
-            <div className="text-center text-white text-base font-semibold font-['Inter']">
+            <div className="text-center text-white text-base font-semibold font-noto">
               업로드
             </div>
           </div>
@@ -466,5 +315,69 @@ const RegistrationPage = () => {
     </>
   );
 };
+
+const StandardForm = React.forwardRef<
+  React.ElementRef<"input">,
+  React.ComponentPropsWithoutRef<"input">
+>(({ title, className, ...props }, ref) => {
+  return (
+    <div className="w-[700px] justify-between items-center flex">
+      <div className={"w-[109.47px] text-sm font-normal font-noto"}>
+        {title}
+      </div>
+      <input
+        className={cn(
+          "bg-white dark:text-white rounded-sm dark:bg-zinc-800 border placeholder:text-neutral-300 text-black text-[11px] font-normal font-pre pl-2 border-neutral-300",
+          className
+        )}
+        {...props}
+      />
+    </div>
+  );
+});
+StandardForm.displayName = "StandardForm";
+
+const ActiveForm = React.forwardRef<
+  React.ElementRef<"input">,
+  React.ComponentPropsWithoutRef<"input">
+>(({ title, className, ...props }, ref) => {
+  return (
+    <div className="w-[700px] justify-between items-center flex">
+      <div className={"w-[109.47px] text-sm font-normal font-noto"}>
+        {title}
+      </div>
+      <input
+        className={cn(
+          "bg-white dark:text-white rounded-sm dark:bg-zinc-800 border placeholder:text-neutral-300 text-black text-[11px] font-normal font-pre pl-2 border-neutral-300",
+          className
+        )}
+        {...props}
+      />
+      <Button
+        variant={"ghost"}
+        className="h-[26px] font-noto hover:bg-inherit active:hover:bg-inherit"
+      >
+        추가
+      </Button>
+    </div>
+  );
+});
+ActiveForm.displayName = "ActiveForm";
+
+const Tag = React.forwardRef<
+  React.ElementRef<"div">,
+  React.ComponentPropsWithoutRef<"div">
+>(({ title, ...props }, ref) => {
+  return (
+    <div className="justify-center items-center gap-[19px] flex h-[26px] px-2 border-[1px] rounded-md border-neutral-400">
+      <Menu className="h-4 w-4" />
+      <div className="text-neutral-600 text-[13px] font-bold font-pre">
+        {title}
+      </div>
+      <X className="h-4 w-4" />
+    </div>
+  );
+});
+Tag.displayName = "Tag";
 
 export default RegistrationPage;
