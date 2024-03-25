@@ -1,24 +1,31 @@
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Menu, X } from "lucide-react";
+import { Menu, Minus, Plus, X } from "lucide-react";
 import Footer from "../_components/footer";
 import React from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { Select, SelectTrigger } from "@/components/ui/select";
+import Link from "next/link";
 
 const RegistrationPage = () => {
+  const yes = true;
+
   return (
     <>
       <div className="w-full flex flex-col bg-neutral-50">
         <div className="flex-col justify-center items-center inline-flex">
           <div className="pl-[505px] pr-[15px] py-[15px] bg-white justify-end items-center inline-flex">
             <div className="justify-start items-start gap-[465px] flex">
-              <div className="justify-center items-center gap-2.5 flex">
+              <Link
+                href="/"
+                className="justify-center items-center gap-2.5 flex"
+              >
                 <img className="w-[22px] h-[22px]" src="images/logo.png" />
                 <div className="text-neutral-900 text-xl font-semibold font-nav">
                   SUMROV
                 </div>
-              </div>
+              </Link>
               <X />
             </div>
           </div>
@@ -166,11 +173,11 @@ const RegistrationPage = () => {
                   <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
                 </div>
               </div>
-              <div className="flex-col justify-center items-center gap-[74px] flex">
+              <div className="flex-col justify-center items-center gap-[74px] flex pb-10">
                 <div className="text-center text-black text-[22px] font-medium font-noto">
                   미리보기
                 </div>
-                <div className="flex-col justify-start items-center gap-[72px] flex">
+                <div className="flex-col justify-start items-center gap-[15px] flex">
                   <div className="justify-center items-center gap-[25px] inline-flex">
                     <img
                       className="w-[550px] h-[733.33px]"
@@ -180,20 +187,20 @@ const RegistrationPage = () => {
                       <div className="flex-col justify-start items-start gap-5 flex">
                         <div className="flex-col justify-start items-start gap-2.5 flex">
                           <div className="justify-start items-start gap-[5px] inline-flex">
-                            <div className="w-3.5 h-3.5 bg-black" />
+                            <div className="w-3.5 h-3.5 bg-black dark:bg-white" />
                             <div className="w-3.5 h-3.5 bg-rose-500" />
                             <div className="w-3.5 h-3.5 bg-green-600" />
                           </div>
-                          <div className="text-black text-xl font-medium font-pre">
-                            Lorem ipsum dolor sit (BLACK, RED, GREEN){" "}
+                          <div className="text-black dark:text-neutral-50 text-xl font-medium font-pre">
+                            Lorem ipsum dolor sit (BLACK, RED, GREEN)
                           </div>
                         </div>
                         <div className="flex-col justify-start items-start gap-[50px] flex">
-                          <div className="text-black text-sm font-normal font-pre">
+                          <div className="text-black dark:text-neutral-50 text-sm font-normal font-pre">
                             KRW 10,000
                           </div>
                           <div className="flex-col justify-start items-start gap-[30px] flex">
-                            <div className="w-[421px] text-neutral-600 text-xs font-light font-pre">
+                            <div className="w-[421px] text-neutral-600 dark:text-zinc-100 text-xs font-light font-pre">
                               -로램잇섬 로램잇섬 Lorem ipsum dolor sit amet
                               로램잇섬 로램잇섬 로램 로램 Lorem ipsum dolor sit
                               amet Lorem ipsum dolor sit amet, consectetuer
@@ -214,75 +221,89 @@ const RegistrationPage = () => {
                           </div>
                         </div>
                       </div>
-                      <div className="flex-col justify-center items-center gap-[30px] flex">
+                      <div
+                        className={cn(
+                          "flex-col justify-center items-center gap-[75px] flex",
+                          yes && "gap-[30px]"
+                        )}
+                      >
                         <div className="flex-col justify-center items-end gap-[15px] flex">
                           <div className="w-[318px] justify-between items-center inline-flex">
-                            <div className="text-neutral-400 text-[11px] font-normal font-pre">
+                            <div className="text-neutral-400 dark:text-zinc-100 text-[11px] font-normal font-pre">
                               색상
                             </div>
-                            <div className="flex-col justify-center items-center gap-2.5 inline-flex">
-                              <div className="w-60 h-[26px] relative">
-                                <div className="w-60 h-[26px] left-0 top-0 absolute bg-neutral-50 rounded-sm border border-neutral-300" />
-                                <div className="w-6 h-[0px] left-[207px] top-[1px] absolute origin-top-left rotate-90 border border-neutral-300"></div>
-                              </div>
-                              <div className="text-neutral-600 text-[11px] font-normal font-pre">
-                                블랙
-                              </div>
-                            </div>
+                            <Select>
+                              <SelectTrigger className="dark:bg-neutral-900 dark:text-stone-300 rounded-sm w-60 h-[26px] text-neutral-600 text-[11px] font-normal font-pre">
+                                -[필수] 옵션을 선택해 주세요-
+                              </SelectTrigger>
+                            </Select>
                           </div>
                           <div className="justify-center items-center gap-[50px] inline-flex">
-                            <div className="text-neutral-400 text-[11px] font-normal font-pre">
+                            <div className="text-neutral-400 dark:text-zinc-100 text-[11px] font-normal font-pre">
                               사이즈
                             </div>
-                            <div className="flex-col justify-center items-center gap-2.5 inline-flex">
-                              <div className="w-60 h-[26px] relative">
-                                <div className="w-60 h-[26px] left-0 top-0 absolute bg-neutral-50 rounded-sm border border-neutral-300" />
-                                <div className="w-6 h-[0px] left-[207px] top-[1px] absolute origin-top-left rotate-90 border border-neutral-300"></div>
-                              </div>
-                              <div className="text-neutral-600 text-[11px] font-normal font-pre">
-                                S
-                              </div>
-                            </div>
+                            <Select>
+                              <SelectTrigger className="dark:bg-neutral-900 dark:text-stone-300 rounded-sm w-60 h-[26px] text-neutral-600 text-[11px] font-normal font-pre">
+                                -[필수] 옵션을 선택해 주세요-
+                              </SelectTrigger>
+                            </Select>
                           </div>
                         </div>
+                        {yes && (
+                          <>
+                            <div className="w-[299px] flex mt-3 flex-col">
+                              <div className="flex flex-col">
+                                <div className="text-neutral-600 dark:text-neutral-50 text-[10px] font-normal font-pre">
+                                  Lorem ipsum dolor sit
+                                </div>
+                                <div className="text-neutral-600 dark:text-neutral-50 text-[10px] font-normal font-pre">
+                                  -블랙/S
+                                </div>
+                              </div>
+                              <div className="text-black dark:text-white text-[11px] font-semibold font-pre flex justify-end w-full">
+                                KRW 10,000
+                              </div>
+                              <div className="flex gap-1">
+                                <input
+                                  placeholder="1"
+                                  className="text-[10px] font-normal font-pre w-[37px] h-[18px] pl-2 rounded-sm border border-neutral-300 dark:bg-neutral-900"
+                                />
+
+                                <div className="w-[18px] h-[18px]">
+                                  <Plus className="w-[18px] h-[18px] dark:text-black bg-neutral-300 rounded-sm" />
+                                </div>
+                                <div className="w-[18px] h-[18px]">
+                                  <Minus className="w-[18px] h-[18px] dark:text-black bg-neutral-300 rounded-sm" />
+                                </div>
+                              </div>
+                            </div>
+                            <div className="w-[299px] h-3.5 justify-center items-start gap-[167px] inline-flex">
+                              <div className="dark:text-white text-[11px] font-semibold font-pre">
+                                총상품금액
+                              </div>
+                              <div className="w-[84px] flex justify-center items-center">
+                                <div className="text-blue-500 text-[11px] font-semibold font-pre">
+                                  KRW 10,000
+                                </div>
+                                <div className="text-blue-500 text-[10px] font-normal font-pre">
+                                  (1개)
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        )}
                         <div className="flex-col justify-start items-start gap-2.5 flex">
-                          <div className="w-[315px] h-[41px] py-3.5 bg-neutral-900 justify-center items-center inline-flex">
-                            <div className="text-neutral-50 text-[11px] font-medium font-noto">
+                          <Button className="rounded-none hover:bg-neutral-900 w-[315px] h-[41px] py-3.5 bg-neutral-900 dark:bg-zinc-600 justify-center items-center inline-flex">
+                            <div className="text-neutral-50 text-[11px] font-medium font-body">
                               Buy it Now
                             </div>
-                          </div>
-                          <div className="w-[315px] h-[41px] py-3.5 border border-neutral-900 justify-center items-center inline-flex">
-                            <div className="text-black text-[11px] font-medium font-noto">
+                          </Button>
+                          <div className="w-[315px] h-[41px] py-3.5 border border-neutral-900 dark:border-zinc-600 justify-center items-center inline-flex">
+                            <div className="text-black dark:text-neutral-50 text-[11px] font-medium font-body">
                               Add to Cart
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="justify-center items-center gap-[25px] inline-flex">
-                    <div className="flex-col justify-start items-start gap-[30px] inline-flex">
-                      <div className="w-[700px] text-neutral-900 text-xs font-light font-pre">
-                        상세 정보 상세 정보 상세 정보 상세 정보 상세 정보 상세
-                        정보 상세 정보 상세 정보 상세 정보 상세 정보 상세 정보
-                        상세 정보 상세 정보 상세 정보 상세 정보 상세 정보 상세
-                        정보 상세 정보 상세 정보 상세 정보 상세 정보 상세 정보
-                        상세 정보 상세 정보 상세 정보 상세 정보 상세 정보 상세
-                        정보 상세 정보 상세 정보 상세 정보 상세 정보 상세 정보
-                        상세 정보 상세 정보 상세 정보 상세 정보 상세 정보 상세
-                        정보 상세 정보 상세 정보 상세 정보 상세 정보 상세 정보
-                        상세 정보 상세 정보 상세 정보 상세 정보 상세 정보 상세
-                        정보 상세 정보 상세 정보 상세 정보 상세 정보 상세 정보
-                        상세 정보 상세 정보 상세 정보 상세 정보 상세 정보 상세
-                        정보 상세 정보 상세 정보 상세 정보 상세 정보 상세 정보
-                        상세 정보 상세 정보 상세 정보 상세 정보 상세 정보 상세
-                        정보 상세 정보 상세 정보 상세 정보 상세 정보 상세 정보
-                        상세 정보 상세 정보 상세 정보 상세 정보 상세 정보 상세
-                        정보 상세 정보 상세 정보 상세 정보 상세 정보 상세 정보
-                        상세 정보 상세 정보 상세 정보 상세 정보 상세 정보 상세
-                        정보 상세 정보 상세 정보 상세 정보 상세 정보 상세 정보
-                        상세 정보 상세 정보 상세 정보 상세 정보 상세 정보 상세
-                        정보{" "}
                       </div>
                     </div>
                   </div>
@@ -304,11 +325,11 @@ const RegistrationPage = () => {
               </div>
             </div>
           </div>
-          <div className="w-[700px] h-[50px] px-[234px] py-[9px] bg-black justify-center items-center gap-2.5 inline-flex">
+          <Button className="w-[700px] h-[50px] px-[234px] py-[9px] bg-black justify-center items-center gap-2.5 inline-flex">
             <div className="text-center text-white text-base font-semibold font-noto">
               업로드
             </div>
-          </div>
+          </Button>
         </div>
       </div>
       <Footer />
