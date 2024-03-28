@@ -3,6 +3,43 @@ import { Minus, Plus } from "lucide-react";
 import Footer from "../../_components/footer";
 import Header from "../../_components/header";
 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+const data = [
+  {
+    title: "-결제 안내-",
+    content: `-로램잇섬 로램잇섬 Lorem ipsum dolor sit amet 로램잇섬 로램잇섬 로램 로램 Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetuer
+
+-로램잇섬 로램잇섬 Lorem ipsum dolor sit amet 로램잇섬 로램잇섬 로램 로램 Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetuer
+
+-로램잇섬 로램잇섬 Lorem ipsum dolor sit amet 로램잇섬 로램잇섬 로램 로램 Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetuer
+`,
+  },
+  {
+    title: "-배송 안내-",
+    content: `-로램잇섬 로램잇섬 Lorem ipsum dolor sit amet 로램잇섬 로램잇섬 로램 로램 Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetuer
+
+-로램잇섬 로램잇섬 Lorem ipsum dolor sit amet 로램잇섬 로램잇섬 로램 로램 Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetuer
+    
+-로램잇섬 로램잇섬 Lorem ipsum dolor sit amet 로램잇섬 로램잇섬 로램 로램 Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetuer
+`,
+  },
+  {
+    title: "-교환/환불 안내-",
+    content: `-로램잇섬 로램잇섬 Lorem ipsum dolor sit amet 로램잇섬 로램잇섬 로램 로램 Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetuer
+
+-로램잇섬 로램잇섬 Lorem ipsum dolor sit amet 로램잇섬 로램잇섬 로램 로램 Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetuer
+    
+-로램잇섬 로램잇섬 Lorem ipsum dolor sit amet 로램잇섬 로램잇섬 로램 로램 Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet, consectetuer
+`,
+  },
+];
+
 const ShopDetailPage = () => {
   return (
     <>
@@ -24,22 +61,7 @@ const ShopDetailPage = () => {
           <div className="text-black dark:text-white w-full text-[13px] font-medium font-pre mt-[12px]">
             Lorem ipsum dolor sit (BLACK, RED, GREEN)
           </div>
-          <div className="w-[315px] mt-[53px] text-neutral-600 dark:text-white text-[8px] font-normal font-pre">
-            -로램잇섬 로램잇섬 Lorem ipsum dolor sit amet 로램잇섬 로램잇섬 로램
-            로램 Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet,
-            consectetuer
-            <br />
-            <br />
-            -로램잇섬 로램잇섬 Lorem ipsum dolor sit amet 로램잇섬 로램잇섬 로램
-            <br />
-            로램잇섬 Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet,
-            consectetuer <br />
-            <br />
-            -로램잇섬 로램잇섬 Lorem ipsum dolor sit amet 로램잇섬 로램잇섬 로램
-            <br />
-            로램잇섬 Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet,
-            consectetuer
-          </div>
+          <div className="w-[315px] mt-[53px] text-neutral-600 dark:text-white text-[8px] font-normal font-pre"></div>
         </div>
 
         <div className="w-[350px] h-0 border-2 border-neutral-300 mt-4" />
@@ -149,29 +171,19 @@ const ShopDetailPage = () => {
               src="https://via.placeholder.com/300x400"
             />
           </div>
-          <div className="items-center flex-col flex w-full gap-[3px]">
-            <div className="flex-col justify-center gap-2.5 flex  mt-[76.21px]">
-              <Select>
-                <SelectTrigger className="w-[315px] h-[26px] bg-white border dark:bg-black dark:text-neutral-300 rounded-none border-neutral-300 text-neutral-600 text-[11px] font-normal font-pre ">
-                  -결제 안내-
-                </SelectTrigger>
-              </Select>
-            </div>
-            <div className="flex-col justify-start items-start gap-2.5 inline-flex">
-              <Select>
-                <SelectTrigger className="w-[315px] h-[26px] bg-white border dark:bg-black dark:text-neutral-300 rounded-none border-neutral-300 text-neutral-600 text-[11px] font-normal font-pre ">
-                  -배송 안내-
-                </SelectTrigger>
-              </Select>
-            </div>
-            <div className="flex-col justify-start items-start gap-2.5 inline-flex">
-              <Select>
-                <SelectTrigger className="w-[315px] h-[26px] bg-white border dark:bg-black dark:text-neutral-300 rounded-none border-neutral-300 text-neutral-600 text-[11px] font-normal font-pre ">
-                  -교환/환불 안내-
-                </SelectTrigger>
-              </Select>
-            </div>
-          </div>
+
+          <Accordion className="font-noto w-[360px]" type="single" collapsible>
+            {data.map((item, index) => (
+              <>
+                <AccordionItem value={"item-" + index + 1} key={index}>
+                  <AccordionTrigger>{item.title}</AccordionTrigger>
+                  <AccordionContent className="whitespace-pre-wrap">
+                    {item.content}
+                  </AccordionContent>
+                </AccordionItem>
+              </>
+            ))}
+          </Accordion>
         </div>
       </div>
       <Footer />

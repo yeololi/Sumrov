@@ -21,7 +21,7 @@ const buttonVariants = cva(
         login:
           "dark:border hover:text-neutral-900 hover:border hover:border-black hover:bg-neutral-50 dark:border-white text-white text-sm font-normal font-pre rounded-none bg-black",
         signup:
-          "border-neutral-900 hover:bg-black hover:text-neutral-50 text-black text-sm font-normal font-pre rounded-none bg-white border",
+          "border-neutral-900 dark:border hover:bg-black hover:text-neutral-50 text-black text-sm font-normal font-pre rounded-none bg-white border",
       },
       size: {
         default: "h-10 px-4 py-2",

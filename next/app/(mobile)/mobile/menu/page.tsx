@@ -2,7 +2,6 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { X } from "lucide-react";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
-import LogoutButton from "./_components/logoutButton";
 import ShopMenu from "./_components/shopmenu";
 
 const MenuPage = async () => {

@@ -1,3 +1,5 @@
+import LogoutButton from "../_components/logoutButton";
+
 const Mypage = () => {
   return (
     <>
@@ -49,7 +51,7 @@ const Mypage = () => {
           <div className="text-[13px] font-medium font-pre">나의 리뷰</div>
           <div className="text-[13px] font-medium font-pre">장바구니</div>
         </div>
-        <div className="text-[13px] font-medium font-pre">로그아웃</div>
+        <LogoutButton />
       </div>
     </>
   );
