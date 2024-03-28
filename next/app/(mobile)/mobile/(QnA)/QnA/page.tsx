@@ -1,4 +1,4 @@
-import Header from "../_components/header";
+import Header from "../../_components/header";
 import {
   Select,
   SelectContent,
@@ -8,7 +8,8 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { Lock } from "lucide-react";
-import Footer from "../_components/footer";
+import Footer from "../../_components/footer";
+import Link from "next/link";
 
 const data = [{}, {}, {}, {}, {}, {}, {}];
 
@@ -31,11 +32,14 @@ const QnAPage = () => {
               <SelectItem value="after">답변완료 글보기</SelectItem>
             </SelectContent>
           </Select>
-          <div className="w-[46px] h-[25px] bg-neutral-400 flex justify-center items-center">
+          <Link
+            href={"/mobile/QnAWrite"}
+            className="w-[46px] h-[25px] bg-neutral-400 flex justify-center items-center"
+          >
             <div className="text-neutral-50 text-[11px] font-normal font-body">
               글쓰기
             </div>
-          </div>
+          </Link>
         </div>
         {data.map((args, i) => (
           <div
@@ -61,7 +65,7 @@ const QnAPage = () => {
                   <div className="text-neutral-400 text-[10px] font-medium font-body tracking-wide">
                     이**
                   </div>
-                  <div className="text-neutral-400 text-[9px] font-medium font-body tracking-wide">
+                  <div className="text-neutral-400 text-[10px] font-medium font-body tracking-wide">
                     2024-02-11
                   </div>
                 </div>
