@@ -33,7 +33,12 @@ const MenuPage = async () => {
       </div>
       <div className="flex flex-col">
         {session ? (
-          <LogoutButton />
+          <Link
+            href={"/mobile/mypage"}
+            className="text-black dark:text-white text-xl font-bold font-nav"
+          >
+            Mypage
+          </Link>
         ) : (
           <Link
             href={"/mobile/login"}
@@ -42,9 +47,12 @@ const MenuPage = async () => {
             Login
           </Link>
         )}
-        <div className="text-black dark:text-white text-xl font-semibold font-nav">
+        <Link
+          href={"/mobile/review"}
+          className="text-black dark:text-white text-xl font-semibold font-nav"
+        >
           Review
-        </div>
+        </Link>
       </div>
       <Link href={"/mobile"}>
         <X
