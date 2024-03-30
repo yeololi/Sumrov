@@ -143,7 +143,7 @@ const Mypage_mine = () => {
     return (
         <>
             <div className="flex flex-col items-start justify-start">
-                <div className="flex flex-col items-center px-[19.5px] pb-[41px]">
+                <div className="flex flex-col items-center pb-[41px]">
                     <form
                         onSubmit={onSubmit}
                         className="flex-col justify-start items-start gap-[31px] flex"
