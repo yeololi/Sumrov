@@ -11,7 +11,7 @@ const NoticePage = ({ searchParams }: { searchParams: { page: string } }) => {
   return (
     <>
       <Header />
-      <div className="flex justify-center pt-[200px] pb-[91px] bg-neutral-50">
+      <div className="flex justify-center pt-[200px] pb-[91px] bg-neutral-50 dark:bg-inherit">
         <div className="w-[1040px] h-[719px] flex-col justify-start items-center gap-[70px] inline-flex">
           <div className="text-black dark:text-neutral-50 text-[32px] font-bold font-nav tracking-[3.20px]">
             NOTICE
@@ -41,8 +41,7 @@ const NoticePage = ({ searchParams }: { searchParams: { page: string } }) => {
                 </div>
               </div>
               {data.map((arg, i) => (
-                <Link
-                  href={"/notice/" + i}
+                <div
                   key={i}
                   className="h-10 w-full border-b border-gray-200 justify-center items-center inline-flex"
                 >
@@ -52,9 +51,12 @@ const NoticePage = ({ searchParams }: { searchParams: { page: string } }) => {
                     </div>
                   </div>
                   <div className="w-[700px] h-[30px] justify-start items-center flex">
-                    <div className="text-black dark:text-neutral-50 text-[13px] font-normal font-body uppercase">
+                    <Link
+                      href={"/notice/" + i}
+                      className="text-black dark:text-neutral-50 text-[13px] font-normal font-body uppercase"
+                    >
                       2월 BEST REVIEW EVENT !
-                    </div>
+                    </Link>
                   </div>
                   <div className="w-[70px] justify-center items-center flex">
                     <div className="text-black dark:text-neutral-50 text-xs font-light font-body uppercase">
@@ -66,7 +68,7 @@ const NoticePage = ({ searchParams }: { searchParams: { page: string } }) => {
                       2022-04-05 21:36:16
                     </div>
                   </div>
-                </Link>
+                </div>
               ))}
             </div>
 

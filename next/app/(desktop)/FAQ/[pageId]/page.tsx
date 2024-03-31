@@ -8,9 +8,9 @@ const FAQ = () => {
     <>
       <Header />
       <div className="flex justify-center pt-[200px] pb-[91px] bg-slate-50 dark:bg-neutral-900">
-        <div className="w-[1001px] h-[568px] flex-col justify-center items-start gap-[50px] inline-flex">
+        <div className="h-[568px] flex-col justify-center items-start gap-[50px] inline-flex">
           <div className="flex-col justify-start items-center gap-[70px] flex">
-            <div className="text-black text-[32px] font-bold font-nav tracking-[3.20px]">
+            <div className="text-[32px] font-bold font-nav tracking-[3.20px]">
               FAQ
             </div>
             <div className="pb-[50px] border border-gray-200 flex-col justify-center items-center flex">
@@ -58,7 +58,7 @@ const FAQ = () => {
                   </div>
                 </div>
                 <div className="flex-col justify-center items-center gap-[50px] flex">
-                  <div className="w-[890px] text-black text-sm font-light font-pre uppercase">
+                  <div className="w-[890px] text-sm font-light font-pre uppercase">
                     Q. 반품 후 환불요청을 했는데 주문금액이랑 다르게 환불 된 것
                     같아요.
                     <br />

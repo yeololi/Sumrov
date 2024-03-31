@@ -51,7 +51,7 @@ const FAQ = ({ searchParams }: { searchParams: { page: string } }) => {
                   </div>
                   <div className="w-[700px] h-[30px] justify-start items-center flex">
                     <Link
-                      href={"/FAQ/1"}
+                      href={"/FAQ/" + i}
                       className="text-black dark:text-neutral-50 text-[13px] font-normal font-body uppercase"
                     >
                       Q. 반품 후 환불요청을 했는데 주문금액이랑 다르게 환불 된
