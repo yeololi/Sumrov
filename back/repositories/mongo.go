@@ -1,4 +1,4 @@
-package repository
+package repositories
 
 import (
 	"context"
@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-func MongoDBInit() *mongo.Client {
+func MongoInit() *mongo.Client {
 	err := godotenv.Load()
 	if err != nil {
 		panic("Error loading.env file")
