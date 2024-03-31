@@ -26,7 +26,7 @@
     "clsx": "^2.1.0",
     "date-fns": "^3.6.0",
     "jsonwebtoken": "^9.0.2",
-    "lucide-react": "^0.325.0",
+    "lucide-react": "^0.363.0",
     "mongodb": "^5.9.2",
     "next": "14.1.0",
     "next-auth": "^4.24.7",
