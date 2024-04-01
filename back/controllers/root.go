@@ -39,6 +39,22 @@ func NewController(port string) {
 		})
 	}
 
+	notice := r.Group("notice")
+	{
+		notice.GET("", func(c *gin.Context) {
+			services.GetAllPost(c, mongo)
+		})
+		notice.GET("/:uuid", func(c *gin.Context) {
+			services.GetPostById(c, mongo)
+		})
+		notice.POST("", func(c *gin.Context) {
+			services.CreatePost(c, mongo)
+		})
+		notice.DELETE("/:uuid", func(c *gin.Context) {
+			services.DeletePost(c, mongo)
+		})
+	}
+
 	err := r.Run(port)
 	if err != nil {
 		panic(err)
