@@ -106,6 +106,40 @@ func GetPostById(c *gin.Context, db *mongo.Client) {
 	c.JSON(http.StatusOK, gin.H{"results": results})
 }
 
+func GetPostByUUID(c *gin.Context, db *mongo.Client) {
+	puid := c.Param("uuid")
+
+	// MongoDB 컬렉션 선택
+	collection := db.Database("sumrov").Collection("feed")
+
+	// 컨텍스트 생성
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	// 카테고리에 대한 필터 생성
+	filter := bson.D{{"uuid", puid}}
+
+	// 컬렉션에서 데이터 가져오기
+	cur, err := collection.Find(ctx, filter)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	defer cur.Close(ctx)
+
+	// 결과를 담을 슬라이스 선언
+	var results []entity.Post
+
+	// 결과를 슬라이스에 저장
+	if err := cur.All(ctx, &results); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	// 결과를 JSON으로 응답
+	c.JSON(http.StatusOK, gin.H{"results": results})
+}
+
 func DeletePost(c *gin.Context, db *mongo.Client) {
 	uuid := c.Param("uuid")
 
