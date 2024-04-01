@@ -18,12 +18,12 @@ const MenuPage = async () => {
         >
           Notice
         </Link>
-        <Link
+        {/* <Link
           href={"/mobile/QnA"}
           className="text-black dark:text-white text-xl font-bold font-nav"
         >
           Q&A
-        </Link>
+        </Link> */}
         <Link
           href={"/mobile/FAQ"}
           className="text-black dark:text-white text-xl font-bold font-nav"
@@ -47,12 +47,12 @@ const MenuPage = async () => {
             Login
           </Link>
         )}
-        <Link
+        {/* <Link
           href={"/mobile/review"}
           className="text-black dark:text-white text-xl font-semibold font-nav"
         >
           Review
-        </Link>
+        </Link> */}
       </div>
       <BackButton />
     </div>
