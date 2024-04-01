@@ -32,12 +32,15 @@ func CreateNotice(c *gin.Context, db *mongo.Client) {
 		return
 	}
 
+	// 현재 KST 시간을 문자열로 변환
+	currentTime := time.Now().In(location).Format("2006-01-02 15:04:05")
+
 	upload := &entity.Notice{
 		Uuid:        uuid.New().String(),
 		Title:       feed.Title,
 		Description: feed.Description,
 		Images:      feed.Images,
-		Date:        time.Now().In(location).Format("2006-01-02 15:04:05"), // KST 시간을 문자열로 포맷팅
+		Date:        currentTime, // KST 시간을 문자열로 설정
 	}
 
 	collection := db.Database("sumrov").Collection("notice")
