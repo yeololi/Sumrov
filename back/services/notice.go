@@ -23,12 +23,21 @@ func CreateNotice(c *gin.Context, db *mongo.Client) {
 		return
 	}
 
+	// KST 타임존 설정
+	location, err := time.LoadLocation("Asia/Seoul")
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "KST 타임존을 설정하는 중 오류가 발생했습니다.",
+		})
+		return
+	}
+
 	upload := &entity.Notice{
 		Uuid:        uuid.New().String(),
 		Title:       feed.Title,
 		Description: feed.Description,
 		Images:      feed.Images,
-		Date:        time.Now().String(),
+		Date:        time.Now().In(location).Format("2006-01-02 15:04:05"), // KST 시간을 문자열로 포맷팅
 	}
 
 	collection := db.Database("sumrov").Collection("notice")
