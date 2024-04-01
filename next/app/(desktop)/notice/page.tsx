@@ -3,10 +3,43 @@ import Header from "../_components/header";
 import Link from "next/link";
 import Pagination from "../_components/pagination";
 
-const data = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
+interface Notice {
+  Uuid: string;
+  Title: string;
+  Description: string;
+  Date: string;
+  Images: string[];
+}
 
-const NoticePage = ({ searchParams }: { searchParams: { page: string } }) => {
+async function fetchData() {
+  try {
+    const response: { results: Notice[] } = await fetch(
+      `http://3.39.237.151:8080/notice/`,
+      {
+        method: "GET",
+      }
+    ).then((r) => r.json());
+
+    if (response) {
+      return response.results;
+    } else {
+      console.log("res.result is not an array or res is undefined");
+      return;
+    }
+  } catch (error) {
+    console.error(error);
+    return;
+  }
+}
+
+const NoticePage = async ({
+  searchParams,
+}: {
+  searchParams: { page: string };
+}) => {
   const page = parseInt(searchParams.page);
+
+  const data = await fetchData();
 
   return (
     <>
@@ -40,22 +73,22 @@ const NoticePage = ({ searchParams }: { searchParams: { page: string } }) => {
                   </div>
                 </div>
               </div>
-              {data.map((arg, i) => (
+              {data?.map((arg, i) => (
                 <div
                   key={i}
                   className="h-10 w-full border-b border-gray-200 justify-center items-center inline-flex"
                 >
                   <div className="w-[70px] h-[30px] justify-center items-center flex">
                     <div className="text-black dark:text-neutral-50 text-xs font-light font-body uppercase">
-                      12
+                      {i + 1}
                     </div>
                   </div>
                   <div className="w-[700px] h-[30px] justify-start items-center flex">
                     <Link
-                      href={"/notice/" + i}
+                      href={"/notice/" + btoa(arg.Uuid)}
                       className="text-black dark:text-neutral-50 text-[13px] font-normal font-body uppercase"
                     >
-                      2월 BEST REVIEW EVENT !
+                      {arg.Title}
                     </Link>
                   </div>
                   <div className="w-[70px] justify-center items-center flex">
@@ -65,7 +98,7 @@ const NoticePage = ({ searchParams }: { searchParams: { page: string } }) => {
                   </div>
                   <div className="w-[200px] justify-center items-center flex">
                     <div className="text-black dark:text-neutral-50 text-xs font-light font-body uppercase">
-                      2022-04-05 21:36:16
+                      {arg.Date}
                     </div>
                   </div>
                 </div>
