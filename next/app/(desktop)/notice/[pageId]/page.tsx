@@ -19,8 +19,6 @@ async function fetchData(params: string) {
       }
     ).then((r) => r.json());
 
-    console.log(response);
-
     if (response) {
       return response.results;
     } else {
