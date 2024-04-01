@@ -1,9 +1,9 @@
 import {
-    ChevronDown,
-    ChevronLeft,
-    ChevronRight,
-    ChevronsLeft,
-    ChevronsRight,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
 } from "lucide-react";
 import Link from "next/link";
 import { NextRequest } from "next/server";
@@ -12,114 +12,120 @@ import Header from "../_components/header";
 import Pagination from "../_components/pagination";
 
 interface Product {
-    Uuid: string;
-    Title: string;
-    Price: number;
-    Sale: number;
-    Description: string;
-    Size: string;
-    Color: string;
-    MainImage: string;
-    DetailImage: string;
-    Category: string;
+  Uuid: string;
+  Title: string;
+  Price: number;
+  Sale: number;
+  Description: string;
+  Size: string;
+  Color: string;
+  MainImage: string;
+  DetailImage: string;
+  Category: string;
 }
 
 const ShopPage = ({
-    searchParams,
+  searchParams,
 }: {
-    searchParams: { category: "all" | "top" | "bottom" | "acc"; page: string };
+  searchParams: { category: "all" | "top" | "bottom" | "acc"; page: string };
 }) => {
-    const page = parseInt(searchParams.page);
-    const category = searchParams.category;
+  const page = parseInt(searchParams.page);
+  const category = searchParams.category;
 
-    async function fetchData() {
-        function chunk<T>(array: T[] | undefined, chunkSize: number): T[][] {
-            if (!array) return []; // array가 undefined 또는 null인 경우, 빈 배열 반환
-            const result: T[][] = [];
-            for (let i = 0; i < array.length; i += chunkSize) {
-                const chunk = array.slice(i, i + chunkSize);
-                result.push(chunk);
-            }
-            return result;
-        }
-
-        try {
-            console.log(category);
-
-            const response = await fetch(`/backend/feed/${category}`, {
-                method: "GET",
-            });
-            const res = await response.json();
-
-            if (res) {
-                // const chunkData = chunk(res.results, 9)
-                //   .map((subArray) => chunk(subArray, 3))
-                //   .flat();
-
-                console.log(res);
-
-                return res;
-            } else {
-                console.log("res.result is not an array or res is undefined");
-                return;
-            }
-        } catch (error) {
-            console.error(error);
-            return;
-        }
+  async function fetchData() {
+    function chunk<T>(array: T[] | undefined, chunkSize: number): T[][] {
+      if (!array) return []; // array가 undefined 또는 null인 경우, 빈 배열 반환
+      const result: T[][] = [];
+      for (let i = 0; i < array.length; i += chunkSize) {
+        const chunk = array.slice(i, i + chunkSize);
+        result.push(chunk);
+      }
+      return result;
     }
 
-    const result = fetchData();
+    try {
+      console.log("cat: " + category);
 
-    return (
-        <>
-            <Header />
-            <div className="w-full h-full flex flex-col justify-center items-center pt-[225px] bg-neutral-50 pb-[142px] gap-[50px]">
-                <div className="flex-col justify-center items-center gap-[25px] inline-flex">
-                    <div className="text-neutral-900 dark:text-neutral-50 text-lg font-bold font-nav tracking-widest uppercase">
-                        {category}
-                    </div>
-                    <div className="justify-center items-center gap-[100px] inline-flex">
-                        <Link
-                            href={{
-                                pathname: "/shop",
-                                query: { category: "all", page: 1 },
-                            }}
-                            className="text-neutral-900 dark:text-neutral-50 text-xs font-medium font-nav"
-                        >
-                            ALL
-                        </Link>
-                        <Link
-                            href={{
-                                pathname: "/shop",
-                                query: { category: "top", page: 1 },
-                            }}
-                            className="text-neutral-900 dark:text-neutral-50 text-xs font-medium font-nav"
-                        >
-                            TOP
-                        </Link>
-                        <Link
-                            href={{
-                                pathname: "/shop",
-                                query: { category: "bottom", page: 1 },
-                            }}
-                            className="text-neutral-900 dark:text-neutral-50 text-xs font-medium font-nav"
-                        >
-                            BOTTOM
-                        </Link>
-                        <Link
-                            href={{
-                                pathname: "/shop",
-                                query: { category: "acc", page: 1 },
-                            }}
-                            className="text-neutral-900 dark:text-neutral-50 text-xs font-medium font-nav"
-                        >
-                            ACC
-                        </Link>
-                    </div>
-                </div>
-                <div className="flex h-full flex-col gap-[100px]">
-                    {/* <>
+      const response: any = await fetch(`/backend/post`, {
+        method: "GET",
+      })
+        .then((r) => r.json())
+        .then((res) => {
+          console.log("res: " + res);
+        });
+      // .catch((err) => {
+      //   console.error(err);
+      // });
+
+      //   if (response) {
+      //     // const chunkData = chunk(response.results, 9)
+      //     //   .map((subArray) => chunk(subArray, 3))
+      //     //   .flat();
+
+      //     console.log(response);
+
+      //     return response;
+      //   } else {
+      //     console.log("res.result is not an array or res is undefined");
+      //     return;
+      //   }
+    } catch (error) {
+      console.error("err: " + error);
+      return;
+    }
+  }
+
+  const result = fetchData();
+
+  return (
+    <>
+      <Header />
+      <div className="w-full h-full flex flex-col justify-center items-center pt-[225px] bg-neutral-50 pb-[142px] gap-[50px]">
+        <div className="flex-col justify-center items-center gap-[25px] inline-flex">
+          <div className="text-neutral-900 dark:text-neutral-50 text-lg font-bold font-nav tracking-widest uppercase">
+            {category}
+          </div>
+          <div className="justify-center items-center gap-[100px] inline-flex">
+            <Link
+              href={{
+                pathname: "/shop",
+                query: { category: "all", page: 1 },
+              }}
+              className="text-neutral-900 dark:text-neutral-50 text-xs font-medium font-nav"
+            >
+              ALL
+            </Link>
+            <Link
+              href={{
+                pathname: "/shop",
+                query: { category: "top", page: 1 },
+              }}
+              className="text-neutral-900 dark:text-neutral-50 text-xs font-medium font-nav"
+            >
+              TOP
+            </Link>
+            <Link
+              href={{
+                pathname: "/shop",
+                query: { category: "bottom", page: 1 },
+              }}
+              className="text-neutral-900 dark:text-neutral-50 text-xs font-medium font-nav"
+            >
+              BOTTOM
+            </Link>
+            <Link
+              href={{
+                pathname: "/shop",
+                query: { category: "acc", page: 1 },
+              }}
+              className="text-neutral-900 dark:text-neutral-50 text-xs font-medium font-nav"
+            >
+              ACC
+            </Link>
+          </div>
+        </div>
+        <div className="flex h-full flex-col gap-[100px]">
+          {/* <>
             {result.map((args, i) => (
               <div className="gap-[50px] w-full flex" key={i}>
                 {args.map((product, j) => (
@@ -148,16 +154,12 @@ const ShopPage = ({
               </div>
             ))}
           </> */}
-                    <Pagination
-                        props={{ category }}
-                        totalPages={30}
-                        currentPage={page}
-                    />
-                </div>
-            </div>
-            <Footer />
-        </>
-    );
+          <Pagination props={{ category }} totalPages={30} currentPage={page} />
+        </div>
+      </div>
+      <Footer />
+    </>
+  );
 };
 
 export default ShopPage;
