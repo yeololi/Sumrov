@@ -131,7 +131,7 @@ const ShopPage = async ({
               <div className="gap-[50px] justify-between w-full flex" key={i}>
                 {args.map((product, j) => (
                   <Link
-                    href={"/shop/" + btoa(product.Uuid) + "/"}
+                    href={"/shop/" + btoa(product.Uuid)}
                     key={j}
                     className="w-[300px] h-[480px] flex-col justify-center items-center gap-[10px] inline-flex"
                   >
