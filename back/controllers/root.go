@@ -13,7 +13,7 @@ func NewController(port string, mongo *mongo.Client, r *gin.Engine) {
 
 	post := r.Group("post")
 	{
-		post.GET("", func(c *gin.Context) {
+		post.GET("/", func(c *gin.Context) {
 			services.GetAllPost(c, mongo)
 		})
 		post.GET("/:category", func(c *gin.Context) {
@@ -22,7 +22,7 @@ func NewController(port string, mongo *mongo.Client, r *gin.Engine) {
 		post.GET("/uuid/:uuid", func(c *gin.Context) {
 			services.GetPostByUUID(c, mongo)
 		})
-		post.POST("", func(c *gin.Context) {
+		post.POST("/", func(c *gin.Context) {
 			services.CreatePost(c, mongo)
 		})
 		post.PATCH("/:uuid", func(c *gin.Context) {
@@ -35,13 +35,13 @@ func NewController(port string, mongo *mongo.Client, r *gin.Engine) {
 
 	notice := r.Group("notice")
 	{
-		notice.GET("", func(c *gin.Context) {
+		notice.GET("/", func(c *gin.Context) {
 			services.GetAllNotice(c, mongo)
 		})
 		notice.GET("/:uuid", func(c *gin.Context) {
 			services.GetNoticeById(c, mongo)
 		})
-		notice.POST("", func(c *gin.Context) {
+		notice.POST("/", func(c *gin.Context) {
 			services.CreateNotice(c, mongo)
 		})
 		notice.DELETE("/:uuid", func(c *gin.Context) {
@@ -49,7 +49,7 @@ func NewController(port string, mongo *mongo.Client, r *gin.Engine) {
 		})
 	}
 
-	r.POST("smtp", func(c *gin.Context) {
+	r.POST("/smtp", func(c *gin.Context) {
 		var mail *entity.Email
 		RandomNumber := rand.Intn(900000) + 100000
 
