@@ -11,13 +11,13 @@ interface CheckboxProps {
 }
 
 // 체크박스 컴포넌트
-const Checkbox: React.FC<CheckboxProps> = ({
+const Checkbox = ({
   id,
   label,
   isChecked,
   onChange,
   className,
-}) => {
+}: CheckboxProps) => {
   return (
     <div className={`flex items-center ${className}`}>
       <input
@@ -38,7 +38,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
 };
 
 // 전체 선택 알고리즘을 포함한 부모 컴포넌트
-const CheckboxGroup: React.FC = () => {
+const CheckboxGroup = () => {
   // 체크박스들의 상태를 관리하는 state
   const [isCheckedAll, setIsCheckedAll] = useState(false);
   const [isCheckedTerms, setIsCheckedTerms] = useState(false);

@@ -2,9 +2,7 @@
 
 //오른쪽 빈칸 해결 필요
 import { Input } from "../../(auth)/_components/input";
-import Header from "../../_components/header";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { FormEvent } from "react";
@@ -136,6 +134,10 @@ const Mypage_mine = () => {
   };
   return (
     <>
+      <script
+        src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
+        async
+      />
       <div className="flex flex-col items-start justify-start">
         <div className="flex flex-col items-center pb-[41px]">
           <form

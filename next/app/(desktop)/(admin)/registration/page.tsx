@@ -1,15 +1,61 @@
+"use client";
+
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Menu, Minus, Plus, X } from "lucide-react";
-import Footer from "../_components/footer";
-import React from "react";
+import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Select, SelectTrigger } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from "@/components/ui/select";
 import Link from "next/link";
 
+const initialTagsState = {
+  size: [],
+  color: [],
+  mainImage: [],
+  detailImage: [],
+};
+
+const yes = true;
+
 const RegistrationPage = () => {
-  const yes = true;
+  const [tags, setTags] = useState(initialTagsState);
+
+  const handleTagOperation = (
+    e: React.MouseEvent<HTMLButtonElement | HTMLDivElement>,
+    operation: "add" | "remove"
+  ) => {
+    const inputElement = e.currentTarget
+      .previousElementSibling as HTMLInputElement;
+
+    if (!inputElement) return;
+
+    const id = e.currentTarget.id as keyof typeof tags;
+    const value = inputElement.value;
+
+    if (operation === "add") {
+      setTags((prevTags) => ({ ...prevTags, [id]: [value, ...prevTags[id]] }));
+      inputElement.value = "";
+    } else if (operation === "remove") {
+      setTags((prevTags) => ({
+        ...prevTags,
+        [id]: prevTags[id].filter((tag) => tag !== value),
+      }));
+    }
+  };
+
+  const addTag: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    handleTagOperation(e, "add");
+  };
+
+  const removeTag: React.MouseEventHandler<HTMLDivElement> = (e) => {
+    handleTagOperation(e, "remove");
+  };
 
   return (
     <>
@@ -98,13 +144,13 @@ const RegistrationPage = () => {
                   <div className="h-[438px] flex-col justify-start items-start gap-6 mt-6 flex">
                     <StandardForm
                       title="상품명"
-                      className="w-[550px] h-[26px]"
+                      className="w-[550px] h-[30px]"
                     />
 
-                    <StandardForm title="가격" className="w-[550px] h-[26px]" />
+                    <StandardForm title="가격" className="w-[550px] h-[30px]" />
                     <StandardForm
                       title="할인 정보"
-                      className="w-[550px] h-[26px]"
+                      className="w-[550px] h-[30px]"
                       placeholder="(상품)"
                     />
 
@@ -117,57 +163,88 @@ const RegistrationPage = () => {
                 <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
                 <div className="h-[145px] flex-col justify-center items-start gap-[23px] flex">
                   <ActiveForm
+                    id="size"
                     title="사이즈 옵션"
-                    className="w-[500px] h-[26px]"
+                    className="w-[500px] h-[30px]"
+                    onClick={addTag}
                   />
                   <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
                   <div className="justify-start items-center flex">
                     <div className="justify-start items-center gap-6 flex">
-                      <Tag title="L" />
-                      <Tag title="M" />
-                      <Tag title="S" />
+                      {tags.size.map((sizes, i) => (
+                        <Tag
+                          onClick={removeTag}
+                          title={sizes}
+                          key={i}
+                          id="size"
+                        />
+                      ))}
                     </div>
                   </div>
                   <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
                 </div>
                 <div className="h-[145px] flex-col justify-center items-start gap-[23px] flex">
                   <ActiveForm
+                    id="color"
                     title="색상 옵션"
-                    className="w-[500px] h-[26px]"
+                    className="w-[500px] h-[30px]"
+                    onClick={addTag}
                   />
                   <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
                   <div className="justify-start items-center flex">
                     <div className="justify-start items-center gap-6 flex">
-                      <Tag title="블랙" />
-                      <Tag title="그레이" />
-                      <Tag title="화이트" />
+                      {tags.color.map((colors, i) => (
+                        <Tag
+                          onClick={removeTag}
+                          title={colors}
+                          key={i}
+                          id="color"
+                        />
+                      ))}
                     </div>
                   </div>
                   <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
                 </div>
                 <div className="h-[145px] flex-col justify-center items-start gap-[23px] flex">
                   <ActiveForm
+                    id="mainImage"
                     title="메인 이미지"
-                    className="w-[500px] h-[26px]"
+                    className="w-[500px] h-[30px]"
+                    onClick={addTag}
                   />
                   <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
                   <div className="justify-start items-center flex">
                     <div className="justify-start items-center gap-6 flex">
-                      <Tag title="IMAGE-1" />
+                      {tags.mainImage.map((imaegs, i) => (
+                        <Tag
+                          onClick={removeTag}
+                          title={imaegs}
+                          key={i}
+                          id="mainImage"
+                        />
+                      ))}
                     </div>
                   </div>
                   <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
                 </div>
                 <div className="h-[145px] flex-col justify-center items-start gap-[23px] flex">
                   <ActiveForm
+                    id="detailImage"
                     title="상세 이미지"
-                    className="w-[500px] h-[26px]"
+                    className="w-[500px] h-[30px]"
+                    onClick={addTag}
                   />
                   <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
                   <div className="justify-start items-center flex">
                     <div className="justify-start items-center gap-6 flex">
-                      <Tag title="IMAGE-1" />
-                      <Tag title="IMAGE-2" />
+                      {tags.detailImage.map((imaegs, i) => (
+                        <Tag
+                          onClick={removeTag}
+                          title={imaegs}
+                          key={i}
+                          id="detailImage"
+                        />
+                      ))}
                     </div>
                   </div>
                   <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
@@ -186,11 +263,6 @@ const RegistrationPage = () => {
                     <div className="w-[550px] h-[733px] flex-col justify-center items-center gap-[50px] inline-flex">
                       <div className="flex-col justify-start items-start gap-5 flex">
                         <div className="flex-col justify-start items-start gap-2.5 flex">
-                          <div className="justify-start items-start gap-[5px] inline-flex">
-                            <div className="w-3.5 h-3.5 bg-black dark:bg-white" />
-                            <div className="w-3.5 h-3.5 bg-rose-500" />
-                            <div className="w-3.5 h-3.5 bg-green-600" />
-                          </div>
                           <div className="text-black dark:text-neutral-50 text-xl font-medium font-pre">
                             Lorem ipsum dolor sit (BLACK, RED, GREEN)
                           </div>
@@ -236,6 +308,13 @@ const RegistrationPage = () => {
                               <SelectTrigger className="dark:bg-neutral-900 dark:text-stone-300 rounded-sm w-60 h-[26px] text-neutral-600 text-[11px] font-normal font-pre">
                                 -[필수] 옵션을 선택해 주세요-
                               </SelectTrigger>
+                              <SelectContent>
+                                {tags.color.map((colors, i) => (
+                                  <SelectItem value={colors} key={i}>
+                                    {colors}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
                             </Select>
                           </div>
                           <div className="justify-center items-center gap-[50px] inline-flex">
@@ -332,7 +411,6 @@ const RegistrationPage = () => {
           </Button>
         </div>
       </div>
-      <Footer />
     </>
   );
 };
@@ -359,9 +437,9 @@ const StandardForm = React.forwardRef<
 StandardForm.displayName = "StandardForm";
 
 const ActiveForm = React.forwardRef<
-  React.ElementRef<"input">,
-  React.ComponentPropsWithoutRef<"input">
->(({ title, className, ...props }, ref) => {
+  React.ElementRef<"button">,
+  React.ComponentPropsWithoutRef<"button">
+>(({ title, className, value, children, ...props }, ref) => {
   return (
     <div className="w-[700px] justify-between items-center flex">
       <div className={"w-[109.47px] text-sm font-normal font-noto"}>
@@ -369,14 +447,14 @@ const ActiveForm = React.forwardRef<
       </div>
       <input
         className={cn(
-          "bg-white dark:text-white rounded-sm dark:bg-zinc-800 border placeholder:text-neutral-300 text-black text-[11px] font-normal font-pre pl-2 border-neutral-300",
+          "bg-white dark:text-white rounded-sm dark:bg-zinc-800 border placeholder:text-neutral-300 text-black text-[14px] font-medium font-pre pl-2 border-neutral-300",
           className
         )}
-        {...props}
       />
       <Button
         variant={"ghost"}
         className="h-[26px] font-noto hover:bg-inherit active:hover:bg-inherit"
+        {...props}
       >
         추가
       </Button>
@@ -395,7 +473,9 @@ const Tag = React.forwardRef<
       <div className="text-neutral-600 text-[13px] font-bold font-pre">
         {title}
       </div>
-      <X className="h-4 w-4" />
+      <div className="cursor-pointer" {...props}>
+        <X className="h-4 w-4" />
+      </div>
     </div>
   );
 });
