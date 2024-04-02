@@ -1,6 +1,5 @@
 "use client";
 
-//오른쪽 빈칸 해결 필요
 import { Input } from "../../(auth)/_components/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -121,7 +120,6 @@ const Mypage_mine = () => {
       addrDetail: addrDetail,
       tel: tel,
     };
-    // console.log(body);
 
     try {
       await fetch("/api/auth/signup", {
