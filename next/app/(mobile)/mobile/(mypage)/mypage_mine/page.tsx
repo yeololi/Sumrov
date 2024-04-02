@@ -8,7 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { FormEvent } from "react";
-import CheckboxGroup from "../_components/checkBoxGroup";
+import CheckboxGroup from "../../_components/checkBoxGroup";
 
 declare global {
   interface Window {
