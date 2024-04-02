@@ -17,7 +17,7 @@ func MongoInit() *mongo.Client {
 		panic("Error loading.env file")
 	}
 
-	mongoDBURI := os.Getenv("Mongo_URL")
+	mongoDBURI := os.Getenv("MONGOURL")
 
 	client, err := mongo.NewClient(options.Client().ApplyURI(mongoDBURI))
 	if err != nil {
