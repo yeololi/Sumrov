@@ -1,12 +1,11 @@
 "use client";
 
-//오른쪽 빈칸 해결 필요
 import { Input } from "../../(auth)/_components/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { FormEvent } from "react";
-import CheckboxGroup from "../_components/checkBoxGroup";
+import CheckboxGroup from "../../_components/checkBoxGroup";
 
 declare global {
   interface Window {
@@ -121,7 +120,6 @@ const Mypage_mine = () => {
       addrDetail: addrDetail,
       tel: tel,
     };
-    // console.log(body);
 
     try {
       await fetch("/api/auth/signup", {
