@@ -139,15 +139,15 @@ const ShopPage = async ({
                       className="w-[300px] h-[380px] shadow"
                       src="https://via.placeholder.com/300x380"
                     />
-                    <div className="w-[134px] flex-col justify-center items-center gap-[5px] flex">
-                      <div className="text-black dark:text-neutral-50 text-[13px] font-medium font-body leading-none">
+                    <div className="flex-col justify-center items-center gap-[5px] flex">
+                      <div className="text-black dark:text-neutral-50 text-[13px] font-medium font-body leading-none text-center">
                         {product.Title}
                       </div>
                       <div className="text-black dark:text-neutral-50 text-[15px] font-semibold font-body">
                         {product.Price}
                       </div>
                       <div className="text-black dark:text-neutral-50 text-[11px] font-light font-body">
-                        {product.Description}
+                        {product.Category}
                       </div>
                     </div>
                   </Link>

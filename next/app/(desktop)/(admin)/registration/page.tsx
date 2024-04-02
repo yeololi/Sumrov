@@ -9,8 +9,10 @@ import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import Link from "next/link";
 
@@ -21,10 +23,46 @@ const initialTagsState = {
   detailImage: [],
 };
 
+const initialInputsState = {
+  title: "",
+  price: "",
+  sale: "",
+  description: "",
+  category: "top",
+};
+
 const yes = true;
 
 const RegistrationPage = () => {
-  const [tags, setTags] = useState(initialTagsState);
+  const [tags, setTags] = useState<{
+    size: string[];
+    color: string[];
+    mainImage: string[];
+    detailImage: string[];
+  }>(initialTagsState);
+
+  const [inputs, setInputs] = useState(initialInputsState);
+
+  const postFetch = async () => {
+    const body = {
+      title: inputs.title,
+      price: inputs.price,
+      sale: parseInt(inputs.sale),
+      description: inputs.description,
+      category: inputs.category,
+      size: tags.size,
+      color: tags.color,
+      mainImage: tags.mainImage[0],
+      detailImage: tags.detailImage,
+    };
+
+    const res = await fetch("/api/post/new", {
+      method: "POST",
+      body: JSON.stringify(body),
+    }).then((r) => {
+      console.log(r);
+    });
+  };
 
   const handleTagOperation = (
     e: React.MouseEvent<HTMLButtonElement | HTMLDivElement>,
@@ -44,7 +82,7 @@ const RegistrationPage = () => {
     } else if (operation === "remove") {
       setTags((prevTags) => ({
         ...prevTags,
-        [id]: prevTags[id].filter((tag) => tag !== value),
+        [id]: prevTags[id].filter((tag) => tag !== inputElement.innerText),
       }));
     }
   };
@@ -57,9 +95,14 @@ const RegistrationPage = () => {
     handleTagOperation(e, "remove");
   };
 
+  const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const { id, value } = e.target;
+    setInputs((prevInputs) => ({ ...prevInputs, [id]: value }));
+  };
+
   return (
     <>
-      <div className="w-full flex flex-col bg-neutral-50">
+      <div className="w-full flex flex-col bg-neutral-50 pb-20">
         <div className="flex-col justify-center items-center inline-flex">
           <div className="pl-[505px] pr-[15px] py-[15px] bg-white justify-end items-center inline-flex">
             <div className="justify-start items-start gap-[465px] flex">
@@ -93,6 +136,13 @@ const RegistrationPage = () => {
                     <RadioGroup
                       defaultValue="top"
                       className="h-[35px] justify-center items-center gap-6 flex"
+                      onValueChange={(value) => {
+                        console.log(value);
+                        setInputs((preInputs) => ({
+                          ...preInputs,
+                          category: value,
+                        }));
+                      }}
                     >
                       <div className="h-[35px] pt-[5px] pb-1.5 justify-center items-center flex">
                         <div className="grow shrink basis-0 self-stretch px-3 justify-start items-center gap-3 inline-flex">
@@ -143,21 +193,51 @@ const RegistrationPage = () => {
                   </div>
                   <div className="h-[438px] flex-col justify-start items-start gap-6 mt-6 flex">
                     <StandardForm
+                      value={inputs.title}
+                      id="title"
+                      onChange={onChange}
                       title="상품명"
                       className="w-[550px] h-[30px]"
                     />
 
-                    <StandardForm title="가격" className="w-[550px] h-[30px]" />
                     <StandardForm
+                      value={inputs.price}
+                      id="price"
+                      onChange={onChange}
+                      title="가격"
+                      className="w-[550px] h-[30px]"
+                    />
+                    <StandardForm
+                      value={inputs.sale}
+                      id="sale"
+                      onChange={onChange}
                       title="할인 정보"
                       className="w-[550px] h-[30px]"
                       placeholder="(상품)"
                     />
 
-                    <StandardForm
-                      title="상세 정보"
-                      className="w-[550px] h-[252px]"
-                    />
+                    <div className="w-[700px] justify-between items-center flex">
+                      <div
+                        className={"w-[109.47px] text-sm font-normal font-noto"}
+                      >
+                        상세 정보
+                      </div>
+
+                      <textarea
+                        className={
+                          "bg-white w-[550px] h-[252px] dark:text-white rounded-sm dark:bg-zinc-800 border placeholder:text-neutral-300 text-black text-[14px] font-normal font-pre pl-2 border-neutral-300"
+                        }
+                        onChange={(e) => {
+                          const { id, value } = e.target;
+                          setInputs((prevInputs) => ({
+                            ...prevInputs,
+                            [id]: value,
+                          }));
+                        }}
+                        value={inputs.description}
+                        id="description"
+                      />
+                    </div>
                   </div>
                 </div>
                 <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
@@ -264,31 +344,21 @@ const RegistrationPage = () => {
                       <div className="flex-col justify-start items-start gap-5 flex">
                         <div className="flex-col justify-start items-start gap-2.5 flex">
                           <div className="text-black dark:text-neutral-50 text-xl font-medium font-pre">
-                            Lorem ipsum dolor sit (BLACK, RED, GREEN)
+                            {inputs.title}
                           </div>
                         </div>
                         <div className="flex-col justify-start items-start gap-[50px] flex">
                           <div className="text-black dark:text-neutral-50 text-sm font-normal font-pre">
-                            KRW 10,000
+                            {!isNaN(parseInt(inputs.price))
+                              ? new Intl.NumberFormat("ko-KR", {
+                                  style: "currency",
+                                  currency: "KRW",
+                                }).format(parseInt(inputs.price))
+                              : ""}
                           </div>
                           <div className="flex-col justify-start items-start gap-[30px] flex">
-                            <div className="w-[421px] text-neutral-600 dark:text-zinc-100 text-xs font-light font-pre">
-                              -로램잇섬 로램잇섬 Lorem ipsum dolor sit amet
-                              로램잇섬 로램잇섬 로램 로램 Lorem ipsum dolor sit
-                              amet Lorem ipsum dolor sit amet, consectetuer
-                              <br />
-                              <br />
-                              -로램잇섬 로램잇섬 Lorem ipsum dolor sit amet
-                              로램잇섬 로램잇섬 로램
-                              <br />
-                              로램잇섬 Lorem ipsum dolor sit amet Lorem ipsum
-                              dolor sit amet, consectetuer <br />
-                              <br />
-                              -로램잇섬 로램잇섬 Lorem ipsum dolor sit amet
-                              로램잇섬 로램잇섬 로램
-                              <br />
-                              로램잇섬 Lorem ipsum dolor sit amet Lorem ipsum
-                              dolor sit amet, consectetuer
+                            <div className="w-[421px] text-neutral-600 dark:text-zinc-100 text-xs font-light font-pre whitespace-pre-wrap">
+                              {inputs.description}
                             </div>
                           </div>
                         </div>
@@ -306,14 +376,16 @@ const RegistrationPage = () => {
                             </div>
                             <Select>
                               <SelectTrigger className="dark:bg-neutral-900 dark:text-stone-300 rounded-sm w-60 h-[26px] text-neutral-600 text-[11px] font-normal font-pre">
-                                -[필수] 옵션을 선택해 주세요-
+                                <SelectValue placeholder="-[필수] 옵션을 선택해 주세요-" />
                               </SelectTrigger>
                               <SelectContent>
-                                {tags.color.map((colors, i) => (
-                                  <SelectItem value={colors} key={i}>
-                                    {colors}
-                                  </SelectItem>
-                                ))}
+                                <SelectGroup>
+                                  {tags.color.map((colors, i) => (
+                                    <SelectItem value={colors} key={i}>
+                                      {colors}
+                                    </SelectItem>
+                                  ))}
+                                </SelectGroup>
                               </SelectContent>
                             </Select>
                           </div>
@@ -323,8 +395,17 @@ const RegistrationPage = () => {
                             </div>
                             <Select>
                               <SelectTrigger className="dark:bg-neutral-900 dark:text-stone-300 rounded-sm w-60 h-[26px] text-neutral-600 text-[11px] font-normal font-pre">
-                                -[필수] 옵션을 선택해 주세요-
+                                <SelectValue placeholder="-[필수] 옵션을 선택해 주세요-" />
                               </SelectTrigger>
+                              <SelectContent>
+                                <SelectGroup>
+                                  {tags.size.map((sizes, i) => (
+                                    <SelectItem value={sizes} key={i}>
+                                      {sizes}
+                                    </SelectItem>
+                                  ))}
+                                </SelectGroup>
+                              </SelectContent>
                             </Select>
                           </div>
                         </div>
@@ -404,7 +485,10 @@ const RegistrationPage = () => {
               </div>
             </div>
           </div>
-          <Button className="w-[700px] h-[50px] px-[234px] py-[9px] bg-black justify-center items-center gap-2.5 inline-flex">
+          <Button
+            className="w-[700px] h-[50px] px-[234px] py-[9px] bg-black justify-center items-center gap-2.5 inline-flex"
+            onClick={postFetch}
+          >
             <div className="text-center text-white text-base font-semibold font-noto">
               업로드
             </div>
@@ -424,6 +508,7 @@ const StandardForm = React.forwardRef<
       <div className={"w-[109.47px] text-sm font-normal font-noto"}>
         {title}
       </div>
+
       <input
         className={cn(
           "bg-white dark:text-white rounded-sm dark:bg-zinc-800 border placeholder:text-neutral-300 text-black text-[11px] font-normal font-pre pl-2 border-neutral-300",
