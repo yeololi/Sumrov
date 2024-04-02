@@ -19,8 +19,9 @@ func main() {
 	}))
 
 	mongo := repositories.MongoInit()
+	rdb := repositories.MySQLInit()
 
-	controllers.NewController(":8080", mongo, r)
+	controllers.NewController(mongo, r, rdb)
 
 	r.Run(":8080")
 

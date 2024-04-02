@@ -5,11 +5,12 @@ import (
 	"back/services"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/mongo"
+	"gorm.io/gorm"
 	"math/rand"
 	"net/http"
 )
 
-func NewController(port string, mongo *mongo.Client, r *gin.Engine) {
+func NewController(mongo *mongo.Client, r *gin.Engine, rdb *gorm.DB) {
 
 	post := r.Group("post")
 	{
@@ -64,4 +65,23 @@ func NewController(port string, mongo *mongo.Client, r *gin.Engine) {
 			"임시비밀번호": RandomNumber,
 		})
 	})
+
+	sale := r.Group("sale")
+	{
+		sale.GET("/", func(c *gin.Context) {
+			services.GetAllSale(c, rdb)
+		})
+		sale.GET("/:uuid", func(c *gin.Context) {
+			services.GetSaleById(c, rdb)
+		})
+		sale.POST("/", func(c *gin.Context) {
+			services.CreateSale(c, rdb)
+		})
+		sale.PUT("/:uuid", func(c *gin.Context) {
+			services.UpdateSale(c, rdb)
+		})
+		sale.DELETE("/:uuid", func(c *gin.Context) {
+			services.DeleteSale(c, rdb)
+		})
+	}
 }
