@@ -4,7 +4,44 @@ import Header from "../_components/header";
 
 const data = [{}, {}, {}, {}, {}, {}, {}];
 
-const NoticePage = () => {
+interface Notice {
+  Uuid: string;
+  Title: string;
+  Description: string;
+  Date: string;
+  Images: string[];
+}
+
+async function fetchData() {
+  try {
+    const response: { results: Notice[] } = await fetch(
+      `http://3.39.237.151:8080/notice`,
+      {
+        method: "GET",
+      }
+    ).then((r) => r.json());
+
+    if (response) {
+      // const chunkData = chunk(response.results, 9)
+      //   .map((subArray) => chunk(subArray, 3))
+      //   .flat();
+
+      console.log(response);
+
+      return response.results;
+    } else {
+      console.log("res.result is not an array or res is undefined");
+      return;
+    }
+  } catch (error) {
+    console.error(error);
+    return;
+  }
+}
+
+const NoticePage = async () => {
+  const data = await fetchData();
+
   return (
     <>
       <Header />
@@ -12,7 +49,7 @@ const NoticePage = () => {
         <div className="text-black dark:text-white text-[17px] font-semibold font-nav tracking-widest mt-[121px] mb-[31px]">
           NOTICE
         </div>
-        {data.map((args, i) => (
+        {data?.map((args, i) => (
           <div
             key={i}
             className={cn(

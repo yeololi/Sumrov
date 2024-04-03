@@ -79,6 +79,7 @@ const LoginForm = () => {
           <Button
             variant={"outline"}
             className="text-black text-sm font-normal font-pre w-[336px] h-[43px] rounded-none bg-white border border-neutral-300"
+            asChild
           >
             <Link href={"/mobile/signup"}>Sign Up</Link>
           </Button>

@@ -1,19 +1,108 @@
+"use client";
+
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Menu, Minus, Plus, X } from "lucide-react";
-import Footer from "../_components/footer";
-import React from "react";
+import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Select, SelectTrigger } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import Link from "next/link";
 
+const initialTagsState = {
+  size: [],
+  color: [],
+  mainImage: [],
+  detailImage: [],
+};
+
+const initialInputsState = {
+  title: "",
+  price: "",
+  sale: "",
+  description: "",
+  category: "top",
+};
+
+const yes = true;
+
 const RegistrationPage = () => {
-  const yes = true;
+  const [tags, setTags] = useState<{
+    size: string[];
+    color: string[];
+    mainImage: string[];
+    detailImage: string[];
+  }>(initialTagsState);
+
+  const [inputs, setInputs] = useState(initialInputsState);
+
+  const postFetch = async () => {
+    const body = {
+      title: inputs.title,
+      price: inputs.price,
+      sale: parseInt(inputs.sale),
+      description: inputs.description,
+      category: inputs.category,
+      size: tags.size,
+      color: tags.color,
+      mainImage: tags.mainImage[0],
+      detailImage: tags.detailImage,
+    };
+
+    const res = await fetch("/api/post/new", {
+      method: "POST",
+      body: JSON.stringify(body),
+    }).then((r) => {
+      console.log(r);
+    });
+  };
+
+  const handleTagOperation = (
+    e: React.MouseEvent<HTMLButtonElement | HTMLDivElement>,
+    operation: "add" | "remove"
+  ) => {
+    const inputElement = e.currentTarget
+      .previousElementSibling as HTMLInputElement;
+
+    if (!inputElement) return;
+
+    const id = e.currentTarget.id as keyof typeof tags;
+    const value = inputElement.value;
+
+    if (operation === "add") {
+      setTags((prevTags) => ({ ...prevTags, [id]: [value, ...prevTags[id]] }));
+      inputElement.value = "";
+    } else if (operation === "remove") {
+      setTags((prevTags) => ({
+        ...prevTags,
+        [id]: prevTags[id].filter((tag) => tag !== inputElement.innerText),
+      }));
+    }
+  };
+
+  const addTag: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+    handleTagOperation(e, "add");
+  };
+
+  const removeTag: React.MouseEventHandler<HTMLDivElement> = (e) => {
+    handleTagOperation(e, "remove");
+  };
+
+  const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const { id, value } = e.target;
+    setInputs((prevInputs) => ({ ...prevInputs, [id]: value }));
+  };
 
   return (
     <>
-      <div className="w-full flex flex-col bg-neutral-50">
+      <div className="w-full flex flex-col bg-neutral-50 pb-20">
         <div className="flex-col justify-center items-center inline-flex">
           <div className="pl-[505px] pr-[15px] py-[15px] bg-white justify-end items-center inline-flex">
             <div className="justify-start items-start gap-[465px] flex">
@@ -31,7 +120,7 @@ const RegistrationPage = () => {
           </div>
           <div className="w-[1125px] px-[350px] py-[15px] bg-zinc-600 border border-black justify-center items-center gap-2.5 inline-flex">
             <div className="text-neutral-50 text-lg font-semibold font-pre">
-              상품 등록
+              NOTICE
             </div>
           </div>
         </div>
@@ -42,134 +131,12 @@ const RegistrationPage = () => {
                 <div className="w-[700px] flex-col justify-between items-center flex">
                   <div className="w-[700px] justify-between items-center inline-flex">
                     <div className="text-black text-sm font-normal font-noto">
-                      카테고리
+                      공지사항
                     </div>
-                    <RadioGroup
-                      defaultValue="top"
-                      className="h-[35px] justify-center items-center gap-6 flex"
-                    >
-                      <div className="h-[35px] pt-[5px] pb-1.5 justify-center items-center flex">
-                        <div className="grow shrink basis-0 self-stretch px-3 justify-start items-center gap-3 inline-flex">
-                          <RadioGroupItem
-                            id="top"
-                            value="top"
-                            className="w-6 h-6"
-                          />
-                          <Label
-                            htmlFor="top"
-                            className="text-black text-sm font-normal font-pre cursor-pointer"
-                          >
-                            TOP
-                          </Label>
-                        </div>
-                      </div>
-                      <div className="p-[0.50px] justify-center items-center flex">
-                        <div className="self-stretch px-3 justify-start items-center gap-3 inline-flex">
-                          <RadioGroupItem
-                            id="bottom"
-                            value="bottom"
-                            className="w-6 h-6"
-                          />
-                          <Label
-                            htmlFor="bottom"
-                            className="text-black text-sm font-normal font-pre cursor-pointer"
-                          >
-                            BOTTOM
-                          </Label>
-                        </div>
-                      </div>
-                      <div className="pr-3 pt-[5px] pb-1.5 justify-start items-center flex">
-                        <div className="self-stretch px-3 justify-start items-center gap-3 inline-flex">
-                          <RadioGroupItem
-                            id="acc"
-                            value="acc"
-                            className="w-6 h-6"
-                          />
-                          <Label
-                            htmlFor="acc"
-                            className="text-black text-sm font-normal font-pre cursor-pointer"
-                          >
-                            ACC
-                          </Label>
-                        </div>
-                      </div>
-                    </RadioGroup>
                   </div>
-                  <div className="h-[438px] flex-col justify-start items-start gap-6 mt-6 flex">
-                    <StandardForm
-                      title="상품명"
-                      className="w-[550px] h-[26px]"
-                    />
+                </div>
 
-                    <StandardForm title="가격" className="w-[550px] h-[26px]" />
-                    <StandardForm
-                      title="할인 정보"
-                      className="w-[550px] h-[26px]"
-                      placeholder="(상품)"
-                    />
-
-                    <StandardForm
-                      title="상세 정보"
-                      className="w-[550px] h-[252px]"
-                    />
-                  </div>
-                </div>
-                <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
                 <div className="h-[145px] flex-col justify-center items-start gap-[23px] flex">
-                  <ActiveForm
-                    title="사이즈 옵션"
-                    className="w-[500px] h-[26px]"
-                  />
-                  <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
-                  <div className="justify-start items-center flex">
-                    <div className="justify-start items-center gap-6 flex">
-                      <Tag title="L" />
-                      <Tag title="M" />
-                      <Tag title="S" />
-                    </div>
-                  </div>
-                  <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
-                </div>
-                <div className="h-[145px] flex-col justify-center items-start gap-[23px] flex">
-                  <ActiveForm
-                    title="색상 옵션"
-                    className="w-[500px] h-[26px]"
-                  />
-                  <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
-                  <div className="justify-start items-center flex">
-                    <div className="justify-start items-center gap-6 flex">
-                      <Tag title="블랙" />
-                      <Tag title="그레이" />
-                      <Tag title="화이트" />
-                    </div>
-                  </div>
-                  <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
-                </div>
-                <div className="h-[145px] flex-col justify-center items-start gap-[23px] flex">
-                  <ActiveForm
-                    title="메인 이미지"
-                    className="w-[500px] h-[26px]"
-                  />
-                  <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
-                  <div className="justify-start items-center flex">
-                    <div className="justify-start items-center gap-6 flex">
-                      <Tag title="IMAGE-1" />
-                    </div>
-                  </div>
-                  <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
-                </div>
-                <div className="h-[145px] flex-col justify-center items-start gap-[23px] flex">
-                  <ActiveForm
-                    title="상세 이미지"
-                    className="w-[500px] h-[26px]"
-                  />
-                  <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
-                  <div className="justify-start items-center flex">
-                    <div className="justify-start items-center gap-6 flex">
-                      <Tag title="IMAGE-1" />
-                      <Tag title="IMAGE-2" />
-                    </div>
-                  </div>
                   <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
                 </div>
               </div>
@@ -186,37 +153,22 @@ const RegistrationPage = () => {
                     <div className="w-[550px] h-[733px] flex-col justify-center items-center gap-[50px] inline-flex">
                       <div className="flex-col justify-start items-start gap-5 flex">
                         <div className="flex-col justify-start items-start gap-2.5 flex">
-                          <div className="justify-start items-start gap-[5px] inline-flex">
-                            <div className="w-3.5 h-3.5 bg-black dark:bg-white" />
-                            <div className="w-3.5 h-3.5 bg-rose-500" />
-                            <div className="w-3.5 h-3.5 bg-green-600" />
-                          </div>
                           <div className="text-black dark:text-neutral-50 text-xl font-medium font-pre">
-                            Lorem ipsum dolor sit (BLACK, RED, GREEN)
+                            {inputs.title}
                           </div>
                         </div>
                         <div className="flex-col justify-start items-start gap-[50px] flex">
                           <div className="text-black dark:text-neutral-50 text-sm font-normal font-pre">
-                            KRW 10,000
+                            {!isNaN(parseInt(inputs.price))
+                              ? new Intl.NumberFormat("ko-KR", {
+                                  style: "currency",
+                                  currency: "KRW",
+                                }).format(parseInt(inputs.price))
+                              : ""}
                           </div>
                           <div className="flex-col justify-start items-start gap-[30px] flex">
-                            <div className="w-[421px] text-neutral-600 dark:text-zinc-100 text-xs font-light font-pre">
-                              -로램잇섬 로램잇섬 Lorem ipsum dolor sit amet
-                              로램잇섬 로램잇섬 로램 로램 Lorem ipsum dolor sit
-                              amet Lorem ipsum dolor sit amet, consectetuer
-                              <br />
-                              <br />
-                              -로램잇섬 로램잇섬 Lorem ipsum dolor sit amet
-                              로램잇섬 로램잇섬 로램
-                              <br />
-                              로램잇섬 Lorem ipsum dolor sit amet Lorem ipsum
-                              dolor sit amet, consectetuer <br />
-                              <br />
-                              -로램잇섬 로램잇섬 Lorem ipsum dolor sit amet
-                              로램잇섬 로램잇섬 로램
-                              <br />
-                              로램잇섬 Lorem ipsum dolor sit amet Lorem ipsum
-                              dolor sit amet, consectetuer
+                            <div className="w-[421px] text-neutral-600 dark:text-zinc-100 text-xs font-light font-pre whitespace-pre-wrap">
+                              {inputs.description}
                             </div>
                           </div>
                         </div>
@@ -234,8 +186,17 @@ const RegistrationPage = () => {
                             </div>
                             <Select>
                               <SelectTrigger className="dark:bg-neutral-900 dark:text-stone-300 rounded-sm w-60 h-[26px] text-neutral-600 text-[11px] font-normal font-pre">
-                                -[필수] 옵션을 선택해 주세요-
+                                <SelectValue placeholder="-[필수] 옵션을 선택해 주세요-" />
                               </SelectTrigger>
+                              <SelectContent>
+                                <SelectGroup>
+                                  {tags.color.map((colors, i) => (
+                                    <SelectItem value={colors} key={i}>
+                                      {colors}
+                                    </SelectItem>
+                                  ))}
+                                </SelectGroup>
+                              </SelectContent>
                             </Select>
                           </div>
                           <div className="justify-center items-center gap-[50px] inline-flex">
@@ -244,8 +205,17 @@ const RegistrationPage = () => {
                             </div>
                             <Select>
                               <SelectTrigger className="dark:bg-neutral-900 dark:text-stone-300 rounded-sm w-60 h-[26px] text-neutral-600 text-[11px] font-normal font-pre">
-                                -[필수] 옵션을 선택해 주세요-
+                                <SelectValue placeholder="-[필수] 옵션을 선택해 주세요-" />
                               </SelectTrigger>
+                              <SelectContent>
+                                <SelectGroup>
+                                  {tags.size.map((sizes, i) => (
+                                    <SelectItem value={sizes} key={i}>
+                                      {sizes}
+                                    </SelectItem>
+                                  ))}
+                                </SelectGroup>
+                              </SelectContent>
                             </Select>
                           </div>
                         </div>
@@ -325,14 +295,16 @@ const RegistrationPage = () => {
               </div>
             </div>
           </div>
-          <Button className="w-[700px] h-[50px] px-[234px] py-[9px] bg-black justify-center items-center gap-2.5 inline-flex">
+          <Button
+            className="w-[700px] h-[50px] px-[234px] py-[9px] bg-black justify-center items-center gap-2.5 inline-flex"
+            onClick={postFetch}
+          >
             <div className="text-center text-white text-base font-semibold font-noto">
               업로드
             </div>
           </Button>
         </div>
       </div>
-      <Footer />
     </>
   );
 };
@@ -346,6 +318,7 @@ const StandardForm = React.forwardRef<
       <div className={"w-[109.47px] text-sm font-normal font-noto"}>
         {title}
       </div>
+
       <input
         className={cn(
           "bg-white dark:text-white rounded-sm dark:bg-zinc-800 border placeholder:text-neutral-300 text-black text-[11px] font-normal font-pre pl-2 border-neutral-300",
@@ -359,9 +332,9 @@ const StandardForm = React.forwardRef<
 StandardForm.displayName = "StandardForm";
 
 const ActiveForm = React.forwardRef<
-  React.ElementRef<"input">,
-  React.ComponentPropsWithoutRef<"input">
->(({ title, className, ...props }, ref) => {
+  React.ElementRef<"button">,
+  React.ComponentPropsWithoutRef<"button">
+>(({ title, className, value, children, ...props }, ref) => {
   return (
     <div className="w-[700px] justify-between items-center flex">
       <div className={"w-[109.47px] text-sm font-normal font-noto"}>
@@ -369,14 +342,14 @@ const ActiveForm = React.forwardRef<
       </div>
       <input
         className={cn(
-          "bg-white dark:text-white rounded-sm dark:bg-zinc-800 border placeholder:text-neutral-300 text-black text-[11px] font-normal font-pre pl-2 border-neutral-300",
+          "bg-white dark:text-white rounded-sm dark:bg-zinc-800 border placeholder:text-neutral-300 text-black text-[14px] font-medium font-pre pl-2 border-neutral-300",
           className
         )}
-        {...props}
       />
       <Button
         variant={"ghost"}
         className="h-[26px] font-noto hover:bg-inherit active:hover:bg-inherit"
+        {...props}
       >
         추가
       </Button>
@@ -395,7 +368,9 @@ const Tag = React.forwardRef<
       <div className="text-neutral-600 text-[13px] font-bold font-pre">
         {title}
       </div>
-      <X className="h-4 w-4" />
+      <div className="cursor-pointer" {...props}>
+        <X className="h-4 w-4" />
+      </div>
     </div>
   );
 });

@@ -3,6 +3,7 @@ import { X } from "lucide-react";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import ShopMenu from "./_components/shopmenu";
+import BackButton from "./_components/backButton";
 
 const MenuPage = async () => {
   const session = await getServerSession(authOptions);
@@ -17,12 +18,12 @@ const MenuPage = async () => {
         >
           Notice
         </Link>
-        <Link
+        {/* <Link
           href={"/mobile/QnA"}
           className="text-black dark:text-white text-xl font-bold font-nav"
         >
           Q&A
-        </Link>
+        </Link> */}
         <Link
           href={"/mobile/FAQ"}
           className="text-black dark:text-white text-xl font-bold font-nav"
@@ -46,19 +47,14 @@ const MenuPage = async () => {
             Login
           </Link>
         )}
-        <Link
+        {/* <Link
           href={"/mobile/review"}
           className="text-black dark:text-white text-xl font-semibold font-nav"
         >
           Review
-        </Link>
+        </Link> */}
       </div>
-      <Link href={"/mobile"}>
-        <X
-          size={26}
-          className="absolute right-[31px] top-[58px] dark:text-white"
-        />
-      </Link>
+      <BackButton />
     </div>
   );
 };

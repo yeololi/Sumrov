@@ -9,7 +9,7 @@ const nextConfig = {
       },
       {
         source: "/backend/:path*",
-        destination: "http://127.0.0.1:8080/:path*",
+        destination: "http://3.39.237.151:8080/:path*",
       },
     ];
   },

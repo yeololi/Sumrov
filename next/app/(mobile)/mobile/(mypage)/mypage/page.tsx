@@ -1,9 +1,10 @@
+import Link from "next/link";
 import LogoutButton from "../_components/logoutButton";
 
 const Mypage = () => {
   return (
     <>
-      <div className="flex-col justify-center items-start gap-[13px] flex w-full">
+      <div className="w-[328px] flex-col justify-center items-start gap-[13px] flex">
         <div className="justify-start items-center gap-0.5 inline-flex w-full">
           <div className="text-[13px] font-medium font-pre">
             Lorem 님의 주문 현황
@@ -46,10 +47,24 @@ const Mypage = () => {
       </div>
       <div className="self-stretch flex-col justify-center items-start gap-8 flex">
         <div className="flex-col justify-center items-start gap-[13px] flex">
-          <div className="text-[13px] font-medium font-pre">주문내역 조회</div>
-          <div className="text-[13px] font-medium font-pre">회원정보</div>
-          <div className="text-[13px] font-medium font-pre">나의 리뷰</div>
-          <div className="text-[13px] font-medium font-pre">장바구니</div>
+          <Link
+            href={"/mobile/mypage_search"}
+            className="text-[13px] font-medium font-pre"
+          >
+            주문내역 조회
+          </Link>
+          <Link
+            href={"/mobile/mypage_mine"}
+            className="text-[13px] font-medium font-pre"
+          >
+            회원정보
+          </Link>
+          <Link
+            href={"/mobile/mypage_search2"} //현재 장바구니 미구현 이슈로 일단 조회 페이지 달아둠
+            className="text-[13px] font-medium font-pre"
+          >
+            장바구니
+          </Link>
         </div>
         <LogoutButton />
       </div>
