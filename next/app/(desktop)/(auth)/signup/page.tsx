@@ -4,6 +4,9 @@ import { Label } from "@/components/ui/label";
 import Header from "../../_components/header";
 import { Input } from "../_components/input";
 import CheckboxGroup from "../../_components/checkBoxGroup";
+import { useToast } from "@/components/ui/use-toast";
+import { FormEvent } from "react";
+import { useRouter } from "next/navigation";
 
 declare global {
   interface Window {
@@ -37,6 +40,10 @@ interface formData extends HTMLFormElement {
 }
 
 const Signup = () => {
+  const router = useRouter();
+
+  const { toast } = useToast();
+
   const searchAddress = () => {
     new window.daum.Postcode({
       oncomplete: function (data: IAddr) {
@@ -48,6 +55,89 @@ const Signup = () => {
       },
     }).open();
   };
+
+  const onSubmit = async (e: FormEvent<formData>) => {
+    e.preventDefault();
+
+    const target = e.currentTarget.elements;
+    const email = target.email1.value + "@" + target.email2.value;
+    const tel =
+      target.tel1.value + "-" + target.tel2.value + "-" + target.tel3.value;
+    const password = target.password.value;
+    const name = target.name.value;
+    const zonecode = target.zonecode.value;
+    const address = target.address.value;
+    const addrDetail = target.addrDetail.value;
+
+    if (!/^[가-힣]{2,10}$/.test(name)) {
+      toast({
+        title: "이름이 한글이 아닙니다.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (
+      !/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i.test(
+        email
+      )
+    ) {
+      toast({
+        title: "이메일 형식이 맞지 않습니다.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (password !== target.passwordCheck.value) {
+      toast({
+        title: "비밀번호가 일치하지 않습니다.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (
+      !/^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{8,16}$/.test(password)
+    ) {
+      toast({
+        title: "비밀번호가 형식에 맞지 않습니다.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!/^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/.test(tel)) {
+      toast({
+        title: "전화번호가 형식에 맞지 않습니다.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const body = {
+      name: name,
+      email: email,
+      password: password,
+      zonecode: +zonecode,
+      address: address,
+      addrDetail: addrDetail,
+      tel: tel,
+    };
+    // console.log(body);
+
+    try {
+      await fetch("/api/auth/signup", {
+        method: "POST",
+        body: JSON.stringify(body),
+      });
+
+      router.replace("/login");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <script
@@ -55,12 +145,15 @@ const Signup = () => {
         async
       />
       <Header />
-      <div className="w-full justify-center flex pt-[200px]">
-        <div className="w-[800px] h-[1250px] flex-col justify-start items-center inline-flex">
+      <div className="w-full justify-center flex pt-[200px] pb-[120px]">
+        <div className="w-[800px] flex-col justify-start items-center inline-flex">
           <div className="text-black text-[32px] font-semibold font-nav tracking-[3.20px]">
             SIGN UP
           </div>
-          <div className="flex-col justify-center items-center gap-10 flex">
+          <form
+            onSubmit={onSubmit}
+            className="flex-col justify-center items-center gap-10 flex"
+          >
             <div className="self-stretch w-[800px] py-6 flex-col justify-center items-center gap-6 flex">
               <div className="h-[35px] flex-col justify-center items-start gap-4 flex w-full">
                 <div className="text-center text-black text-base font-medium font-noto">
@@ -106,7 +199,7 @@ const Signup = () => {
                       *
                     </div>
                   </div>
-                  <Input className="w-[650px]" id="password" />
+                  <Input className="w-[650px]" id="password" type="password" />
                 </div>
                 <div className="self-stretch h-[37px] justify-between items-center inline-flex">
                   <div className="justify-start items-center gap-1 flex">
@@ -117,7 +210,11 @@ const Signup = () => {
                       *
                     </div>
                   </div>
-                  <Input className="w-[650px]" id="passwordCheck" />
+                  <Input
+                    className="w-[650px]"
+                    id="passwordCheck"
+                    type="password"
+                  />
                 </div>
                 <div className="self-stretch justify-between items-start inline-flex">
                   <div className="justify-start items-center gap-1 flex">
@@ -178,12 +275,15 @@ const Signup = () => {
             <div className="self-stretch h-[0px] border-2 border-gray-200"></div>
             <CheckboxGroup isChecked={false}></CheckboxGroup>
 
-            <div className="self-stretch h-[50px] px-[234px] py-[9px] bg-black justify-center items-center gap-2.5 inline-flex">
+            <button
+              type="submit"
+              className="cursor-pointer h-[50px] px-[234px] py-[9px] bg-black justify-center items-center gap-2.5 inline-flex"
+            >
               <div className="text-center text-white text-base font-semibold font-noto">
                 회원가입
               </div>
-            </div>
-          </div>
+            </button>
+          </form>
         </div>
       </div>
     </>

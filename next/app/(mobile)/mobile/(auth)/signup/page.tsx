@@ -7,6 +7,7 @@ import { useToast } from "@/components/ui/use-toast";
 
 import { FormEvent } from "react";
 import Header from "../../_components/header";
+import { useRouter } from "next/navigation";
 
 declare global {
   interface Window {
@@ -40,6 +41,8 @@ interface formData extends HTMLFormElement {
 }
 
 const SignUp = () => {
+  const router = useRouter();
+
   const { toast } = useToast();
 
   const searchAddress = () => {
@@ -129,6 +132,8 @@ const SignUp = () => {
         method: "POST",
         body: JSON.stringify(body),
       });
+
+      router.replace("/mobile/login");
     } catch (error) {
       console.error(error);
     }
