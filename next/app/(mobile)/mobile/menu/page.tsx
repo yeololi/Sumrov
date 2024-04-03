@@ -1,9 +1,9 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { X } from "lucide-react";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import ShopMenu from "./_components/shopmenu";
 import BackButton from "./_components/backButton";
+import { authOptions } from "@/util/authOption";
 
 const MenuPage = async () => {
   const session = await getServerSession(authOptions);
