@@ -17,7 +17,7 @@ const LoginPage = () => {
             </div>
           </div>
           <div className="h-[331px] flex-col justify-center items-center gap-[19px] flex">
-            <div className="flex-col justify-center items-center gap-[50px] flex">
+            <form className="flex-col justify-center items-center gap-[50px] flex">
               <div className="h-[93px] flex-col justify-center items-center gap-[23px] flex">
                 <div className="w-[450px] justify-between items-center inline-flex">
                   <Label className="dark:text-white text-black text-[13px] font-medium font-pre">
@@ -26,7 +26,7 @@ const LoginPage = () => {
                   <Input
                     placeholder="이메일"
                     type={"email"}
-                    className="rounded-none w-[336px] h-[34px] dark:placeholder:text-neutral-400 dark:bg-zinc-800 border-neutral-300 dark:border-black"
+                    className="rounded-none font-noto w-[336px] h-[34px] dark:placeholder:text-neutral-400 dark:bg-zinc-800 border-neutral-300 dark:border-black"
                   />
                 </div>
                 <div className="w-[450px] justify-between items-center inline-flex">
@@ -36,17 +36,25 @@ const LoginPage = () => {
                   <Input
                     placeholder="비밀번호"
                     type={"password"}
-                    className="w-[336px] h-[34px] rounded-none dark:placeholder:text-neutral-400 dark:bg-zinc-800 border-neutral-300 dark:border-black"
+                    className="w-[336px] h-[34px] rounded-none font-noto dark:placeholder:text-neutral-400 dark:bg-zinc-800 border-neutral-300 dark:border-black"
                   />
                 </div>
               </div>
               <div className="flex-col justify-center items-center gap-2.5 flex">
                 <div className="flex-col justify-center items-center gap-[15px] flex">
-                  <Button variant={"login"} className="w-[450px] h-[43px]">
+                  <Button
+                    variant={"login"}
+                    type="submit"
+                    className="w-[450px] h-[43px]"
+                  >
                     Login
                   </Button>
-                  <Button variant={"signup"} className="w-[450px] h-[43px]">
-                    Sign Up
+                  <Button
+                    variant={"signup"}
+                    className="w-[450px] h-[43px]"
+                    asChild
+                  >
+                    <Link href={"/signup"}>Sign Up</Link>
                   </Button>
                 </div>
                 <div className="w-[450px] px-[75px] mt-2 justify-between items-center inline-flex">
@@ -61,7 +69,7 @@ const LoginPage = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </form>
             <div className="h-[45px] flex-col justify-start items-center gap-2 flex">
               <div className="w-[450px] justify-center items-center gap-2.5 inline-flex">
                 <div className="w-[150px] h-[0px] border border-gray-200"></div>
