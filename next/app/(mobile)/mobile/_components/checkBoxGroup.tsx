@@ -46,7 +46,7 @@ const Checkbox = ({
   );
 };
 
-const CheckboxGroup = (isChecked: boolean) => {
+const CheckboxGroup = ({ isChecked }: { isChecked: boolean }) => {
   const [isCheckedAll, setIsCheckedAll] = useState(false);
   const [isCheckedTerms, setIsCheckedTerms] = useState(false);
   const [isCheckedPrivacy, setIsCheckedPrivacy] = useState(false);
