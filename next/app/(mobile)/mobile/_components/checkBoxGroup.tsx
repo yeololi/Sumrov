@@ -172,11 +172,10 @@ const CheckboxGroup = ({ isChecked }: { isChecked: boolean }) => {
                   </DrawerDescription>
                 </DrawerHeader>
                 <DrawerFooter>
-                  <Button>
-                    <DrawerClose>
-                      <Button onClick={handlePrivacySubmit}>약관 동의</Button>
-                    </DrawerClose>
-                  </Button>
+                  <DrawerClose>
+                    <Button onClick={handlePrivacySubmit}>약관 동의</Button>
+                  </DrawerClose>
+
                   <DrawerClose>
                     <Button variant="outline">닫기</Button>
                   </DrawerClose>

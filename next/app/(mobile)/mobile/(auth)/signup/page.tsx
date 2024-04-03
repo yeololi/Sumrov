@@ -244,7 +244,7 @@ const SignUp = () => {
                   주소
                 </div>
               </Label>
-              <div className="flex flex-col gap-0.5">
+              <div className="flex flex-col gap-2">
                 <div className="flex gap-2">
                   <Input
                     className="w-[106px] h-[34px]"
