@@ -43,6 +43,9 @@ const RegistrationPage = () => {
 
   const [inputs, setInputs] = useState(initialInputsState);
 
+  const [image, setImage] = useState<File | null>(null);
+  const [createObjectURL, setCreateObjectURL] = useState<string | null>(null);
+
   const postFetch = async () => {
     const body = {
       title: inputs.title,
@@ -98,6 +101,22 @@ const RegistrationPage = () => {
   const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const { id, value } = e.target;
     setInputs((prevInputs) => ({ ...prevInputs, [id]: value }));
+  };
+
+  const uploadToClient: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const { id } = e.target;
+
+    if (createObjectURL) {
+      URL.revokeObjectURL(createObjectURL);
+    }
+
+    if (e.target.files && e.target.files[0]) {
+      const i = e.target.files[0];
+      setImage(i);
+      setTags((prevTags) => ({ ...prevTags, [id]: [i.name] }));
+
+      setCreateObjectURL(URL.createObjectURL(i));
+    }
   };
 
   return (
@@ -286,21 +305,37 @@ const RegistrationPage = () => {
                   <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
                 </div>
                 <div className="h-[145px] flex-col justify-center items-start gap-[23px] flex">
-                  <ActiveForm
-                    id="mainImage"
-                    title="메인 이미지"
-                    className="w-[500px] h-[30px]"
-                    onClick={addTag}
-                  />
+                  <div className="w-[700px] justify-between items-center flex">
+                    <div
+                      className={"w-[109.47px] text-sm font-normal font-noto"}
+                    >
+                      메인 이미지
+                    </div>
+
+                    <label htmlFor="mainImage">
+                      <div
+                        className={cn(
+                          "bg-white dark:text-white rounded-sm dark:bg-zinc-800 border placeholder:text-neutral-300 text-black text-[14px] font-medium font-pre pl-2 border-neutral-300",
+                          "w-[550px] h-[30px] cursor-pointer"
+                        )}
+                      />
+                    </label>
+                    <input
+                      type="file"
+                      id="mainImage"
+                      className="hidden"
+                      onChange={uploadToClient}
+                    />
+                  </div>
                   <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
                   <div className="justify-start items-center flex">
                     <div className="justify-start items-center gap-6 flex">
-                      {tags.mainImage.map((imaegs, i) => (
+                      {tags.mainImage.map((mainImages, i) => (
                         <Tag
                           onClick={removeTag}
-                          title={imaegs}
+                          title={mainImages}
                           key={i}
-                          id="mainImage"
+                          id="color"
                         />
                       ))}
                     </div>
@@ -338,7 +373,7 @@ const RegistrationPage = () => {
                   <div className="justify-center items-center gap-[25px] inline-flex">
                     <img
                       className="w-[550px] h-[733.33px]"
-                      src="https://via.placeholder.com/550x733"
+                      src={createObjectURL ?? ""}
                     />
                     <div className="w-[550px] h-[733px] flex-col justify-center items-center gap-[50px] inline-flex">
                       <div className="flex-col justify-start items-start gap-5 flex">
