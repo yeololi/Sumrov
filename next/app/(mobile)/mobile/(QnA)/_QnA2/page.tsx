@@ -1,5 +1,5 @@
-import Footer from "../_components/footer";
-import Header from "../_components/header";
+// import Footer from "../_components/footer";
+// import Header from "../_components/header";
 import { Lock } from "lucide-react";
 
 const data = [{}, {}, {}, {}, {}, {}, {}];
@@ -7,7 +7,7 @@ const data = [{}, {}, {}, {}, {}, {}, {}];
 const QnAPage = () => {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="w-full flex flex-col items-center border-b border-black border-opacity-25 pb-[49px] relative h-[calc(100vh-105px)]">
         <div className="text-black dark:text-white text-[17px] font-semibold font-nav tracking-widest mt-[121px] mb-[54px]">
           Q&A
@@ -39,7 +39,7 @@ const QnAPage = () => {
           </div>
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };
