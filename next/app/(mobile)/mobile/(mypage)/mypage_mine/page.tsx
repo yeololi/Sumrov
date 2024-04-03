@@ -307,7 +307,6 @@ const Mypage_mine = () => {
                 </div>
               </div>
             </div>
-            <CheckboxGroup />
             <Button
               variant={"outline"}
               className="text-black dark:text-black text-sm font-normal font-pre w-[336px] h-[43px] rounded-none bg-white border border-neutral-300"

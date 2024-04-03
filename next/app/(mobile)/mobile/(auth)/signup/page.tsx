@@ -8,6 +8,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { FormEvent } from "react";
 import Header from "../../_components/header";
 import { useRouter } from "next/navigation";
+import CheckboxGroup from "../../_components/checkBoxGroup";
 
 declare global {
   interface Window {
@@ -248,7 +249,7 @@ const SignUp = () => {
                   주소
                 </div>
               </Label>
-              <div className="flex flex-col gap-0.5">
+              <div className="flex flex-col gap-2">
                 <div className="flex gap-2">
                   <Input
                     className="w-[106px] h-[34px]"
@@ -311,56 +312,7 @@ const SignUp = () => {
               </div>
             </div>
           </div>
-          <div className="flex-col justify-start items-start gap-[29px] flex">
-            <div className="justify-start items-center gap-[9px] inline-flex">
-              <Checkbox
-                id="check1"
-                className="w-[15px] h-[15px] bg-neutral-50 rounded-[3px] border border-neutral-300"
-              />
-              <Label
-                htmlFor="check1"
-                className="text-black dark:text-white text-[13px] font-medium font-pre"
-              >
-                모두 동의합니다
-              </Label>
-            </div>
-            <div className="flex-col justify-start items-start gap-[7px] flex">
-              <div className="w-[335px] h-[15px] justify-start items-start gap-[191px] inline-flex">
-                <div className="justify-start items-center gap-[7px] flex">
-                  <Label
-                    htmlFor="check2"
-                    className="text-neutral-400 text-[11px] font-medium font-pre"
-                  >
-                    [필수] 이용약관 동의
-                  </Label>
-                  <Checkbox
-                    id="check2"
-                    className="w-[15px] h-[15px] bg-neutral-50 rounded-[3px] border border-neutral-300"
-                  />
-                </div>
-                <div className="text-neutral-400 text-[9px] font-medium font-pre">
-                  약관보기
-                </div>
-              </div>
-              <div className="w-[335px] h-[15px] justify-start items-start gap-[135px] inline-flex">
-                <div className="justify-start items-center gap-2 flex">
-                  <Label
-                    htmlFor="check3"
-                    className="text-neutral-400 text-[11px] font-medium font-pre"
-                  >
-                    [필수] 개인정보 수집 및 이용 동의
-                  </Label>
-                  <Checkbox
-                    id="check3"
-                    className="w-[15px] h-[15px] bg-neutral-50 rounded-[3px] border border-neutral-300"
-                  />
-                </div>
-                <div className="text-neutral-400 text-[9px] font-medium font-pre">
-                  약관보기
-                </div>
-              </div>
-            </div>
-          </div>
+          <CheckboxGroup isChecked={true} />
           <Button
             variant={"outline"}
             className="text-black dark:text-black text-sm font-normal font-pre w-[336px] h-[43px] rounded-none bg-white border border-neutral-300"
