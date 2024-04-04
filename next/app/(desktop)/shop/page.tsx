@@ -135,10 +135,17 @@ const ShopPage = async ({
                     key={j}
                     className="w-[300px] h-[480px] flex-col justify-center items-center gap-[10px] inline-flex"
                   >
-                    <img
-                      className="w-[300px] h-[380px] shadow"
-                      src="https://via.placeholder.com/300x380"
-                    />
+                    {product.MainImage ? (
+                      <img
+                        className="w-[300px] h-[380px] shadow"
+                        src={product.MainImage}
+                      />
+                    ) : (
+                      <img
+                        className="w-[300px] h-[380px] shadow"
+                        src="https://via.placeholder.com/300x380"
+                      />
+                    )}
                     <div className="flex-col justify-center items-center gap-[5px] flex">
                       <div className="text-black dark:text-neutral-50 text-[13px] font-medium font-body leading-none text-center">
                         {product.Title}
