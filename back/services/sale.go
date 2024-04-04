@@ -171,7 +171,6 @@ func GetSaleStatus(c *gin.Context, db *gorm.DB) {
 
 	// 성공 응답 반환
 	c.JSON(http.StatusOK, gin.H{
-		"message": "판매 정보가 성공적으로 업데이트되었습니다.",
-		"sale":    sale,
+		"sale": sale,
 	})
 }
