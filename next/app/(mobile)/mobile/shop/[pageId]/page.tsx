@@ -99,11 +99,7 @@ const ShopDetailPage = async ({ params }: { params: { pageId: string } }) => {
             className="w-[300px] h-[400px] border border-black"
             src="https://via.placeholder.com/300x400"
           />
-          <div className="justify-start items-start gap-[5px] mt-[12.21px] flex w-full">
-            <div className="w-[13px] h-[13px] bg-black dark:bg-white" />
-            <div className="w-[13px] h-[13px] bg-rose-500" />
-            <div className="w-[13px] h-[13px] bg-green-600" />
-          </div>
+
           <div className="text-black dark:text-white w-full text-[13px] font-medium font-pre mt-[12px]">
             {result?.Title}
           </div>
