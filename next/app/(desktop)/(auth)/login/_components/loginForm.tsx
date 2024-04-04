@@ -87,11 +87,14 @@ const LoginForm = () => {
               href={"/findId"}
               className="text-black dark:text-neutral-50 text-[11px] font-normal font-pre"
             >
-              find ID/Password
+              find ID
             </Link>
-            <div className="text-black dark:text-neutral-50 text-[11px] font-normal font-pre">
-              비회원으로 이용
-            </div>
+            <Link
+              href={"/findPw"}
+              className="text-black dark:text-neutral-50 text-[11px] font-normal font-pre"
+            >
+              find Password
+            </Link>
           </div>
         </div>
       </form>

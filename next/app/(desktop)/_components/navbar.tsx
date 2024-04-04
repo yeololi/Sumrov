@@ -12,10 +12,11 @@ import {
   NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 
-const data: {
+const datas: {
   title: string;
   items: {
     href: string;
@@ -41,9 +42,11 @@ const data: {
 ];
 
 const NavBar = () => {
+  const { data: session } = useSession();
+
   return (
     <div className="justify-center items-start gap-[50px] flex flex-1">
-      {data.map((args, i) => (
+      {datas.map((args, i) => (
         <NavigationMenu key={i}>
           <NavigationMenuList>
             <NavigationMenuItem>
@@ -80,12 +83,21 @@ const NavBar = () => {
           </span>
         </Link>
       </Button>
-      <Button
-        variant={"ghost"}
-        className="text-black dark:text-white text-xl font-bold font-nav whitespace-nowrap hover:bg-opacity-0 hover:bg-white"
-      >
-        <Link href={"/login"}>Log in</Link>
-      </Button>
+      {session ? (
+        <Button
+          variant={"ghost"}
+          className="text-black dark:text-white text-xl font-bold font-nav whitespace-nowrap hover:bg-opacity-0 hover:bg-white"
+        >
+          <Link href={"/mypage"}>My Page</Link>
+        </Button>
+      ) : (
+        <Button
+          variant={"ghost"}
+          className="text-black dark:text-white text-xl font-bold font-nav whitespace-nowrap hover:bg-opacity-0 hover:bg-white"
+        >
+          <Link href={"/login"}>Log in</Link>
+        </Button>
+      )}
     </div>
   );
 };

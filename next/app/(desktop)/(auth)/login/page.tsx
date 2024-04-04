@@ -19,7 +19,7 @@ const LoginPage = () => {
           </div>
           <div className="h-[331px] flex-col justify-center items-center gap-[19px] flex">
             <LoginForm />
-            <div className="h-[45px] flex-col justify-start items-center gap-2 flex">
+            {/* <div className="h-[45px] flex-col justify-start items-center gap-2 flex">
               <div className="w-[450px] justify-center items-center gap-2.5 inline-flex">
                 <div className="w-[150px] h-[0px] border border-gray-200"></div>
                 <div className="text-neutral-400 text-[11px] font-medium font-pre">
@@ -41,7 +41,7 @@ const LoginPage = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
