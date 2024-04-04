@@ -231,7 +231,7 @@ const RegistrationPage = () => {
                   미리보기
                 </div>
                 <div className=" border border-gray-200 flex-col justify-center items-center gap-10 inline-flex ">
-                  <div className="flex-col justify-center items-center gap-[50px] flex">
+                  <div className="flex-col justify-center items-center gap-[20px] flex">
                     <div className="w-[940px] h-[46px] pr-[795px] pt-[15px] pb-4 border-b border-gray-200 justify-start items-center inline-flex">
                       <div className="self-stretch pl-[25px] justify-center items-center inline-flex">
                         <div className="text-black text-xs font-light font-['Inter'] uppercase">
@@ -239,7 +239,7 @@ const RegistrationPage = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="flex-col justify-center items-center   flex">
+                    <div className="flex-col justify-center items-center flex">
                       <div className="w-[890px] text-black text-sm font-light font-['Pretendard'] uppercase tracking-wide">
                         <br />
                         안녕하세요.
@@ -311,10 +311,10 @@ const RegistrationPage = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex-col justify-center items-center flex border-t">
-                    <div className="justify-start border items-start inline-flex">
+                  <div className="flex-col justify-center items-center flex border-0">
+                    <div className="justify-start border-[0.5px] border-t-[1px] items-start inline-flex w-full">
                       <div
-                        className="h-[46px] pr-[110px] pt-3.5 pb-[15px] bg-zinc-100 border-gray-200 justify-start items-center flex border-r-2
+                        className="h-[46px] pr-[110px] pt-3.5 pb-[15px] bg-zinc-100 border-gray-200 justify-start items-center flex border-r
                       "
                       >
                         <div className="self-stretch pl-[25px] justify-center items-center inline-flex">
@@ -331,8 +331,8 @@ const RegistrationPage = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="  justify-start border items-start inline-flex w-full">
-                      <div className="pr-[95px] pt-3.5 pb-[15px] bg-zinc-100  justify-start items-center flex border-r-2">
+                    <div className="  justify-start border-[0.5px] items-start inline-flex w-full">
+                      <div className="pr-[95px] pt-3.5 pb-[15px] bg-zinc-100  justify-start items-center flex border-r">
                         <div className="self-stretch pl-[25px] justify-center items-center inline-flex ">
                           <div className="text-black text-sm font-light font-['Pretendard'] tracking-wider text-nowrap">
                             작성자
