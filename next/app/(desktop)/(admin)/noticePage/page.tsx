@@ -126,31 +126,79 @@ const RegistrationPage = () => {
         </div>
         <div className="flex-col justify-start items-center gap-[74px] flex">
           <div className="border border-stone-300 border-t-0 flex-col justify-center items-center flex">
-            <div className="flex-col justify-center items-center gap-[100px] flex mt-[48px]">
-              <div className="w-[700px] flex-col justify-center items-center gap-[50px] flex">
-                <div className="w-[700px] flex-col justify-between items-center flex">
-                  <div className="w-[700px] justify-between items-center inline-flex">
-                    <div className="text-black text-sm font-normal font-noto">
-                      공지사항
+            <div className="flex-col justify-center items-center gap-[10px] flex mt-[48px]">
+              <div className="w-[700px] flex-col justify-center items-center gap-[10px] flex">
+                <div className="w-[700px] flex-col  items-center flex">
+                  <div className="text-black text-xl w-full font-semibold font-noto">
+                    공지사항
+                  </div>
+                </div>
+                <div className="w-[700px] h-[0px] border-2 border-gray-200" />
+              </div>
+              <div className="flex-col justify-center items-center gap-[74px] flex pb-10">
+                <div className="h-[438px] flex-col justify-start items-start gap-6 mt-6 flex">
+                  <StandardForm
+                    value={inputs.title}
+                    id="title"
+                    onChange={onChange}
+                    title="제목"
+                    className="w-[550px] h-[30px]"
+                  />
+
+                  <div className="w-[700px] justify-between items-center flex">
+                    <div
+                      className={"w-[109.47px] text-sm font-normal font-noto"}
+                    >
+                      내용 입력
                     </div>
+
+                    <textarea
+                      className={
+                        "bg-white w-[550px] h-[252px] dark:text-white rounded-sm dark:bg-zinc-800 border placeholder:text-neutral-300 text-black text-[14px] font-normal font-pre pl-2 border-neutral-300"
+                      }
+                      onChange={(e) => {
+                        const { id, value } = e.target;
+                        setInputs((prevInputs) => ({
+                          ...prevInputs,
+                          [id]: value,
+                        }));
+                      }}
+                      value={inputs.description}
+                      id="description"
+                    />
+                  </div>
+                  <div className="w-[700px] h-[0px] border-2 border-gray-200" />
+                  <div className="h-[145px] flex-col justify-center items-start gap-[23px] flex">
+                    <ActiveForm
+                      id="mainImage"
+                      title="상세 이미지"
+                      className="w-[500px] h-[30px]"
+                      onClick={addTag}
+                    />
+                    <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
+                    <div className="justify-start items-center flex">
+                      <div className="justify-start items-center gap-6 flex">
+                        {tags.mainImage.map((imaegs, i) => (
+                          <Tag
+                            onClick={removeTag}
+                            title={imaegs}
+                            key={i}
+                            id="mainImage"
+                          />
+                        ))}
+                      </div>
+                    </div>
+                    <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
                   </div>
                 </div>
 
-                <div className="h-[145px] flex-col justify-center items-start gap-[23px] flex">
-                  <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
-                </div>
-              </div>
-              <div className="flex-col justify-center items-center gap-[74px] flex pb-10">
                 <div className="text-center text-black text-[22px] font-medium font-noto">
                   미리보기
                 </div>
+
                 <div className="flex-col justify-start items-center gap-[15px] flex">
                   <div className="justify-center items-center gap-[25px] inline-flex">
-                    <img
-                      className="w-[550px] h-[733.33px]"
-                      src="https://via.placeholder.com/550x733"
-                    />
-                    <div className="w-[550px] h-[733px] flex-col justify-center items-center gap-[50px] inline-flex">
+                    <div className="w-[1125px] h-[733px] flex-col justify-center items-center gap-[50px] inline-flex">
                       <div className="flex-col justify-start items-start gap-5 flex">
                         <div className="flex-col justify-start items-start gap-2.5 flex">
                           <div className="text-black dark:text-neutral-50 text-xl font-medium font-pre">
@@ -158,14 +206,6 @@ const RegistrationPage = () => {
                           </div>
                         </div>
                         <div className="flex-col justify-start items-start gap-[50px] flex">
-                          <div className="text-black dark:text-neutral-50 text-sm font-normal font-pre">
-                            {!isNaN(parseInt(inputs.price))
-                              ? new Intl.NumberFormat("ko-KR", {
-                                  style: "currency",
-                                  currency: "KRW",
-                                }).format(parseInt(inputs.price))
-                              : ""}
-                          </div>
                           <div className="flex-col justify-start items-start gap-[30px] flex">
                             <div className="w-[421px] text-neutral-600 dark:text-zinc-100 text-xs font-light font-pre whitespace-pre-wrap">
                               {inputs.description}
@@ -179,46 +219,6 @@ const RegistrationPage = () => {
                           yes && "gap-[30px]"
                         )}
                       >
-                        <div className="flex-col justify-center items-end gap-[15px] flex">
-                          <div className="w-[318px] justify-between items-center inline-flex">
-                            <div className="text-neutral-400 dark:text-zinc-100 text-[11px] font-normal font-pre">
-                              색상
-                            </div>
-                            <Select>
-                              <SelectTrigger className="dark:bg-neutral-900 dark:text-stone-300 rounded-sm w-60 h-[26px] text-neutral-600 text-[11px] font-normal font-pre">
-                                <SelectValue placeholder="-[필수] 옵션을 선택해 주세요-" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectGroup>
-                                  {tags.color.map((colors, i) => (
-                                    <SelectItem value={colors} key={i}>
-                                      {colors}
-                                    </SelectItem>
-                                  ))}
-                                </SelectGroup>
-                              </SelectContent>
-                            </Select>
-                          </div>
-                          <div className="justify-center items-center gap-[50px] inline-flex">
-                            <div className="text-neutral-400 dark:text-zinc-100 text-[11px] font-normal font-pre">
-                              사이즈
-                            </div>
-                            <Select>
-                              <SelectTrigger className="dark:bg-neutral-900 dark:text-stone-300 rounded-sm w-60 h-[26px] text-neutral-600 text-[11px] font-normal font-pre">
-                                <SelectValue placeholder="-[필수] 옵션을 선택해 주세요-" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectGroup>
-                                  {tags.size.map((sizes, i) => (
-                                    <SelectItem value={sizes} key={i}>
-                                      {sizes}
-                                    </SelectItem>
-                                  ))}
-                                </SelectGroup>
-                              </SelectContent>
-                            </Select>
-                          </div>
-                        </div>
                         {yes && (
                           <>
                             <div className="w-[299px] flex mt-3 flex-col">
