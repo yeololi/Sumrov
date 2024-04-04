@@ -140,8 +140,6 @@ const RegistrationPage = () => {
     }
   };
 
-  console.log(tags);
-
   return (
     <>
       <div className="w-full flex flex-col bg-neutral-50 pb-20">
