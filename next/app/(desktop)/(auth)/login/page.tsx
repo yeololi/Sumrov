@@ -4,6 +4,7 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import Footer from "../../_components/footer";
 import Header from "../../_components/header";
+import LoginForm from "./_components/loginForm";
 
 const LoginPage = () => {
   return (
@@ -17,59 +18,7 @@ const LoginPage = () => {
             </div>
           </div>
           <div className="h-[331px] flex-col justify-center items-center gap-[19px] flex">
-            <form className="flex-col justify-center items-center gap-[50px] flex">
-              <div className="h-[93px] flex-col justify-center items-center gap-[23px] flex">
-                <div className="w-[450px] justify-between items-center inline-flex">
-                  <Label className="dark:text-white text-black text-[13px] font-medium font-pre">
-                    ID
-                  </Label>
-                  <Input
-                    placeholder="이메일"
-                    type={"email"}
-                    className="rounded-none font-noto w-[336px] h-[34px] dark:placeholder:text-neutral-400 dark:bg-zinc-800 border-neutral-300 dark:border-black"
-                  />
-                </div>
-                <div className="w-[450px] justify-between items-center inline-flex">
-                  <Label className="dark:text-white text-black text-[13px] font-medium font-pre">
-                    Password
-                  </Label>
-                  <Input
-                    placeholder="비밀번호"
-                    type={"password"}
-                    className="w-[336px] h-[34px] rounded-none font-noto dark:placeholder:text-neutral-400 dark:bg-zinc-800 border-neutral-300 dark:border-black"
-                  />
-                </div>
-              </div>
-              <div className="flex-col justify-center items-center gap-2.5 flex">
-                <div className="flex-col justify-center items-center gap-[15px] flex">
-                  <Button
-                    variant={"login"}
-                    type="submit"
-                    className="w-[450px] h-[43px]"
-                  >
-                    Login
-                  </Button>
-                  <Button
-                    variant={"signup"}
-                    className="w-[450px] h-[43px]"
-                    asChild
-                  >
-                    <Link href={"/signup"}>Sign Up</Link>
-                  </Button>
-                </div>
-                <div className="w-[450px] px-[75px] mt-2 justify-between items-center inline-flex">
-                  <Link
-                    href={"/findId"}
-                    className="text-black dark:text-neutral-50 text-[11px] font-normal font-pre"
-                  >
-                    find ID/Password
-                  </Link>
-                  <div className="text-black dark:text-neutral-50 text-[11px] font-normal font-pre">
-                    비회원으로 이용
-                  </div>
-                </div>
-              </div>
-            </form>
+            <LoginForm />
             <div className="h-[45px] flex-col justify-start items-center gap-2 flex">
               <div className="w-[450px] justify-center items-center gap-2.5 inline-flex">
                 <div className="w-[150px] h-[0px] border border-gray-200"></div>
