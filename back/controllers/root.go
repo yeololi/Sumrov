@@ -74,6 +74,9 @@ func NewController(mongo *mongo.Client, r *gin.Engine, rdb *gorm.DB) {
 		sale.GET("/:uuid", func(c *gin.Context) {
 			services.GetSaleById(c, rdb)
 		})
+		sale.GET("status", func(c *gin.Context) {
+			services.GetSaleStatus(c, rdb)
+		})
 		sale.POST("/", func(c *gin.Context) {
 			services.CreateSale(c, rdb)
 		})
