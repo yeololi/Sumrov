@@ -11,9 +11,9 @@ import Footer from "../_components/footer";
 import Header from "../_components/header";
 import Pagination from "../_components/pagination";
 
-type category = "all" | "top" | "bottom" | "acc";
+export type category = "all" | "top" | "bottom" | "acc";
 
-interface Product {
+export interface Product {
   Uuid: string;
   Title: string;
   Price: string;
