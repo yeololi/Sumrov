@@ -15,22 +15,34 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Dispatch, SetStateAction, useEffect } from "react";
+import { cart } from "./colums";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  setSelected: Dispatch<SetStateAction<cart[] | undefined>>;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  setSelected,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
-
+  console.log(table.getFilteredSelectedRowModel().rows);
+  useEffect(() => {
+    let temp:cart[] = [];
+    table.getFilteredSelectedRowModel().rows.forEach((ai) => {temp.push(ai.original)})
+    console.log(temp)
+    setSelected(
+      temp
+    );
+  }, [table.getFilteredSelectedRowModel().rows]);
   return (
     <div className="rounded-none border border-t-0">
       <Table>
