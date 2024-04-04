@@ -60,7 +60,7 @@ const Mypage = () => {
             회원정보
           </Link>
           <Link
-            href={"/mobile/mypage_search2"} //현재 장바구니 미구현 이슈로 일단 조회 페이지 달아둠
+            href={"/mobile/cart"}
             className="text-[13px] font-medium font-pre"
           >
             장바구니
