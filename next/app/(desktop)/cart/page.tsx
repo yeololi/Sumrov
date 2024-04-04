@@ -12,6 +12,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/util/authOption";
+import { redirect } from "next/navigation";
 
 const data: cart[] = [
   {
@@ -25,7 +28,12 @@ const data: cart[] = [
   },
 ];
 
-const Cart = () => {
+const Cart = async () => {
+  const session = await getServerSession(authOptions);
+  console.log(session);
+
+  !session && redirect("/login");
+
   return (
     <>
       <Header />

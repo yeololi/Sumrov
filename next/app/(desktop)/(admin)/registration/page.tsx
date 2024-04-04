@@ -37,14 +37,16 @@ const RegistrationPage = () => {
   const [tags, setTags] = useState<{
     size: string[];
     color: string[];
-    mainImage: string[];
-    detailImage: string[];
+    mainImage: File[];
+    detailImage: File[];
   }>(initialTagsState);
 
   const [inputs, setInputs] = useState(initialInputsState);
 
   const [image, setImage] = useState<File | null>(null);
-  const [createObjectURL, setCreateObjectURL] = useState<string | null>(null);
+  const [createObjectURL, setCreateObjectURL] = useState<{
+    [key: string]: string;
+  } | null>(null);
 
   const postFetch = async () => {
     const body = {
@@ -74,8 +76,6 @@ const RegistrationPage = () => {
     const inputElement = e.currentTarget
       .previousElementSibling as HTMLInputElement;
 
-    if (!inputElement) return;
-
     const id = e.currentTarget.id as keyof typeof tags;
     const value = inputElement.value;
 
@@ -85,8 +85,23 @@ const RegistrationPage = () => {
     } else if (operation === "remove") {
       setTags((prevTags) => ({
         ...prevTags,
-        [id]: prevTags[id].filter((tag) => tag !== inputElement.innerText),
+        [id]: prevTags[id].filter((tag) =>
+          tag instanceof File
+            ? tag.name !== inputElement.innerText
+            : tag !== inputElement.innerText
+        ),
       }));
+
+      if (createObjectURL && inputElement.innerText) {
+        const fileArray = tags[id] as File[];
+        const foundFile = fileArray
+          ? fileArray.find((file: File) => file.name === inputElement.innerText)
+          : undefined;
+        if (foundFile) {
+          console.log(foundFile.name);
+          URL.revokeObjectURL(createObjectURL[foundFile.name]);
+        }
+      }
     }
   };
 
@@ -104,18 +119,24 @@ const RegistrationPage = () => {
   };
 
   const uploadToClient: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    const { id } = e.target;
+    const id = e.target.id as keyof typeof tags;
 
-    if (createObjectURL) {
-      URL.revokeObjectURL(createObjectURL);
-    }
+    // if (createObjectURL) {
+    //   URL.revokeObjectURL(createObjectURL);
+    // }
 
     if (e.target.files && e.target.files[0]) {
       const i = e.target.files[0];
-      setImage(i);
-      setTags((prevTags) => ({ ...prevTags, [id]: [i.name] }));
 
-      setCreateObjectURL(URL.createObjectURL(i));
+      setTags((prevTags) => ({
+        ...prevTags,
+        [id]: [i, ...prevTags[id]],
+      }));
+
+      setCreateObjectURL((pre) => ({
+        ...pre,
+        [i.name]: URL.createObjectURL(i),
+      }));
     }
   };
 
@@ -149,7 +170,7 @@ const RegistrationPage = () => {
               <div className="w-[700px] flex-col justify-center items-center gap-[50px] flex">
                 <div className="w-[700px] flex-col justify-between items-center flex">
                   <div className="w-[700px] justify-between items-center inline-flex">
-                    <div className="text-black text-sm font-normal font-noto">
+                    <div className="text-black text-sm font-normal font-pre">
                       카테고리
                     </div>
                     <RadioGroup
@@ -237,7 +258,7 @@ const RegistrationPage = () => {
 
                     <div className="w-[700px] justify-between items-center flex">
                       <div
-                        className={"w-[109.47px] text-sm font-normal font-noto"}
+                        className={"w-[109.47px] text-sm font-normal font-pre"}
                       >
                         상세 정보
                       </div>
@@ -307,7 +328,7 @@ const RegistrationPage = () => {
                 <div className="h-[145px] flex-col justify-center items-start gap-[23px] flex">
                   <div className="w-[700px] justify-between items-center flex">
                     <div
-                      className={"w-[109.47px] text-sm font-normal font-noto"}
+                      className={"w-[109.47px] text-sm font-normal font-pre"}
                     >
                       메인 이미지
                     </div>
@@ -333,9 +354,9 @@ const RegistrationPage = () => {
                       {tags.mainImage.map((mainImages, i) => (
                         <Tag
                           onClick={removeTag}
-                          title={mainImages}
+                          title={mainImages.name}
                           key={i}
-                          id="color"
+                          id="mainImage"
                         />
                       ))}
                     </div>
@@ -343,21 +364,39 @@ const RegistrationPage = () => {
                   <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
                 </div>
                 <div className="h-[145px] flex-col justify-center items-start gap-[23px] flex">
-                  <ActiveForm
-                    id="detailImage"
-                    title="상세 이미지"
-                    className="w-[500px] h-[30px]"
-                    onClick={addTag}
-                  />
+                  <div className="w-[700px] justify-between items-center flex">
+                    <div
+                      className={"w-[109.47px] text-sm font-normal font-pre"}
+                    >
+                      상세 이미지
+                    </div>
+
+                    <div className="">
+                      <label htmlFor="detailImage">
+                        <div
+                          className={cn(
+                            "bg-white dark:text-white rounded-sm dark:bg-zinc-800 border placeholder:text-neutral-300 text-black text-[14px] font-medium font-pre pl-2 border-neutral-300",
+                            "w-[550px] h-[30px] cursor-pointer"
+                          )}
+                        />
+                      </label>
+                      <input
+                        type="file"
+                        id="detailImage"
+                        className="hidden"
+                        onChange={uploadToClient}
+                      />
+                    </div>
+                  </div>
                   <div className="w-[700px] h-[0px] border-2 border-gray-200"></div>
                   <div className="justify-start items-center flex">
                     <div className="justify-start items-center gap-6 flex">
                       {tags.detailImage.map((imaegs, i) => (
                         <Tag
                           onClick={removeTag}
-                          title={imaegs}
+                          title={imaegs.name}
                           key={i}
-                          id="detailImage"
+                          id={"detailImage"}
                         />
                       ))}
                     </div>
@@ -366,15 +405,22 @@ const RegistrationPage = () => {
                 </div>
               </div>
               <div className="flex-col justify-center items-center gap-[74px] flex pb-10">
-                <div className="text-center text-black text-[22px] font-medium font-noto">
+                <div className="text-center text-black text-[22px] font-medium font-pre">
                   미리보기
                 </div>
                 <div className="flex-col justify-start items-center gap-[15px] flex">
                   <div className="justify-center items-center gap-[25px] inline-flex">
-                    <img
-                      className="w-[550px] h-[733.33px]"
-                      src={createObjectURL ?? ""}
-                    />
+                    {createObjectURL && tags.mainImage[0] ? (
+                      <img
+                        className="w-[550px] h-[733.33px]"
+                        src={createObjectURL[tags.mainImage[0].name]}
+                      />
+                    ) : (
+                      <img
+                        className="w-[550px] h-[733.33px]"
+                        src={"https://via.placeholder.com/550x733"}
+                      />
+                    )}
                     <div className="w-[550px] h-[733px] flex-col justify-center items-center gap-[50px] inline-flex">
                       <div className="flex-col justify-start items-start gap-5 flex">
                         <div className="flex-col justify-start items-start gap-2.5 flex">
@@ -503,18 +549,40 @@ const RegistrationPage = () => {
                     </div>
                   </div>
                   <div className="flex-col justify-start items-start gap-10 flex">
-                    <img
-                      className="w-[550px] h-[733.33px]"
-                      src="https://via.placeholder.com/550x733"
-                    />
-                    <img
-                      className="w-[550px] h-[733.33px]"
-                      src="https://via.placeholder.com/550x733"
-                    />
-                    <img
-                      className="w-[550px] h-[733.33px]"
-                      src="https://via.placeholder.com/550x733"
-                    />
+                    {createObjectURL &&
+                    tags.detailImage[0] &&
+                    tags.detailImage[1] &&
+                    tags.detailImage[2] ? (
+                      <>
+                        <img
+                          className="w-[550px] h-[733.33px]"
+                          src={createObjectURL[tags.detailImage[0].name]}
+                        />
+                        <img
+                          className="w-[550px] h-[733.33px]"
+                          src={createObjectURL[tags.detailImage[1].name]}
+                        />
+                        <img
+                          className="w-[550px] h-[733.33px]"
+                          src={createObjectURL[tags.detailImage[2].name]}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <img
+                          className="w-[550px] h-[733.33px]"
+                          src="https://via.placeholder.com/550x733"
+                        />
+                        <img
+                          className="w-[550px] h-[733.33px]"
+                          src="https://via.placeholder.com/550x733"
+                        />
+                        <img
+                          className="w-[550px] h-[733.33px]"
+                          src="https://via.placeholder.com/550x733"
+                        />
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
@@ -524,7 +592,7 @@ const RegistrationPage = () => {
             className="w-[700px] h-[50px] px-[234px] py-[9px] bg-black justify-center items-center gap-2.5 inline-flex"
             onClick={postFetch}
           >
-            <div className="text-center text-white text-base font-semibold font-noto">
+            <div className="text-center text-white text-base font-semibold font-pre">
               업로드
             </div>
           </Button>
@@ -540,7 +608,7 @@ const StandardForm = React.forwardRef<
 >(({ title, className, ...props }, ref) => {
   return (
     <div className="w-[700px] justify-between items-center flex">
-      <div className={"w-[109.47px] text-sm font-normal font-noto"}>
+      <div className={"w-[109.47px] text-sm font-normal font-pre "}>
         {title}
       </div>
 
@@ -562,7 +630,7 @@ const ActiveForm = React.forwardRef<
 >(({ title, className, value, children, ...props }, ref) => {
   return (
     <div className="w-[700px] justify-between items-center flex">
-      <div className={"w-[109.47px] text-sm font-normal font-noto"}>
+      <div className={"w-[109.47px] text-sm font-normal font-pre "}>
         {title}
       </div>
       <input
@@ -573,7 +641,7 @@ const ActiveForm = React.forwardRef<
       />
       <Button
         variant={"ghost"}
-        className="h-[26px] font-noto hover:bg-inherit active:hover:bg-inherit"
+        className="h-[26px] font-pre  hover:bg-inherit active:hover:bg-inherit"
         {...props}
       >
         추가
@@ -586,14 +654,14 @@ ActiveForm.displayName = "ActiveForm";
 const Tag = React.forwardRef<
   React.ElementRef<"div">,
   React.ComponentPropsWithoutRef<"div">
->(({ title, ...props }, ref) => {
+>(({ title, className, ...props }, ref) => {
   return (
     <div className="justify-center items-center gap-[19px] flex h-[26px] px-2 border-[1px] rounded-md border-neutral-400">
       <Menu className="h-4 w-4" />
       <div className="text-neutral-600 text-[13px] font-bold font-pre">
         {title}
       </div>
-      <div className="cursor-pointer" {...props}>
+      <div className={cn("cursor-pointer", className)} {...props}>
         <X className="h-4 w-4" />
       </div>
     </div>
