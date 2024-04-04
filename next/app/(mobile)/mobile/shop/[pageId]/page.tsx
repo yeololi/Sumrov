@@ -196,7 +196,7 @@ const ShopDetailPage = async ({ params }: { params: { pageId: string } }) => {
               </div>
               <div className="w-[350px] h-0 border-2 border-neutral-300 mt-4" />
               <div className="mt-[17px] w-[299px] h-3.5 justify-center items-start gap-[167px] inline-flex">
-                <div className="dark:text-white text-[11px] font-semibold font-pre">
+                <div className="text-black dark:text-white text-[11px] font-semibold font-pre">
                   총상품금액
                 </div>
                 <div className="w-[84px] flex justify-center items-center">
