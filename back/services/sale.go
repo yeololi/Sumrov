@@ -146,3 +146,32 @@ func DeleteSale(c *gin.Context, db *gorm.DB) {
 		"message": "판매 정보가 성공적으로 삭제되었습니다.",
 	})
 }
+
+func GetSaleStatus(c *gin.Context, db *gorm.DB) {
+	var sale []entity.Sale
+	var status struct {
+		Status string `json:"status"`
+	}
+
+	// 요청 바디에서 상태 정보를 바인딩
+	if err := c.ShouldBindJSON(&status); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	// UUID에 해당하는 판매 정보 조회
+	if err := db.Where("status = ?", status.Status).Find(&sale).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"error": "해당하는 판매 정보를 찾을 수 없습니다.",
+		})
+		return
+	}
+
+	// 성공 응답 반환
+	c.JSON(http.StatusOK, gin.H{
+		"message": "판매 정보가 성공적으로 업데이트되었습니다.",
+		"sale":    sale,
+	})
+}
