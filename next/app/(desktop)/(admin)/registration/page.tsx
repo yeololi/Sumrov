@@ -43,12 +43,27 @@ const RegistrationPage = () => {
 
   const [inputs, setInputs] = useState(initialInputsState);
 
-  const [image, setImage] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [createObjectURL, setCreateObjectURL] = useState<{
     [key: string]: string;
   } | null>(null);
 
   const postFetch = async () => {
+    setIsLoading(() => true);
+
+    const files: string[] = ["", "", ""];
+    const uploadPromises = files.map(async (element, i) => {
+      const formData = new FormData();
+      // formData.append("file", file[i]);
+
+      const res = await fetch("/api/s3-upload", {
+        method: "POST",
+        body: formData,
+      }).then((r) => r.json());
+      const fileName = encodeURIComponent(res.fileName);
+      return `https://introduce-club.s3.ap-northeast-2.amazonaws.com/${fileName}`;
+    });
+
     const body = {
       title: inputs.title,
       price: inputs.price,
@@ -590,7 +605,7 @@ const RegistrationPage = () => {
           </div>
           <Button
             className="w-[700px] h-[50px] px-[234px] py-[9px] bg-black justify-center items-center gap-2.5 inline-flex"
-            onClick={postFetch}
+            // onClick={postFetch}
           >
             <div className="text-center text-white text-base font-semibold font-pre">
               업로드
