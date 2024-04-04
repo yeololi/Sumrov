@@ -15,8 +15,19 @@ import {
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/util/authOption";
 import { redirect } from "next/navigation";
+import { useState } from "react";
+import { Row } from "@tanstack/react-table";
 
 const data: cart[] = [
+  {
+    id: "1",
+    name: "Lorem ipsum dolor sit",
+    price: 10000,
+    amount: 1,
+    color: "블랙",
+    size: "L",
+    image: "asd",
+  },
   {
     id: "1",
     name: "Lorem ipsum dolor sit",
@@ -30,6 +41,10 @@ const data: cart[] = [
 
 const Cart = async () => {
   const session = await getServerSession(authOptions);
+  let total = 0;
+  data.forEach((ai)=>{total += ai.price*ai.amount});
+  const sale=100, box=0;
+
   console.log(session);
 
   !session && redirect("/login");
@@ -63,10 +78,10 @@ const Cart = async () => {
               </TableHeader>
               <TableBody>
                 <TableRow>
-                  <TableCell className="text-center">KRW 20,000</TableCell>
-                  <TableCell className="text-center">KRW 100</TableCell>
-                  <TableCell className="text-center">KRW 0</TableCell>
-                  <TableCell className="text-center">KRW 19,900</TableCell>
+                  <TableCell className="text-center">KRW {total.toLocaleString()}</TableCell>
+                  <TableCell className="text-center">KRW {sale.toLocaleString()}</TableCell>
+                  <TableCell className="text-center">KRW {box.toLocaleString()}</TableCell>
+                  <TableCell className="text-center">KRW {(total-sale+box).toLocaleString()}</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
