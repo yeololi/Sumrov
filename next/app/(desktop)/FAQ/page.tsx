@@ -9,7 +9,7 @@ const FAQ = ({ searchParams }: { searchParams: { page: string } }) => {
   const page = parseInt(searchParams.page);
 
   let totalPages = result
-    ? result.length / 9 + (result.length % 9) / (result.length % 9)
+    ? parseInt(result.length / 9) + (result.length % 9) / (result.length % 9)
     : 30;
 
   const realresult = result?.slice((page - 1) * 9, page * 9);

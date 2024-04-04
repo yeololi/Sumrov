@@ -72,7 +72,7 @@ const ShopPage = async ({
   const category = searchParams.category;
 
   const result = await fetchData(category);
-  let totalPages = result ? result.length/9 + (result.length%9)/(result.length%9) : 30;
+  let totalPages = result ? parseInt(result.length/9) + (result.length%9)/(result.length%9) : 30;
   
   const realresult = result?.slice((page-1)*9, page*9);
 
