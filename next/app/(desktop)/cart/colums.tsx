@@ -94,12 +94,12 @@ export const columns: ColumnDef<cart>[] = [
     accessorKey: "amount",
     header: () => <div className="text-center font-noto">수량</div>,
     cell: ({ row }) => {
+
       const amount = row.getValue("amount") as string;
       return (
         <div className="w-[70px] flex justify-center h-5">
-          <div className="flex justify-between w-full">
-            <Minus size={20} /> <div className="text-[16px]">{amount}</div>
-            <Plus size={20} />
+          <div className="w-full text-center">
+            <div className="text-[16px]">{amount}</div>
           </div>
         </div>
       );
