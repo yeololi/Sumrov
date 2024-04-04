@@ -1,4 +1,11 @@
-import { Select, SelectTrigger } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Minus, Plus } from "lucide-react";
 import Footer from "../../_components/footer";
 import Header from "../../_components/header";
@@ -40,7 +47,46 @@ const data = [
   },
 ];
 
-const ShopDetailPage = () => {
+interface post {
+  Uuid: string;
+  Title: string;
+  Price: string;
+  Sale: number;
+  Description: string;
+  Category: "all" | "top" | "bottom" | "acc";
+  Size: string[];
+  Color: string[];
+  MainImage: string;
+  DetailImages: string[];
+}
+
+async function fetchData(uuid: string) {
+  try {
+    const response: { results: post[] } = await fetch(
+      `http://3.39.237.151:8080/post/uuid/${atob(uuid)}`,
+      {
+        method: "GET",
+      }
+    ).then((r) => r.json());
+
+    if (response) {
+      return response.results[0];
+    } else {
+      console.log("res.result is not an array or res is undefined");
+      return;
+    }
+  } catch (error) {
+    console.error(error);
+    return;
+  }
+}
+
+const ShopDetailPage = async ({ params }: { params: { pageId: string } }) => {
+  const result = await fetchData(params.pageId);
+
+  if (!result) {
+  }
+
   return (
     <>
       <Header />
@@ -59,9 +105,11 @@ const ShopDetailPage = () => {
             <div className="w-[13px] h-[13px] bg-green-600" />
           </div>
           <div className="text-black dark:text-white w-full text-[13px] font-medium font-pre mt-[12px]">
-            Lorem ipsum dolor sit (BLACK, RED, GREEN)
+            {result?.Title}
           </div>
-          <div className="w-[315px] mt-[53px] text-neutral-600 dark:text-white text-[8px] font-normal font-pre"></div>
+          <div className="w-[315px] mt-[53px] text-neutral-600 dark:text-white text-[8px] font-normal font-pre">
+            {result?.Description}
+          </div>
         </div>
 
         <div className="w-[350px] h-0 border-2 border-neutral-300 mt-4" />
@@ -72,7 +120,10 @@ const ShopDetailPage = () => {
               판매가
             </div>
             <div className="text-black dark:text-white text-[11px] font-semibold font-pre">
-              KRW 10,000
+              {new Intl.NumberFormat("ko-KR", {
+                style: "currency",
+                currency: "KRW",
+              }).format(parseInt(result?.Price ?? "0"))}
             </div>
           </div>
           <div className="justify-center items-center gap-[29px] flex mt-[25px]">
@@ -81,18 +132,37 @@ const ShopDetailPage = () => {
             </div>
             <Select>
               <SelectTrigger className="dark:bg-neutral-50 rounded-sm w-60 h-[26px] text-neutral-600 text-[11px] font-normal font-pre">
-                -[필수] 옵션을 선택해 주세요-
+                <SelectValue placeholder="-[필수] 옵션을 선택해 주세요-" />
               </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {result?.Color.map((colors, i) => (
+                    <SelectItem value={colors} key={i}>
+                      {colors}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
             </Select>
           </div>
           <div className="w-[289px] justify-center items-center gap-5 flex mt-4">
             <div className="text-neutral-400 text-[11px] font-normal font-pre">
               사이즈
             </div>
+
             <Select>
               <SelectTrigger className="dark:bg-neutral-50 rounded-sm w-60 h-[26px] text-neutral-600 text-[11px] font-normal font-pre">
-                -[필수] 옵션을 선택해 주세요-
+                <SelectValue placeholder="-[필수] 옵션을 선택해 주세요-" />
               </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {result?.Size.map((sizes, i) => (
+                    <SelectItem value={sizes} key={i}>
+                      {sizes}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
             </Select>
           </div>
           {true && (
