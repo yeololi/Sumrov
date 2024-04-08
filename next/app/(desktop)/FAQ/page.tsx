@@ -3,10 +3,17 @@ import Header from "../_components/header";
 import Pagination from "../_components/pagination";
 import Link from "next/link";
 
-const data = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
+const result = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
 
 const FAQ = ({ searchParams }: { searchParams: { page: string } }) => {
   const page = parseInt(searchParams.page);
+
+  let totalPages = result
+    ? parseInt(result.length / 9) + (result.length % 9) / (result.length % 9)
+    : 30;
+
+  const realresult = result?.slice((page - 1) * 9, page * 9);
+
   return (
     <>
       <Header />
@@ -39,7 +46,7 @@ const FAQ = ({ searchParams }: { searchParams: { page: string } }) => {
                   </div>
                 </div>
               </div>
-              {data.map((arg, i) => (
+              {realresult.map((arg, i) => (
                 <div
                   key={i}
                   className="h-10 w-full border-b border-gray-200 justify-center items-center inline-flex"
@@ -51,7 +58,7 @@ const FAQ = ({ searchParams }: { searchParams: { page: string } }) => {
                   </div>
                   <div className="w-[700px] h-[30px] justify-start items-center flex">
                     <Link
-                      href={"/FAQ/" + i}
+                      href={"/FAQ/" + (i + 1)}
                       className="text-black dark:text-neutral-50 text-[13px] font-normal font-body uppercase"
                     >
                       Q. 반품 후 환불요청을 했는데 주문금액이랑 다르게 환불 된
@@ -71,7 +78,7 @@ const FAQ = ({ searchParams }: { searchParams: { page: string } }) => {
                 </div>
               ))}
             </div>
-            <Pagination totalPages={30} currentPage={page} />
+            <Pagination totalPages={totalPages} currentPage={page} />
           </div>
         </div>
       </div>

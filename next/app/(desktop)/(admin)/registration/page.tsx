@@ -15,6 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const initialTagsState = {
   size: [],
@@ -34,6 +35,8 @@ const initialInputsState = {
 const yes = true;
 
 const RegistrationPage = () => {
+  const router = useRouter();
+
   const [tags, setTags] = useState<{
     size: string[];
     color: string[];
@@ -43,30 +46,62 @@ const RegistrationPage = () => {
 
   const [inputs, setInputs] = useState(initialInputsState);
 
-  const [image, setImage] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [createObjectURL, setCreateObjectURL] = useState<{
     [key: string]: string;
   } | null>(null);
 
   const postFetch = async () => {
-    const body = {
-      title: inputs.title,
-      price: inputs.price,
-      sale: parseInt(inputs.sale),
-      description: inputs.description,
-      category: inputs.category,
-      size: tags.size,
-      color: tags.color,
-      mainImage: tags.mainImage[0],
-      detailImage: tags.detailImage,
-    };
+    setIsLoading(() => true);
 
-    const res = await fetch("/api/post/new", {
-      method: "POST",
-      body: JSON.stringify(body),
-    }).then((r) => {
-      console.log(r);
+    const uploadPromises = ["", "", "", ""].map(async (element, i) => {
+      const formData = new FormData();
+      if (i == 3) {
+        formData.append("file", tags.mainImage[0]);
+      } else {
+        formData.append("file", tags.detailImage[i]);
+      }
+
+      const res = await fetch("/api/s3-upload", {
+        method: "POST",
+        body: formData,
+      }).then((r) => r.json());
+      // console.log(res);
+      const fileName = encodeURIComponent(res.fileName);
+      return `https://sumrovbucket.s3.ap-northeast-2.amazonaws.com/${fileName}`;
     });
+
+    try {
+      const uploadedFiles = await Promise.all(uploadPromises);
+
+      // console.log(uploadedFiles);
+
+      const body = {
+        title: inputs.title,
+        price: inputs.price,
+        sale: parseInt(inputs.sale),
+        description: inputs.description,
+        category: inputs.category,
+        size: tags.size,
+        color: tags.color,
+        main_image: uploadedFiles[3],
+        detail_images: uploadedFiles.slice(0, 3),
+      };
+
+      // console.log(body);
+
+      const res = await fetch("/api/post/new", {
+        method: "POST",
+        body: JSON.stringify(body),
+      }).then((r) => {
+        console.log(r);
+      });
+      setIsLoading(() => false);
+      router.push("/");
+    } catch (error) {
+      console.error(error);
+      setIsLoading(() => false);
+    }
   };
 
   const handleTagOperation = (
@@ -588,14 +623,26 @@ const RegistrationPage = () => {
               </div>
             </div>
           </div>
-          <Button
-            className="w-[700px] h-[50px] px-[234px] py-[9px] bg-black justify-center items-center gap-2.5 inline-flex"
-            onClick={postFetch}
-          >
-            <div className="text-center text-white text-base font-semibold font-pre">
-              업로드
-            </div>
-          </Button>
+          {isLoading ? (
+            <Button
+              disabled
+              className="w-[700px] h-[50px] px-[234px] py-[9px] bg-black justify-center items-center gap-2.5 inline-flex"
+              onClick={postFetch}
+            >
+              <div className="text-center text-white text-base font-semibold font-pre">
+                업로드
+              </div>
+            </Button>
+          ) : (
+            <Button
+              className="w-[700px] h-[50px] px-[234px] py-[9px] bg-black justify-center items-center gap-2.5 inline-flex"
+              onClick={postFetch}
+            >
+              <div className="text-center text-white text-base font-semibold font-pre">
+                업로드
+              </div>
+            </Button>
+          )}
         </div>
       </div>
     </>

@@ -2,13 +2,14 @@
 
 import { cn } from "@/lib/utils";
 import { ChevronRight } from "lucide-react";
-import { ElementRef, useRef, useState } from "react";
+import Link from "next/link";
+import { ElementRef, useEffect, useRef, useState } from "react";
 
-const ShopSelect = () => {
+const ShopSelect = ({ category }: { category: string }) => {
   const modalRef = useRef<ElementRef<"div">>(null);
   const [isResetting, setIsResetting] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(true);
-
+  const categorys = ["All", "Top", "Bottom", "Acc"];
   const resetWidth = () => {
     if (modalRef.current) {
       setIsCollapsed(false);
@@ -31,6 +32,7 @@ const ShopSelect = () => {
     }
   };
 
+  let upCategory = category[0].toUpperCase() + category.slice(1);
   return (
     <>
       <div className="flex justify-start w-full">
@@ -39,7 +41,7 @@ const ShopSelect = () => {
           onClick={isCollapsed ? resetWidth : collapse}
         >
           <div className="text-black text-xs font-medium font-nav dark:text-white">
-            All
+            {upCategory}
           </div>
           <ChevronRight className="w-2 h-2" />
         </div>
@@ -51,18 +53,19 @@ const ShopSelect = () => {
             isResetting && "transition-all ease-in-out duration-300"
           )}
         >
-          <div className="text-black text-xs font-medium font-nav dark:text-white">
-            All
-          </div>
-          <div className="text-black text-xs font-medium font-nav dark:text-white">
-            Top
-          </div>
-          <div className="text-black text-xs font-medium font-nav dark:text-white">
-            Bottom
-          </div>
-          <div className="text-black text-xs font-medium font-nav dark:text-white">
-            Acc
-          </div>
+          {categorys.map((category, i) => (
+            <Link
+              className="text-black text-xs font-medium font-nav dark:text-white"
+              key={i}
+              href={{
+                pathname: "/mobile/shop",
+                query: {category: category.toLowerCase()}
+              }}
+              onClick={collapse}
+            >
+              {category}
+            </Link>
+          ))}
         </div>
       </div>
     </>

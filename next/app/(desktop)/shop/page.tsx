@@ -11,9 +11,9 @@ import Footer from "../_components/footer";
 import Header from "../_components/header";
 import Pagination from "../_components/pagination";
 
-type category = "all" | "top" | "bottom" | "acc";
+export type category = "all" | "top" | "bottom" | "acc";
 
-interface Product {
+export interface Product {
   Uuid: string;
   Title: string;
   Price: string;
@@ -26,15 +26,15 @@ interface Product {
   Category: category;
 }
 
-function chunk<T>(array: T[] | undefined, chunkSize: number): T[][] {
-  if (!array) return []; // array가 undefined 또는 null인 경우, 빈 배열 반환
-  const result: T[][] = [];
-  for (let i = 0; i < array.length; i += chunkSize) {
-    const chunk = array.slice(i, i + chunkSize);
-    result.push(chunk);
-  }
-  return result;
-}
+// function chunk<T>(array: T[] | undefined, chunkSize: number): T[][] {
+//   if (!array) return []; // array가 undefined 또는 null인 경우, 빈 배열 반환
+//   const result: T[][] = [];
+//   for (let i = 0; i < array.length; i += chunkSize) {
+//     const chunk = array.slice(i, i + chunkSize);
+//     result.push(chunk);
+//   }
+//   return result;
+// }
 
 async function fetchData(category: category) {
   try {
@@ -49,15 +49,10 @@ async function fetchData(category: category) {
         method: "GET",
       }).then((r) => r.json());
     }
-
+    console.log(response);
     if (response) {
-      const chunkData = chunk(response.results, 9)
-        .map((subArray) => chunk(subArray, 3))
-        .flat();
 
-      console.log(chunkData);
-
-      return chunkData;
+      return response.results;
     } else {
       console.log("res.result is not an array or res is undefined");
       return;
@@ -77,6 +72,9 @@ const ShopPage = async ({
   const category = searchParams.category;
 
   const result = await fetchData(category);
+  let totalPages = result ? parseInt(result.length/9) + (result.length%9)/(result.length%9) : 30;
+  
+  const realresult = result?.slice((page-1)*9, page*9);
 
   return (
     <>
@@ -125,20 +123,25 @@ const ShopPage = async ({
             </Link>
           </div>
         </div>
-        <div className="flex h-full flex-col gap-[100px]">
+        <div className="h-full grid gap-y-[100px] gap-x-[50px] grid-cols-3">
           <>
-            {result?.map((args, i) => (
-              <div className="gap-[50px] justify-between w-full flex" key={i}>
-                {args.map((product, j) => (
+            {realresult?.map((product, i) => (
                   <Link
                     href={"/shop/" + btoa(product.Uuid)}
-                    key={j}
+                    key={i}
                     className="w-[300px] h-[480px] flex-col justify-center items-center gap-[10px] inline-flex"
                   >
-                    <img
-                      className="w-[300px] h-[380px] shadow"
-                      src="https://via.placeholder.com/300x380"
-                    />
+                    {product.MainImage ? (
+                      <img
+                        className="w-[300px] h-[380px] shadow"
+                        src={product.MainImage}
+                      />
+                    ) : (
+                      <img
+                        className="w-[300px] h-[380px] shadow"
+                        src="https://via.placeholder.com/300x380"
+                      />
+                    )}
                     <div className="flex-col justify-center items-center gap-[5px] flex">
                       <div className="text-black dark:text-neutral-50 text-[13px] font-medium font-body leading-none text-center">
                         {product.Title}
@@ -151,12 +154,10 @@ const ShopPage = async ({
                       </div>
                     </div>
                   </Link>
-                ))}
-              </div>
             ))}
           </>
         </div>
-        <Pagination props={{ category }} totalPages={30} currentPage={page} />
+        <Pagination props={{ category }} totalPages={totalPages} currentPage={page} />
       </div>
       <Footer />
     </>

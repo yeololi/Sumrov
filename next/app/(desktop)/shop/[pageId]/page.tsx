@@ -60,10 +60,17 @@ const ShopPageDetail = async ({ params }: { params: { pageId: string } }) => {
           <div className="w-[1125px] flex-col items-center gap-[200px] inline-flex">
             <div className="flex-col justify-start items-center gap-[15px] flex">
               <div className="justify-center items-center gap-[25px] inline-flex">
-                <img
-                  className="w-[550px] h-[733px]"
-                  src="https://via.placeholder.com/550x733"
-                />
+                {data[0].MainImage ? (
+                  <img
+                    className="w-[550px] h-[733px]"
+                    src={data[0].MainImage}
+                  />
+                ) : (
+                  <img
+                    className="w-[550px] h-[733px]"
+                    src="https://via.placeholder.com/550x733"
+                  />
+                )}
                 <div className="w-[550px] h-[733px] flex-col justify-center items-center gap-[50px] inline-flex">
                   <div className="flex-col justify-start items-start gap-5 flex">
                     <div className="flex-col justify-start items-start gap-2.5 flex">
@@ -190,18 +197,37 @@ const ShopPageDetail = async ({ params }: { params: { pageId: string } }) => {
                 </div>
               </div>
               <div className="flex-col justify-start items-start gap-10 flex">
-                <img
-                  className="w-[550px] h-[733.33px]"
-                  src="https://via.placeholder.com/550x733"
-                />
-                <img
-                  className="w-[550px] h-[733.33px]"
-                  src="https://via.placeholder.com/550x733"
-                />
-                <img
-                  className="w-[550px] h-[733.33px]"
-                  src="https://via.placeholder.com/550x733"
-                />
+                {data[0].DetailImages ? (
+                  <>
+                    <img
+                      className="w-[550px] h-[733.33px]"
+                      src={data[0].DetailImages[0]}
+                    />
+                    <img
+                      className="w-[550px] h-[733.33px]"
+                      src={data[0].DetailImages[1]}
+                    />
+                    <img
+                      className="w-[550px] h-[733.33px]"
+                      src={data[0].DetailImages[2]}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <img
+                      className="w-[550px] h-[733.33px]"
+                      src="https://via.placeholder.com/550x733"
+                    />
+                    <img
+                      className="w-[550px] h-[733.33px]"
+                      src="https://via.placeholder.com/550x733"
+                    />
+                    <img
+                      className="w-[550px] h-[733.33px]"
+                      src="https://via.placeholder.com/550x733"
+                    />
+                  </>
+                )}
               </div>
             </div>
 
