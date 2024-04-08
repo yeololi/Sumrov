@@ -11,6 +11,7 @@ import { Minus, Plus } from "lucide-react";
 import Footer from "../../_components/footer";
 import Header from "../../_components/header";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import ShopOption from "../_components/shopOption";
 
 const data = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
 const yes = true;
@@ -26,6 +27,9 @@ interface post {
   Color: string[];
   MainImage: string;
   DetailImages: string[];
+  Counter: number;
+  increment: number;
+  decrement: number;
 }
 
 async function fetchData(uuid: string) {
@@ -38,7 +42,7 @@ async function fetchData(uuid: string) {
     ).then((r) => r.json());
 
     if (response) {
-      return response.results;
+      return response.results[0];
     } else {
       console.log("res.result is not an array or res is undefined");
       return;
@@ -60,11 +64,8 @@ const ShopPageDetail = async ({ params }: { params: { pageId: string } }) => {
           <div className="w-[1125px] flex-col items-center gap-[200px] inline-flex">
             <div className="flex-col justify-start items-center gap-[15px] flex">
               <div className="justify-center items-center gap-[25px] inline-flex">
-                {data[0].MainImage ? (
-                  <img
-                    className="w-[550px] h-[733px]"
-                    src={data[0].MainImage}
-                  />
+                {data.MainImage ? (
+                  <img className="w-[550px] h-[733px]" src={data.MainImage} />
                 ) : (
                   <img
                     className="w-[550px] h-[733px]"
@@ -75,7 +76,7 @@ const ShopPageDetail = async ({ params }: { params: { pageId: string } }) => {
                   <div className="flex-col justify-start items-start gap-5 flex">
                     <div className="flex-col justify-start items-start gap-2.5 flex">
                       <div className="text-black dark:text-neutral-50 text-xl font-medium font-pre">
-                        {data[0].Title}
+                        {data.Title}
                       </div>
                     </div>
                     <div className="flex-col justify-start items-start gap-[50px] flex">
@@ -83,11 +84,11 @@ const ShopPageDetail = async ({ params }: { params: { pageId: string } }) => {
                         {new Intl.NumberFormat("ko-KR", {
                           style: "currency",
                           currency: "KRW",
-                        }).format(parseInt(data[0].Price))}
+                        }).format(parseInt(data.Price))}
                       </div>
                       <div className="flex-col justify-start items-start gap-[30px] flex">
                         <div className="w-[421px] text-neutral-600 dark:text-zinc-100 text-xs font-light font-pre whitespace-pre-wrap">
-                          {data[0].Description}
+                          {data.Description}
                         </div>
                       </div>
                     </div>
@@ -109,7 +110,7 @@ const ShopPageDetail = async ({ params }: { params: { pageId: string } }) => {
                           </SelectTrigger>
                           <SelectContent>
                             <SelectGroup>
-                              {data[0].Color.map((colors, i) => (
+                              {data.Color.map((colors, i) => (
                                 <SelectItem value={colors} key={i}>
                                   {colors}
                                 </SelectItem>
@@ -128,7 +129,7 @@ const ShopPageDetail = async ({ params }: { params: { pageId: string } }) => {
                           </SelectTrigger>
                           <SelectContent>
                             <SelectGroup>
-                              {data[0].Size.map((sizes, i) => (
+                              {data.Size.map((sizes, i) => (
                                 <SelectItem value={sizes} key={i}>
                                   {sizes}
                                 </SelectItem>
@@ -138,49 +139,49 @@ const ShopPageDetail = async ({ params }: { params: { pageId: string } }) => {
                         </Select>
                       </div>
                     </div>
-                    {yes && (
-                      <>
-                        <div className="w-[299px] flex mt-3 flex-col">
-                          <div className="flex flex-col">
-                            <div className="text-neutral-600 dark:text-neutral-50 text-[10px] font-normal font-pre">
-                              Lorem ipsum dolor sit
-                            </div>
-                            <div className="text-neutral-600 dark:text-neutral-50 text-[10px] font-normal font-pre">
-                              -블랙/S
-                            </div>
+
+                    <>
+                      <div className="w-[299px] flex mt-3 flex-col">
+                        <div className="flex flex-col">
+                          <div className="text-neutral-600 dark:text-neutral-50 text-[10px] font-normal font-pre">
+                            Lorem ipsum dolor sit
                           </div>
-                          <div className="text-black dark:text-white text-[11px] font-semibold font-pre flex justify-end w-full">
+                          <div className="text-neutral-600 dark:text-neutral-50 text-[10px] font-normal font-pre">
+                            -블랙/S
+                          </div>
+                        </div>
+                        <div className="text-black dark:text-white text-[11px] font-semibold font-pre flex justify-end w-full">
+                          KRW 10,000
+                        </div>
+                        <div className="flex gap-1">
+                          <input
+                            placeholder="1"
+                            className="text-[10px] font-normal font-pre w-[37px] h-[18px] pl-2 rounded-sm border border-neutral-300 dark:bg-neutral-900"
+                          />
+
+                          <div className="w-[18px] h-[18px]">
+                            <Plus className="w-[18px] h-[18px] dark:text-black bg-neutral-300 rounded-sm" />
+                          </div>
+                          <div className="w-[18px] h-[18px]">
+                            <Minus className="w-[18px] h-[18px] dark:text-black bg-neutral-300 rounded-sm" />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="w-[299px] h-3.5 justify-center items-start gap-[167px] inline-flex">
+                        <div className="dark:text-white text-[11px] font-semibold font-pre">
+                          총상품금액
+                        </div>
+                        <div className="w-[84px] flex justify-center items-center">
+                          <div className="text-blue-500 text-[11px] font-semibold font-pre">
                             KRW 10,000
                           </div>
-                          <div className="flex gap-1">
-                            <input
-                              placeholder="1"
-                              className="text-[10px] font-normal font-pre w-[37px] h-[18px] pl-2 rounded-sm border border-neutral-300 dark:bg-neutral-900"
-                            />
-
-                            <div className="w-[18px] h-[18px]">
-                              <Plus className="w-[18px] h-[18px] dark:text-black bg-neutral-300 rounded-sm" />
-                            </div>
-                            <div className="w-[18px] h-[18px]">
-                              <Minus className="w-[18px] h-[18px] dark:text-black bg-neutral-300 rounded-sm" />
-                            </div>
+                          <div className="text-blue-500 text-[10px] font-normal font-pre">
+                            (1개)
                           </div>
                         </div>
-                        <div className="w-[299px] h-3.5 justify-center items-start gap-[167px] inline-flex">
-                          <div className="dark:text-white text-[11px] font-semibold font-pre">
-                            총상품금액
-                          </div>
-                          <div className="w-[84px] flex justify-center items-center">
-                            <div className="text-blue-500 text-[11px] font-semibold font-pre">
-                              KRW 10,000
-                            </div>
-                            <div className="text-blue-500 text-[10px] font-normal font-pre">
-                              (1개)
-                            </div>
-                          </div>
-                        </div>
-                      </>
-                    )}
+                      </div>
+                    </>
+                    {data && <ShopOption result={data} />}
                     <div className="flex-col justify-start items-start gap-2.5 flex">
                       <div className="w-[315px] h-[41px] py-3.5 bg-neutral-900 dark:bg-zinc-600 justify-center items-center inline-flex">
                         <div className="text-neutral-50 text-[11px] font-medium font-body">
@@ -197,19 +198,19 @@ const ShopPageDetail = async ({ params }: { params: { pageId: string } }) => {
                 </div>
               </div>
               <div className="flex-col justify-start items-start gap-10 flex">
-                {data[0].DetailImages ? (
+                {data.DetailImages ? (
                   <>
                     <img
                       className="w-[550px] h-[733.33px]"
-                      src={data[0].DetailImages[0]}
+                      src={data.DetailImages[0]}
                     />
                     <img
                       className="w-[550px] h-[733.33px]"
-                      src={data[0].DetailImages[1]}
+                      src={data.DetailImages[1]}
                     />
                     <img
                       className="w-[550px] h-[733.33px]"
-                      src={data[0].DetailImages[2]}
+                      src={data.DetailImages[2]}
                     />
                   </>
                 ) : (
