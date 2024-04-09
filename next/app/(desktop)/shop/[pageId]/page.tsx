@@ -99,47 +99,6 @@ const ShopPageDetail = async ({ params }: { params: { pageId: string } }) => {
                       yes && "gap-[30px]"
                     )}
                   >
-                    <div className="flex-col justify-center items-end gap-[15px] flex">
-                      <div className="w-[318px] justify-between items-center inline-flex">
-                        <div className="text-neutral-400 dark:text-zinc-100 text-[11px] font-normal font-pre">
-                          색상
-                        </div>
-                        <Select>
-                          <SelectTrigger className="dark:bg-neutral-900 dark:text-stone-300 rounded-sm w-60 h-[26px] text-neutral-600 text-[11px] font-normal font-pre">
-                            <SelectValue placeholder="-[필수] 옵션을 선택해 주세요-" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectGroup>
-                              {data.Color.map((colors, i) => (
-                                <SelectItem value={colors} key={i}>
-                                  {colors}
-                                </SelectItem>
-                              ))}
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="justify-center items-center gap-[50px] inline-flex">
-                        <div className="text-neutral-400 dark:text-zinc-100 text-[11px] font-normal font-pre">
-                          사이즈
-                        </div>
-                        <Select>
-                          <SelectTrigger className="dark:bg-neutral-900 dark:text-stone-300 rounded-sm w-60 h-[26px] text-neutral-600 text-[11px] font-normal font-pre">
-                            <SelectValue placeholder="-[필수] 옵션을 선택해 주세요-" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectGroup>
-                              {data.Size.map((sizes, i) => (
-                                <SelectItem value={sizes} key={i}>
-                                  {sizes}
-                                </SelectItem>
-                              ))}
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
-
                     {data && <ShopOption result={data} />}
                   </div>
                 </div>
