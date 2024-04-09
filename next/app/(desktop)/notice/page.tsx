@@ -41,6 +41,12 @@ const NoticePage = async ({
 
   const data = await fetchData();
 
+
+  let totalPages = data
+    ? parseInt(data.length / 10) + (data.length % 10) / (data.length % 10)
+    : 30;
+
+  const realdata = data?.slice((page - 1) * 10, page * 10);
   return (
     <>
       <Header />
@@ -73,7 +79,7 @@ const NoticePage = async ({
                   </div>
                 </div>
               </div>
-              {data?.map((arg, i) => (
+              {realdata?.map((arg, i) => (
                 <div
                   key={i}
                   className="h-10 w-full border-b border-gray-200 justify-center items-center inline-flex"
@@ -105,7 +111,7 @@ const NoticePage = async ({
               ))}
             </div>
 
-            <Pagination totalPages={30} currentPage={page} />
+            <Pagination totalPages={totalPages} currentPage={page} />
           </div>
         </div>
       </div>
