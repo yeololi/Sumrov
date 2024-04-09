@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useToast } from "@/components/ui/use-toast";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useRouter } from "next/navigation";
 declare global {
     interface Window {
         daum: any;
@@ -19,6 +20,9 @@ interface IAddr {
     zonecode: string;
 }
 const Payment = () => {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const data = {urlSearchParams.get("Sale")};
+    console.log(data)
     const [checked, setChecked] = React.useState("false");
     const [recipient, setRecipient] = useState("");
     const [zonecode, setZonecode] = useState("");
