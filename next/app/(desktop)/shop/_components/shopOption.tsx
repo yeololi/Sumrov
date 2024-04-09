@@ -9,6 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Minus, Plus } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 
 interface post {
@@ -54,6 +55,8 @@ const ShopOption = ({ result }: { result: post }) => {
       setitemCounter(value);
     }
   };
+
+  const handleAddCart = () => {};
 
   return (
     <>
@@ -175,13 +178,22 @@ const ShopOption = ({ result }: { result: post }) => {
           </div>
         </>
 
-        <div className="flex mt-[39px]">
+        <Link
+          className="flex mt-[39px]"
+          href={{
+            pathname: "/payment",
+            query: {
+              OriginUuid: result.Uuid,
+              Cnt: result.Counter,
+            },
+          }}
+        >
           <button className="w-[315px] h-[41px] bg-black cursor-pointer">
             <div className="text-neutral-50 h-full text-[11px] flex justify-center items-center font-medium font-pre">
               Buy it Now
             </div>
           </button>
-        </div>
+        </Link>
         <div className="flex mt-1.5">
           <button className="w-[315px] h-[41px] bg-neutral-50 border border-black cursor-pointer">
             <div className="text-black text-[11px] h-full font-medium font-body flex justify-center items-center">

@@ -16,6 +16,16 @@ import ShopOption from "../_components/shopOption";
 const data = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
 const yes = true;
 
+interface CartItem {
+  _id: string;
+  OriginUuid: string;
+  Title: string;
+  Cnt: number;
+  Price: string;
+  Sale: number;
+  Option: string;
+}
+
 interface post {
   Uuid: string;
   Title: string;
