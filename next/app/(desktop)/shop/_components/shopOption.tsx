@@ -135,13 +135,17 @@ const ShopOption = ({ result }: { result: post }) => {
               </div>
             </div>
             <div className="text-black dark:text-white text-[11px] font-semibold font-pre flex justify-end w-full">
-              KRW 10,000
+              {new Intl.NumberFormat("ko-KR", {
+                style: "currency",
+                currency: "KRW",
+              }).format(parseInt(result?.Price ?? "0"))}
             </div>
             <div className="flex gap-1">
               <input
                 value={itemCounter}
                 onChange={handleInputChange}
                 className="text-[10px] text-black font-normal font-pre w-[37px] h-[18px] pl-2 rounded-sm border border-neutral-300 dark:bg-white"
+                readOnly
               />
 
               <div className="w-[18px] h-[18px]" onClick={increment}>
@@ -159,28 +163,31 @@ const ShopOption = ({ result }: { result: post }) => {
             </div>
             <div className="w-[84px] flex justify-center items-center">
               <div className="text-blue-500 text-[11px] font-semibold font-pre">
-                KRW 10,000
+                {new Intl.NumberFormat("ko-KR", {
+                  style: "currency",
+                  currency: "KRW",
+                }).format(itemCounter * parseInt(result.Price))}
               </div>
               <div className="text-blue-500 text-[10px] font-normal font-pre">
-                (1개)
+                ({itemCounter}개)
               </div>
             </div>
           </div>
         </>
 
         <div className="flex mt-[39px]">
-          <div className="w-[315px] h-[41px] bg-black">
+          <button className="w-[315px] h-[41px] bg-black cursor-pointer">
             <div className="text-neutral-50 h-full text-[11px] flex justify-center items-center font-medium font-pre">
               Buy it Now
             </div>
-          </div>
+          </button>
         </div>
         <div className="flex mt-1.5">
-          <div className="w-[315px] h-[41px] bg-neutral-50 border border-black">
+          <button className="w-[315px] h-[41px] bg-neutral-50 border border-black cursor-pointer">
             <div className="text-black text-[11px] h-full font-medium font-body flex justify-center items-center">
               Add to Cart
             </div>
-          </div>
+          </button>
         </div>
       </div>
     </>

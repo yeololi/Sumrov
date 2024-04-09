@@ -140,60 +140,7 @@ const ShopPageDetail = async ({ params }: { params: { pageId: string } }) => {
                       </div>
                     </div>
 
-                    <>
-                      <div className="w-[299px] flex mt-3 flex-col">
-                        <div className="flex flex-col">
-                          <div className="text-neutral-600 dark:text-neutral-50 text-[10px] font-normal font-pre">
-                            Lorem ipsum dolor sit
-                          </div>
-                          <div className="text-neutral-600 dark:text-neutral-50 text-[10px] font-normal font-pre">
-                            -블랙/S
-                          </div>
-                        </div>
-                        <div className="text-black dark:text-white text-[11px] font-semibold font-pre flex justify-end w-full">
-                          KRW 10,000
-                        </div>
-                        <div className="flex gap-1">
-                          <input
-                            placeholder="1"
-                            className="text-[10px] font-normal font-pre w-[37px] h-[18px] pl-2 rounded-sm border border-neutral-300 dark:bg-neutral-900"
-                          />
-
-                          <div className="w-[18px] h-[18px]">
-                            <Plus className="w-[18px] h-[18px] dark:text-black bg-neutral-300 rounded-sm" />
-                          </div>
-                          <div className="w-[18px] h-[18px]">
-                            <Minus className="w-[18px] h-[18px] dark:text-black bg-neutral-300 rounded-sm" />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="w-[299px] h-3.5 justify-center items-start gap-[167px] inline-flex">
-                        <div className="dark:text-white text-[11px] font-semibold font-pre">
-                          총상품금액
-                        </div>
-                        <div className="w-[84px] flex justify-center items-center">
-                          <div className="text-blue-500 text-[11px] font-semibold font-pre">
-                            KRW 10,000
-                          </div>
-                          <div className="text-blue-500 text-[10px] font-normal font-pre">
-                            (1개)
-                          </div>
-                        </div>
-                      </div>
-                    </>
                     {data && <ShopOption result={data} />}
-                    <div className="flex-col justify-start items-start gap-2.5 flex">
-                      <div className="w-[315px] h-[41px] py-3.5 bg-neutral-900 dark:bg-zinc-600 justify-center items-center inline-flex">
-                        <div className="text-neutral-50 text-[11px] font-medium font-body">
-                          Buy it Now
-                        </div>
-                      </div>
-                      <div className="w-[315px] h-[41px] py-3.5 border border-neutral-900 dark:border-zinc-600 justify-center items-center inline-flex">
-                        <div className="text-black dark:text-neutral-50 text-[11px] font-medium font-body">
-                          Add to Cart
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>

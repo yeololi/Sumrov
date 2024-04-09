@@ -51,7 +51,6 @@ async function fetchData(category: category) {
     }
     console.log(response);
     if (response) {
-
       return response.results;
     } else {
       console.log("res.result is not an array or res is undefined");
@@ -72,9 +71,11 @@ const ShopPage = async ({
   const category = searchParams.category;
 
   const result = await fetchData(category);
-  let totalPages = result ? parseInt(result.length/9) + (result.length%9)/(result.length%9) : 30;
-  
-  const realresult = result?.slice((page-1)*9, page*9);
+  let totalPages = result
+    ? result.length / 9 + (result.length % 9) / (result.length % 9)
+    : 30;
+
+  const realresult = result?.slice((page - 1) * 9, page * 9);
 
   return (
     <>
@@ -126,38 +127,45 @@ const ShopPage = async ({
         <div className="h-full grid gap-y-[100px] gap-x-[50px] grid-cols-3">
           <>
             {realresult?.map((product, i) => (
-                  <Link
-                    href={"/shop/" + btoa(product.Uuid)}
-                    key={i}
-                    className="w-[300px] h-[480px] flex-col justify-center items-center gap-[10px] inline-flex"
-                  >
-                    {product.MainImage ? (
-                      <img
-                        className="w-[300px] h-[380px] shadow"
-                        src={product.MainImage}
-                      />
-                    ) : (
-                      <img
-                        className="w-[300px] h-[380px] shadow"
-                        src="https://via.placeholder.com/300x380"
-                      />
-                    )}
-                    <div className="flex-col justify-center items-center gap-[5px] flex">
-                      <div className="text-black dark:text-neutral-50 text-[13px] font-medium font-body leading-none text-center">
-                        {product.Title}
-                      </div>
-                      <div className="text-black dark:text-neutral-50 text-[15px] font-semibold font-body">
-                        {product.Price}
-                      </div>
-                      <div className="text-black dark:text-neutral-50 text-[11px] font-light font-body">
-                        {product.Category}
-                      </div>
-                    </div>
-                  </Link>
+              <Link
+                href={"/shop/" + btoa(product.Uuid)}
+                key={i}
+                className="w-[300px] h-[480px] flex-col justify-center items-center gap-[10px] inline-flex"
+              >
+                {product.MainImage ? (
+                  <img
+                    className="w-[300px] h-[380px] shadow"
+                    src={product.MainImage}
+                  />
+                ) : (
+                  <img
+                    className="w-[300px] h-[380px] shadow"
+                    src="https://via.placeholder.com/300x380"
+                  />
+                )}
+                <div className="flex-col justify-center items-center gap-[5px] flex">
+                  <div className="text-black dark:text-neutral-50 text-[13px] font-medium font-body leading-none text-center">
+                    {product.Title}
+                  </div>
+                  <div className="text-black dark:text-neutral-50 text-[15px] font-semibold font-body">
+                    {new Intl.NumberFormat("ko-KR", {
+                      style: "currency",
+                      currency: "KRW",
+                    }).format(parseInt(product.Price ?? "0"))}
+                  </div>
+                  <div className="text-black dark:text-neutral-50 text-[11px] font-light font-body">
+                    {product.Category}
+                  </div>
+                </div>
+              </Link>
             ))}
           </>
         </div>
-        <Pagination props={{ category }} totalPages={totalPages} currentPage={page} />
+        <Pagination
+          props={{ category }}
+          totalPages={totalPages}
+          currentPage={page}
+        />
       </div>
       <Footer />
     </>
