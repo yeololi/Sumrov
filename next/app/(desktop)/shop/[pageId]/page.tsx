@@ -37,7 +37,6 @@ interface post {
   Color: string[];
   MainImage: string;
   DetailImages: string[];
-  Counter: number;
 }
 
 async function fetchData(uuid: string) {

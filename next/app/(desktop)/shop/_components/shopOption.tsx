@@ -12,7 +12,7 @@ import { Minus, Plus } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
-interface post {
+export interface post {
   Uuid: string;
   Title: string;
   Price: string;
@@ -23,7 +23,6 @@ interface post {
   Color: string[];
   MainImage: string;
   DetailImages: string[];
-  Counter: number;
 }
 
 const ShopOption = ({ result }: { result: post }) => {
@@ -181,8 +180,10 @@ const ShopOption = ({ result }: { result: post }) => {
           href={{
             pathname: "/payment",
             query: {
-              OriginUuid: result.Uuid,
-              Cnt: result.Counter,
+              OriginUuid: btoa(result.Uuid),
+              Cnt: itemCounter,
+              size: selectValue.size,
+              color: selectValue.color
             },
           }}
         >
