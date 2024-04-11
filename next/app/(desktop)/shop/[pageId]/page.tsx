@@ -38,8 +38,6 @@ interface post {
   MainImage: string;
   DetailImages: string[];
   Counter: number;
-  increment: number;
-  decrement: number;
 }
 
 async function fetchData(uuid: string) {

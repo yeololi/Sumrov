@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import Footer from "../_components/footer";
 import Header from "../_components/header";
@@ -41,15 +40,11 @@ const data: cart[] = [
 ];
 
 const Cart = async () => {
-  const session = await getServerSession(authOptions) 
-
-  console.log(session);
+  const session = await getServerSession(authOptions);
 
   !session && redirect("/login");
 
-  return (
-    <CartInner/>
-  );
+  return <CartInner />;
 };
 
 export default Cart;

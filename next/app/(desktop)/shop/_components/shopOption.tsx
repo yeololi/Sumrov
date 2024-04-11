@@ -24,8 +24,6 @@ interface post {
   MainImage: string;
   DetailImages: string[];
   Counter: number;
-  increment: number;
-  decrement: number;
 }
 
 const ShopOption = ({ result }: { result: post }) => {

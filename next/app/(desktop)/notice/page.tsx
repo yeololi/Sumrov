@@ -14,7 +14,7 @@ interface Notice {
 async function fetchData() {
   try {
     const response: { results: Notice[] } = await fetch(
-      `http://3.39.237.151:8080/notice/`,
+      `http://3.39.237.151:8080/notice`,
       {
         method: "GET",
       }
@@ -41,12 +41,13 @@ const NoticePage = async ({
 
   const data = await fetchData();
 
-
   let totalPages = data
-    ? parseInt(data.length / 10) + (data.length % 10) / (data.length % 10)
+    ? data.length / 10 + (data.length % 10) / (data.length % 10)
     : 30;
 
   const realdata = data?.slice((page - 1) * 10, page * 10);
+
+  console.log(data);
   return (
     <>
       <Header />
@@ -79,14 +80,14 @@ const NoticePage = async ({
                   </div>
                 </div>
               </div>
-              {realdata?.map((arg, i) => (
+              {realdata?.reverse().map((arg, i) => (
                 <div
                   key={i}
                   className="h-10 w-full border-b border-gray-200 justify-center items-center inline-flex"
                 >
                   <div className="w-[70px] h-[30px] justify-center items-center flex">
                     <div className="text-black dark:text-neutral-50 text-xs font-light font-body uppercase">
-                      {i + 1}
+                      {realdata.length - i}
                     </div>
                   </div>
                   <div className="w-[700px] h-[30px] justify-start items-center flex">
