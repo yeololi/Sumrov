@@ -120,10 +120,9 @@ const RegistrationPage = () => {
     } else if (operation === "remove") {
       setTags((prevTags) => ({
         ...prevTags,
-        [id]: prevTags[id].filter((tag) =>
-          tag instanceof File
-            ? tag.name !== inputElement.innerText
-            : tag !== inputElement.innerText
+        [id]: (prevTags[id] as Array<string | File>).filter(
+          (tag: string | File) =>
+            (tag instanceof File ? tag.name : tag) !== inputElement.innerText
         ),
       }));
 
@@ -530,14 +529,17 @@ const RegistrationPage = () => {
                             <div className="w-[299px] flex mt-3 flex-col">
                               <div className="flex flex-col">
                                 <div className="text-neutral-600 dark:text-neutral-50 text-[10px] font-normal font-pre">
-                                  Lorem ipsum dolor sit
+                                  {inputs.title}
                                 </div>
                                 <div className="text-neutral-600 dark:text-neutral-50 text-[10px] font-normal font-pre">
-                                  -블랙/S
+                                  -색/사이즈
                                 </div>
                               </div>
                               <div className="text-black dark:text-white text-[11px] font-semibold font-pre flex justify-end w-full">
-                                KRW 10,000
+                                {new Intl.NumberFormat("ko-KR", {
+                                  style: "currency",
+                                  currency: "KRW",
+                                }).format(parseInt(inputs.price))}
                               </div>
                               <div className="flex gap-1">
                                 <input
@@ -559,10 +561,13 @@ const RegistrationPage = () => {
                               </div>
                               <div className="w-[84px] flex justify-center items-center">
                                 <div className="text-blue-500 text-[11px] font-semibold font-pre">
-                                  KRW 10,000
+                                  {new Intl.NumberFormat("ko-KR", {
+                                    style: "currency",
+                                    currency: "KRW",
+                                  }).format(1 * parseInt(inputs.price))}
                                 </div>
                                 <div className="text-blue-500 text-[10px] font-normal font-pre">
-                                  (1개)
+                                  ({1}개)
                                 </div>
                               </div>
                             </div>

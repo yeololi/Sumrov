@@ -11,9 +11,20 @@ import { Minus, Plus } from "lucide-react";
 import Footer from "../../_components/footer";
 import Header from "../../_components/header";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import ShopOption from "../_components/shopOption";
 
 const data = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
 const yes = true;
+
+interface CartItem {
+  _id: string;
+  OriginUuid: string;
+  Title: string;
+  Cnt: number;
+  Price: string;
+  Sale: number;
+  Option: string;
+}
 
 interface post {
   Uuid: string;
@@ -26,6 +37,7 @@ interface post {
   Color: string[];
   MainImage: string;
   DetailImages: string[];
+  Counter: number;
 }
 
 async function fetchData(uuid: string) {
@@ -38,7 +50,7 @@ async function fetchData(uuid: string) {
     ).then((r) => r.json());
 
     if (response) {
-      return response.results;
+      return response.results[0];
     } else {
       console.log("res.result is not an array or res is undefined");
       return;
@@ -60,11 +72,8 @@ const ShopPageDetail = async ({ params }: { params: { pageId: string } }) => {
           <div className="w-[1125px] flex-col items-center gap-[200px] inline-flex">
             <div className="flex-col justify-start items-center gap-[15px] flex">
               <div className="justify-center items-center gap-[25px] inline-flex">
-                {data[0].MainImage ? (
-                  <img
-                    className="w-[550px] h-[733px]"
-                    src={data[0].MainImage}
-                  />
+                {data.MainImage ? (
+                  <img className="w-[550px] h-[733px]" src={data.MainImage} />
                 ) : (
                   <img
                     className="w-[550px] h-[733px]"
@@ -75,7 +84,7 @@ const ShopPageDetail = async ({ params }: { params: { pageId: string } }) => {
                   <div className="flex-col justify-start items-start gap-5 flex">
                     <div className="flex-col justify-start items-start gap-2.5 flex">
                       <div className="text-black dark:text-neutral-50 text-xl font-medium font-pre">
-                        {data[0].Title}
+                        {data.Title}
                       </div>
                     </div>
                     <div className="flex-col justify-start items-start gap-[50px] flex">
@@ -83,11 +92,11 @@ const ShopPageDetail = async ({ params }: { params: { pageId: string } }) => {
                         {new Intl.NumberFormat("ko-KR", {
                           style: "currency",
                           currency: "KRW",
-                        }).format(parseInt(data[0].Price))}
+                        }).format(parseInt(data.Price))}
                       </div>
                       <div className="flex-col justify-start items-start gap-[30px] flex">
                         <div className="w-[421px] text-neutral-600 dark:text-zinc-100 text-xs font-light font-pre whitespace-pre-wrap">
-                          {data[0].Description}
+                          {data.Description}
                         </div>
                       </div>
                     </div>
@@ -98,118 +107,24 @@ const ShopPageDetail = async ({ params }: { params: { pageId: string } }) => {
                       yes && "gap-[30px]"
                     )}
                   >
-                    <div className="flex-col justify-center items-end gap-[15px] flex">
-                      <div className="w-[318px] justify-between items-center inline-flex">
-                        <div className="text-neutral-400 dark:text-zinc-100 text-[11px] font-normal font-pre">
-                          색상
-                        </div>
-                        <Select>
-                          <SelectTrigger className="dark:bg-neutral-900 dark:text-stone-300 rounded-sm w-60 h-[26px] text-neutral-600 text-[11px] font-normal font-pre">
-                            <SelectValue placeholder="-[필수] 옵션을 선택해 주세요-" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectGroup>
-                              {data[0].Color.map((colors, i) => (
-                                <SelectItem value={colors} key={i}>
-                                  {colors}
-                                </SelectItem>
-                              ))}
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="justify-center items-center gap-[50px] inline-flex">
-                        <div className="text-neutral-400 dark:text-zinc-100 text-[11px] font-normal font-pre">
-                          사이즈
-                        </div>
-                        <Select>
-                          <SelectTrigger className="dark:bg-neutral-900 dark:text-stone-300 rounded-sm w-60 h-[26px] text-neutral-600 text-[11px] font-normal font-pre">
-                            <SelectValue placeholder="-[필수] 옵션을 선택해 주세요-" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectGroup>
-                              {data[0].Size.map((sizes, i) => (
-                                <SelectItem value={sizes} key={i}>
-                                  {sizes}
-                                </SelectItem>
-                              ))}
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
-                    {yes && (
-                      <>
-                        <div className="w-[299px] flex mt-3 flex-col">
-                          <div className="flex flex-col">
-                            <div className="text-neutral-600 dark:text-neutral-50 text-[10px] font-normal font-pre">
-                              Lorem ipsum dolor sit
-                            </div>
-                            <div className="text-neutral-600 dark:text-neutral-50 text-[10px] font-normal font-pre">
-                              -블랙/S
-                            </div>
-                          </div>
-                          <div className="text-black dark:text-white text-[11px] font-semibold font-pre flex justify-end w-full">
-                            KRW 10,000
-                          </div>
-                          <div className="flex gap-1">
-                            <input
-                              placeholder="1"
-                              className="text-[10px] font-normal font-pre w-[37px] h-[18px] pl-2 rounded-sm border border-neutral-300 dark:bg-neutral-900"
-                            />
-
-                            <div className="w-[18px] h-[18px]">
-                              <Plus className="w-[18px] h-[18px] dark:text-black bg-neutral-300 rounded-sm" />
-                            </div>
-                            <div className="w-[18px] h-[18px]">
-                              <Minus className="w-[18px] h-[18px] dark:text-black bg-neutral-300 rounded-sm" />
-                            </div>
-                          </div>
-                        </div>
-                        <div className="w-[299px] h-3.5 justify-center items-start gap-[167px] inline-flex">
-                          <div className="dark:text-white text-[11px] font-semibold font-pre">
-                            총상품금액
-                          </div>
-                          <div className="w-[84px] flex justify-center items-center">
-                            <div className="text-blue-500 text-[11px] font-semibold font-pre">
-                              KRW 10,000
-                            </div>
-                            <div className="text-blue-500 text-[10px] font-normal font-pre">
-                              (1개)
-                            </div>
-                          </div>
-                        </div>
-                      </>
-                    )}
-                    <div className="flex-col justify-start items-start gap-2.5 flex">
-                      <div className="w-[315px] h-[41px] py-3.5 bg-neutral-900 dark:bg-zinc-600 justify-center items-center inline-flex">
-                        <div className="text-neutral-50 text-[11px] font-medium font-body">
-                          Buy it Now
-                        </div>
-                      </div>
-                      <div className="w-[315px] h-[41px] py-3.5 border border-neutral-900 dark:border-zinc-600 justify-center items-center inline-flex">
-                        <div className="text-black dark:text-neutral-50 text-[11px] font-medium font-body">
-                          Add to Cart
-                        </div>
-                      </div>
-                    </div>
+                    {data && <ShopOption result={data} />}
                   </div>
                 </div>
               </div>
               <div className="flex-col justify-start items-start gap-10 flex">
-                {data[0].DetailImages ? (
+                {data.DetailImages ? (
                   <>
                     <img
                       className="w-[550px] h-[733.33px]"
-                      src={data[0].DetailImages[0]}
+                      src={data.DetailImages[0]}
                     />
                     <img
                       className="w-[550px] h-[733.33px]"
-                      src={data[0].DetailImages[1]}
+                      src={data.DetailImages[1]}
                     />
                     <img
                       className="w-[550px] h-[733.33px]"
-                      src={data[0].DetailImages[2]}
+                      src={data.DetailImages[2]}
                     />
                   </>
                 ) : (
@@ -252,135 +167,89 @@ const ShopPageDetail = async ({ params }: { params: { pageId: string } }) => {
                     <br />
                     <br />
                   </span>
-                  <pre className="text-black dark:text-neutral-50 leading-[15px] text-[13px] font-normal font-noto uppercase tracking-wide whitespace-pre-wrap">
-                    행정각부의 장은 국무위원 중에서 국무총리의 제청으로 대통령이
-                    임명한다.
-                    <br />
-                    형사피고인은 유죄의 판결이 확정될 때까지는 무죄로 추정된다.
-                    <br />
-                    탄핵결정은 공직으로부터 파면함에 그친다. <br />
-                    그러나, 이에 의하여 민사상이나 형사상의 책임이 면제되지는
-                    아니한다.
-                    <br /> 모든 국민은 학문과 예술의 자유를 가진다. <br />
-                    정부는 회계연도마다 예산안을 편성하여 회계연도 개시
-                    90일전까지 국회에 제출하고,
-                    <br /> 국회는 회계연도 개시 30일전까지 이를 의결하여야 한다.
-                    <br />
-                    헌법개정안은 국회가 의결한 후 30일 이내에 국민투표에 붙여
-                    국회의원선거권자 과반수의 투표와 투표자 과반수의 찬성을
-                    얻어야 한다.
-                    <br /> 근로자는 근로조건의 향상을 위하여 자주적인
-                    단결권·단체교섭권 및 단체행동권을 가진다.
-                    <br />
-                    <br />
-                    <br />
-                    누구든지 체포 또는 구속을 당한 때에는 즉시 변호인의 조력을
-                    받을 권리를 가진다. <br />
-                    다만, 형사피고인이 스스로 변호인을 구할 수 없을 때에는
-                    법률이 정하는 바에 의하여 국가가 변호인을 붙인다.
-                    <br /> 국가는 평생교육을 진흥하여야 한다. 국가는 여자의
-                    복지와 권익의 향상을 위하여 노력하여야 한다. <br />
-                    평화통일정책의 수립에 관한 대통령의 자문에 응하기 위하여
-                    민주평화통일자문회의를 둘 수 있다. <br />
-                    대통령·국무총리·국무위원·행정각부의 장·헌법재판소
-                    재판관·법관·중앙선거관리위원회 위원·감사원장·감사위원 기타
-                    법률이 정한 공무원이 그 직무집행에 있어서 헌법이나 법률을
-                    위배한 때에는 국회는 탄핵의 소추를 의결할 수 있다.
-                    <br />
+                  <pre className="text-black dark:text-neutral-50 leading-[15px] text-[13px] font-normal font-pre uppercase tracking-wide whitespace-pre-wrap">
+                    {`고액 결제의 경우, 안전을 위해 카드사에서 확인 전화를 드릴 수 있습니다.
+확인 과정에서 도난 카드의 사용이나 타인 명의의 주문 등 정상적인 주문이 아니라고 판단될 경우
+임의로 주문을 보류 또는 취소할 수 있습니다.
+
+무통장 입금은 상품 구매 대금을 PC뱅킹, 인터넷뱅킹, 텔레뱅킹 혹은 가까운 은행에서 직접입금하시면 됩니다.
+주문시 입력한 입금자명과 실제 입금자의 성명이 반드시 일치하여야 하며, 7일 이내로 입금을
+하셔야하며 입금되지 않은 주문은 자동취소 됩니다.`}
                   </pre>
                 </div>
               </TabsContent>
               <TabsContent value="2">
                 <div className="px-[125px] py-[50px] border border-gray-20 dark:border-zinc-600 flex-col justify-center items-center flex">
                   <span className="text-black dark:text-neutral-50 text-[15px] font-semibold font-pre uppercase tracking-wide">
-                    결제 안내
+                    배송 안내
                   </span>
                   <span className="text-black dark:text-neutral-50 text-[12px] font-light font-pre uppercase tracking-wide">
                     <br />
                     <br />
                   </span>
-                  <pre className="text-black dark:text-neutral-50 leading-[15px] text-[13px] font-normal font-noto uppercase tracking-wide whitespace-pre-wrap">
-                    행정각부의 장은 국무위원 중에서 국무총리의 제청으로 대통령이
-                    임명한다.
-                    <br />
-                    형사피고인은 유죄의 판결이 확정될 때까지는 무죄로 추정된다.
-                    <br />
-                    탄핵결정은 공직으로부터 파면함에 그친다. <br />
-                    그러나, 이에 의하여 민사상이나 형사상의 책임이 면제되지는
-                    아니한다.
-                    <br /> 모든 국민은 학문과 예술의 자유를 가진다. <br />
-                    정부는 회계연도마다 예산안을 편성하여 회계연도 개시
-                    90일전까지 국회에 제출하고,
-                    <br /> 국회는 회계연도 개시 30일전까지 이를 의결하여야 한다.
-                    <br />
-                    헌법개정안은 국회가 의결한 후 30일 이내에 국민투표에 붙여
-                    국회의원선거권자 과반수의 투표와 투표자 과반수의 찬성을
-                    얻어야 한다.
-                    <br /> 근로자는 근로조건의 향상을 위하여 자주적인
-                    단결권·단체교섭권 및 단체행동권을 가진다.
-                    <br />
-                    <br />
-                    <br />
-                    누구든지 체포 또는 구속을 당한 때에는 즉시 변호인의 조력을
-                    받을 권리를 가진다. <br />
-                    다만, 형사피고인이 스스로 변호인을 구할 수 없을 때에는
-                    법률이 정하는 바에 의하여 국가가 변호인을 붙인다.
-                    <br /> 국가는 평생교육을 진흥하여야 한다. 국가는 여자의
-                    복지와 권익의 향상을 위하여 노력하여야 한다. <br />
-                    평화통일정책의 수립에 관한 대통령의 자문에 응하기 위하여
-                    민주평화통일자문회의를 둘 수 있다. <br />
-                    대통령·국무총리·국무위원·행정각부의 장·헌법재판소
-                    재판관·법관·중앙선거관리위원회 위원·감사원장·감사위원 기타
-                    법률이 정한 공무원이 그 직무집행에 있어서 헌법이나 법률을
-                    위배한 때에는 국회는 탄핵의 소추를 의결할 수 있다.
-                    <br />
+                  <pre className="text-black dark:text-neutral-50 leading-[15px] text-[13px] font-normal font-pre uppercase tracking-wide whitespace-pre-wrap">
+                    {`교환 및 반품 주소
+교환 및 반환 사유 확인후 제공 - 문의하기(인스타)
+
+- 배송 방법 : 택배
+- 배송 지역 : 전국지역
+- 배송 비용 : 조건부 무료 (주문 금액 40,000원 미만일 때 배송비 3,000원이 추가됩니다.)
+- 배송 기간 : 3일 ~ 7일
+- 배송 안내 : 주문금액 4만원 이상 구매시 무료 배송 됩니다.
+
+* 주문 기준 배송기한은 1~2일 이내이며 제품 종류에 따라 7일 이내 배송됩니다. 다만, 
+특수한 경우 별도 배송안내를 통해 공지 드릴 수 있습니다.
+
+* 산간벽지나 도서지방은 별도의 추가금액을 지불하셔야 하는 경우가 있습니다.
+
+* 고객님께서 주문하신 상품은 입금 확인 후 배송해 드립니다. 다만, 상품종류에 따라서
+상품의 배송이 다소 지연될 수 있습니다.
+`}
                   </pre>
                 </div>
               </TabsContent>
               <TabsContent value="3">
                 <div className="px-[125px] py-[50px] border border-gray-20 dark:border-zinc-600 flex-col justify-center items-center flex">
                   <span className="text-black dark:text-neutral-50 text-[15px] font-semibold font-pre uppercase tracking-wide">
-                    결제 안내
+                    교환/환불 안내
                   </span>
                   <span className="text-black dark:text-neutral-50 text-[12px] font-light font-pre uppercase tracking-wide">
                     <br />
                     <br />
                   </span>
-                  <pre className="text-black dark:text-neutral-50 leading-[15px] text-[13px] font-normal font-noto uppercase tracking-wide whitespace-pre-wrap">
-                    행정각부의 장은 국무위원 중에서 국무총리의 제청으로 대통령이
-                    임명한다.
-                    <br />
-                    형사피고인은 유죄의 판결이 확정될 때까지는 무죄로 추정된다.
-                    <br />
-                    탄핵결정은 공직으로부터 파면함에 그친다. <br />
-                    그러나, 이에 의하여 민사상이나 형사상의 책임이 면제되지는
-                    아니한다.
-                    <br /> 모든 국민은 학문과 예술의 자유를 가진다. <br />
-                    정부는 회계연도마다 예산안을 편성하여 회계연도 개시
-                    90일전까지 국회에 제출하고,
-                    <br /> 국회는 회계연도 개시 30일전까지 이를 의결하여야 한다.
-                    <br />
-                    헌법개정안은 국회가 의결한 후 30일 이내에 국민투표에 붙여
-                    국회의원선거권자 과반수의 투표와 투표자 과반수의 찬성을
-                    얻어야 한다.
-                    <br /> 근로자는 근로조건의 향상을 위하여 자주적인
-                    단결권·단체교섭권 및 단체행동권을 가진다.
-                    <br />
-                    <br />
-                    <br />
-                    누구든지 체포 또는 구속을 당한 때에는 즉시 변호인의 조력을
-                    받을 권리를 가진다. <br />
-                    다만, 형사피고인이 스스로 변호인을 구할 수 없을 때에는
-                    법률이 정하는 바에 의하여 국가가 변호인을 붙인다.
-                    <br /> 국가는 평생교육을 진흥하여야 한다. 국가는 여자의
-                    복지와 권익의 향상을 위하여 노력하여야 한다. <br />
-                    평화통일정책의 수립에 관한 대통령의 자문에 응하기 위하여
-                    민주평화통일자문회의를 둘 수 있다. <br />
-                    대통령·국무총리·국무위원·행정각부의 장·헌법재판소
-                    재판관·법관·중앙선거관리위원회 위원·감사원장·감사위원 기타
-                    법률이 정한 공무원이 그 직무집행에 있어서 헌법이나 법률을
-                    위배한 때에는 국회는 탄핵의 소추를 의결할 수 있다.
-                    <br />
+                  <pre className="text-black dark:text-neutral-50 leading-[15px] text-[13px] font-normal font-pre uppercase tracking-wide whitespace-pre-wrap">
+                    {`교환 및 반품이 가능한 경우
+
+- 상품을 공금 받으신 날로부터 7일이내. 단, 가전제품의 경우 포장을 개봉하였거나 포장이
+훼손되어 상품가치가 상실된 경우에는 교환/반품이 불가능합니다.
+
+- 공금받으신 상품 및 용역의 내용이 표시, 광고 내용과 다르거나 다르게 이행된 경우에는
+공금받은 날로부터 3개월이내, 그 사실을 알게 된 날로부터 30일 이내
+교환 및 반품이 불가능한 경우
+
+- 고객님의 책임이 있는 사유로 상품 등이 멸실 또는 훼손된 경우. 단, 상품의 내용을
+확인하기 위하여 포장 등을 훼손한 경우는 제외
+
+- 포장을 개봉하였거나 포장이 훼손되어 상품가치가 상실된 경우
+(예 : 가전제품, 식품, 음반 등. 단, 액정화면이 부착된 노트북, LCD모니터, 디지털 카메라
+등의 불량화소에 따른 반품/교환은 제조사 기준에 따릅니다.)
+
+- 고객님의 사용 또는 일부 소비에 의하여 상품의 가치가 현저히 감소한 경우. 단, 화장품
+등의 경우 시용제품을 제공한 경우에 한 합니다.
+
+- 시간의 경과에 의하여 재판매가 곤란할 정도로 상품 등의 가치가 현저히 감소한 경우
+
+- 복제가 가능한 상품등의 포장을 훼손한 경우
+(자세한 내용은 고객만족센터 1:1 E-MAIL 상담을 이용해 주시기 바랍니다.)
+
+
+* 고객님의 마음이 바뀌어 교환/반품을 하실 경우 상품반송 비용은 고객님께서 부담하셔야
+합니다.
+(색상 및 사이즈 교환 등 포함)
+
+환불
+
+환불시 반품 확인여부를 확인한 후 영업일 기준 3일 이내에 결제 금액을 환불해 드립니다.`}
                   </pre>
                 </div>
               </TabsContent>

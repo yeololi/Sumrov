@@ -5,12 +5,35 @@ import { Label } from "@/components/ui/label";
 import Footer from "../../_components/footer";
 import Header from "../../_components/header";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 let yes = true;
 
 const LoginPage = () => {
+    const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false);
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const FindPw = async () => {
+        setIsLoading(() => true);
+        const FindPw = async () => {
+            try {
+                const res = await fetch(`/api/auth/findPw`, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        email: email,
+                        name: name,
+                    }),
+                }).then((r) => r.json());
+                console.log(res);
+                if (res.pw) {
+                    console.log(res.pw.임시비밀번호);
+                }
+                yes = false;
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
         try {
             const res = await fetch(`/api/auth/findPw`, {
                 method: "POST",
@@ -19,13 +42,12 @@ const LoginPage = () => {
                     name: name,
                 }),
             }).then((r) => r.json());
-            console.log(res);
-            if (res.pw) {
-                console.log(res.pw.임시비밀번호);
-            }
-            yes = false;
+            setIsLoading(() => false);
+
+            router.push("/login");
         } catch (error) {
             console.error(error);
+            setIsLoading(() => false);
         }
     };
 
@@ -100,12 +122,22 @@ const LoginPage = () => {
                                 보내드렸습니다.
                             </div>
                         </div>
-                        <Button
-                            variant={"login"}
-                            className="w-[450px] h-[43px]"
-                        >
-                            확인
-                        </Button>
+                        {isLoading ? (
+                            <Button
+                                disabled
+                                variant={"login"}
+                                className="w-[450px] h-[43px]"
+                            >
+                                확인
+                            </Button>
+                        ) : (
+                            <Button
+                                variant={"login"}
+                                className="w-[450px] h-[43px]"
+                            >
+                                확인
+                            </Button>
+                        )}
                     </div>
                 )}
             </div>

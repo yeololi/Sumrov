@@ -80,7 +80,7 @@ async function fetchData(uuid: string) {
 
 const ShopDetailPage = async ({ params }: { params: { pageId: string } }) => {
   const result = await fetchData(params.pageId);
-
+  console.log(result);
   if (!result) {
   }
 
