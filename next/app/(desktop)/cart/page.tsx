@@ -1,21 +1,7 @@
-import { Button } from "@/components/ui/button";
-import Footer from "../_components/footer";
-import Header from "../_components/header";
-import { cart, columns } from "./colums";
-import { DataTable } from "./data-tables";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { cart} from "./colums";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/util/authOption";
 import { redirect } from "next/navigation";
-import { Row } from "@tanstack/react-table";
 import CartInner from "./_components/cart-inner";
 
 const data: cart[] = [

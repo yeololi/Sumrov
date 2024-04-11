@@ -8,8 +8,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useToast } from "@/components/ui/use-toast";
 import { Minus, Plus } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export interface post {
@@ -33,7 +35,8 @@ const ShopOption = ({ result }: { result: post }) => {
     color: "",
     size: "",
   });
-
+  const { toast } = useToast();
+  const router = useRouter();
   const [itemCounter, setitemCounter] = useState(1);
 
   const increment = () => {
@@ -54,6 +57,18 @@ const ShopOption = ({ result }: { result: post }) => {
   };
 
   const handleAddCart = () => {};
+
+  const handleBuyNow = () => {
+    if(selectValue.color && selectValue.size) {
+      router.push(`/payment?OriginUuid=${btoa(result.Uuid)}&Cnt=${itemCounter}&size=${selectValue.size}&color=${selectValue.color}`);
+    }
+    else {
+      toast({
+        title: "상품 옵션을 모두 선택해주세요",
+        variant: "destructive",
+      });
+    }
+  }
 
   return (
     <>
@@ -175,24 +190,16 @@ const ShopOption = ({ result }: { result: post }) => {
           </div>
         </>
 
-        <Link
+        <div
           className="flex mt-[39px]"
-          href={{
-            pathname: "/payment",
-            query: {
-              OriginUuid: btoa(result.Uuid),
-              Cnt: itemCounter,
-              size: selectValue.size,
-              color: selectValue.color
-            },
-          }}
+          onClick={handleBuyNow}
         >
           <button className="w-[315px] h-[41px] bg-black cursor-pointer">
             <div className="text-neutral-50 h-full text-[11px] flex justify-center items-center font-medium font-pre">
               Buy it Now
             </div>
           </button>
-        </Link>
+        </div>
         <div className="flex mt-1.5">
           <button className="w-[315px] h-[41px] bg-neutral-50 border border-black cursor-pointer">
             <div className="text-black text-[11px] h-full font-medium font-body flex justify-center items-center">
