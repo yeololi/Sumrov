@@ -23,6 +23,7 @@ const LoginPage = () => {
             if (res.pw) {
                 console.log(res.pw.임시비밀번호);
             }
+            yes = false;
         } catch (error) {
             console.error(error);
         }

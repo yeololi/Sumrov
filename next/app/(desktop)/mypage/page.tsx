@@ -1,48 +1,23 @@
 import Footer from "../_components/footer";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/util/authOption";
 import Header from "../_components/header";
-const data = ["주문내역 조회", "회원정보", "장바구니", "로그아웃"];
-const data2 = ["입금전", "배송준비중", "배송중", "배송완료", "교환/반품"];
-
+import MyPageset from "./_components/myPage";
+import { redirect } from "next/navigation";
+const session = await getServerSession(authOptions);
 function mypage() {
+    console.log(session);
+
+    !session && redirect("/login");
     return (
         <>
             <Header />
             <div className="flex justify-center pt-[200px] pb-[91px] bg-neutral-50 dark:bg-inherit">
                 <div className="w-[1040px] flex-col justify-start items-center gap-[70px] inline-flex">
                     <div className="text-black dark:text-neutral-50 text-[32px] font-bold font-nav tracking-[3.20px]">
-                        NOTICE
+                        MY PAGE
                     </div>
-                    <div className="flex flex-row gap-[120px]">
-                        <div className="flex flex-col">
-                            {data.map((arg, key) => (
-                                <div className="text-[12px] font-bold dark:text-white text-[#000] mb-[40px] min-w-[78px]">
-                                    {arg}
-                                </div>
-                            ))}
-                        </div>
-                        <div className="flex flex-col">
-                            <div className="flex flex-row mb-[32px]">
-                                <div className="text-[16px] font-bold text-[#000] mr-[2px] dark:text-white">
-                                    Lorem 님의 주문 현황
-                                </div>
-                                <div className="mt-[3px] text-[12px] font-bold text-[#919191] whitespace-nowrap">
-                                    (최근 3개월)
-                                </div>
-                            </div>
-                            <div className="flex flex-row justify-around h-[132px] w-[815px] border-y border-[#EBEBEB] px-[56px] py-[40px]">
-                                {data2.map((arg, key) => (
-                                    <div className="flex flex-col">
-                                        <div className="mb-[16px] text-[14px] font-bold text-[#919191] whitespace-nowrap">
-                                            {arg}
-                                        </div>
-                                        <div className=" font-bold text-center">
-                                            0
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
+                    <MyPageset session = {session} />
                 </div>
             </div>
             <Footer />
