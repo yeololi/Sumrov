@@ -10,6 +10,8 @@ import { useToast } from "@/components/ui/use-toast";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useRouter } from "next/navigation";
+import { Label as Label3 } from "@/components/ui/label";
+
 declare global {
   interface Window {
     daum: any;
@@ -39,8 +41,8 @@ const Payment = ({ data }: { data?: Postpp[] }) => {
     ?.map((ai, i) => ai.Price)
     .reduce((pre, cur) => pre + cur, 0);
   const salesum = data
-  ?.map((ai, i) => ai.Price * ai.Sale / 100)
-  .reduce((pre, cur) => pre + cur, 0);
+    ?.map((ai, i) => (ai.Price * ai.Sale) / 100)
+    .reduce((pre, cur) => pre + cur, 0);
   const [checked, setChecked] = React.useState("false");
   const [recipient, setRecipient] = useState("");
   const [zonecode, setZonecode] = useState("");
@@ -276,7 +278,7 @@ const Payment = ({ data }: { data?: Postpp[] }) => {
                 <div className="w-[700px] h-[0px] border border-stone-300"></div>
               </div>
             </form>
-            <div className="h-[276px] flex-col justify-start items-start gap-[50px] flex">
+            <div className="w-[700px] flex-col justify-start items-start gap-[50px] flex">
               <div className="text-lg font-medium font-noto">주문상품 확인</div>
               {data?.map((post, i) => (
                 <div
@@ -347,7 +349,10 @@ const Payment = ({ data }: { data?: Postpp[] }) => {
                       총 결제 금액
                     </div>
                     <div className="text-right text-sm font-normal font-noto">
-                      KWR {pricesum && salesum && (pricesum-salesum+3000).toLocaleString()}
+                      KWR{" "}
+                      {pricesum &&
+                        salesum &&
+                        (pricesum - salesum + 3000).toLocaleString()}
                     </div>
                   </div>
                 </div>
@@ -418,6 +423,7 @@ const Payment = ({ data }: { data?: Postpp[] }) => {
             <div className="h-5 flex-col justify-center items-start gap-2.5 flex">
               <div className="px-[50px] justify-center items-center gap-2.5 inline-flex">
                 <Checkbox
+                  id="allCheck"
                   onCheckedChange={(e) => {
                     if (checked == "true") {
                       setChecked("false");
@@ -427,9 +433,12 @@ const Payment = ({ data }: { data?: Postpp[] }) => {
                     console.log(checked);
                   }}
                 />
-                <div className="text-sm font-normal font-pre">
+                <Label3
+                  htmlFor="allCheck"
+                  className="text-sm font-normal font-pre"
+                >
                   주문 내용을 확인하였으며 약관에 동의합니다.
-                </div>
+                </Label3>
               </div>
             </div>
             <button

@@ -16,6 +16,7 @@ async function fetchData() {
     const response: { results: Notice[] } = await fetch(
       `http://3.39.237.151:8080/notice`,
       {
+        cache: "no-store",
         method: "GET",
       }
     ).then((r) => r.json());
