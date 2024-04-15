@@ -22,7 +22,7 @@ function MyPageset() {
         </div>
         <div className="flex flex-row justify-around h-[132px] w-[815px] border-y border-[#EBEBEB] px-[56px] py-[40px]">
           {data2.map((arg, key) => (
-            <div className="flex flex-col">
+            <div className="flex flex-col" key={key}>
               <div className="mb-[16px] text-[14px] font-bold text-[#919191] whitespace-nowrap">
                 {arg}
               </div>

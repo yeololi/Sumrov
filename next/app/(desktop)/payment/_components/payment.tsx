@@ -486,6 +486,6 @@ const Label2 = React.forwardRef<
     </div>
   );
 });
-Label.displayName = "Label";
+Label2.displayName = "Label2";
 
 export default Payment;
