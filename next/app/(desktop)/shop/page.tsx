@@ -41,11 +41,13 @@ async function fetchData(category: category) {
     let response: { results: Product[] };
 
     if (category === "all") {
-      response = await fetch(`http://3.39.237.151:8080/post`, {
+      response = await fetch(`http://3.39.237.151:8080/post/`, {
+        cache: "no-store",
         method: "GET",
       }).then((r) => r.json());
     } else {
-      response = await fetch(`http://3.39.237.151:8080/post/${category}`, {
+      response = await fetch(`http://3.39.237.151:8080/post/${category}/`, {
+        cache: "no-store",
         method: "GET",
       }).then((r) => r.json());
     }
