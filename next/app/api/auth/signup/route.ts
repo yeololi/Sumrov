@@ -6,7 +6,7 @@ interface res {
   name: string;
   email: string;
   password: string;
-  zonecode: number;
+  zonecode: string;
   address: string;
   addrDetail: string;
   tel: string;

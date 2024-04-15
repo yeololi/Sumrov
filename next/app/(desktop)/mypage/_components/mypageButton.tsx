@@ -2,11 +2,18 @@
 
 import { Button } from "@/components/ui/button";
 import { signOut } from "next-auth/react";
+import Link from "next/link";
 
 const data = [
   { name: "주문내역 조회" },
   { name: "회원정보" },
-  { name: "장바구니" },
+  {
+    name: (
+      <>
+        <Link href={"/cart"}>장바구니</Link>
+      </>
+    ),
+  },
   {
     name: "로그아웃",
     onClick: () => {
@@ -23,7 +30,7 @@ const MypageButton = () => {
           key={key}
           variant={"ghost"}
           className="text-[12px] font-bold font-pre dark:text-white text-[#000] mb-[40px] min-w-[78px]"
-          {...arg}
+          onClick={arg.onClick}
         >
           {arg.name}
         </Button>

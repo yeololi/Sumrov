@@ -290,6 +290,7 @@ const SignUp = () => {
                   placeholder=""
                   type={"text"}
                   id="tel1"
+                  maxLength={3}
                 />
                 <div className="text-black dark:text-white text-[13px] font-medium font-pre">
                   -
@@ -299,6 +300,7 @@ const SignUp = () => {
                   placeholder=""
                   type={"text"}
                   id="tel2"
+                  maxLength={4}
                 />
                 <div className="text-black dark:text-white text-[13px] font-medium font-pre">
                   -
@@ -308,6 +310,7 @@ const SignUp = () => {
                   placeholder=""
                   type={"text"}
                   id="tel3"
+                  maxLength={4}
                 />
               </div>
             </div>
