@@ -1,8 +1,11 @@
-import { cart} from "./colums";
+import { cart } from "./colums";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/util/authOption";
 import { redirect } from "next/navigation";
 import CartInner from "./_components/cart-inner";
+import { connectDB } from "@/lib/database";
+import { ObjectId } from "mongodb";
+import { fetchPaymentData } from "@/lib/utils";
 
 const data: cart[] = [
   {
@@ -26,11 +29,18 @@ const data: cart[] = [
 ];
 
 const Cart = async () => {
+  const db = (await connectDB).db("sumrov");
   const session = await getServerSession(authOptions);
-
+  const result = await db
+    .collection("cart")
+    .find({ UserUuid: new ObjectId(session?.user._id) })
+    .toArray();
+  const data = await Promise.all(
+    result.map((ai) => fetchPaymentData(ai.OriginUuid))
+  );
   !session && redirect("/login");
-
-  return <CartInner />;
+  console.log(data);
+  return data && <CartInner data={data} />;
 };
 
 export default Cart;
