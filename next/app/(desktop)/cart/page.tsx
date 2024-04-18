@@ -6,6 +6,7 @@ import CartInner from "./_components/cart-inner";
 import { connectDB } from "@/lib/database";
 import { ObjectId } from "mongodb";
 import { fetchPaymentData } from "@/lib/utils";
+import clientPromise from "@/util/database";
 
 const data: cart[] = [
   {
@@ -33,7 +34,7 @@ const data: cart[] = [
 ];
 
 const Cart = async () => {
-  const db = (await connectDB).db("sumrov");
+  const db = (await clientPromise).db("sumrov");
   const session = await getServerSession(authOptions);
   const result = await db
     .collection("cart")
