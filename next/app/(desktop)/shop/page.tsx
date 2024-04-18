@@ -74,7 +74,7 @@ const ShopPage = async ({
 
   const result = await fetchData(category);
   let totalPages = result
-    ? result.length / 9 + (result.length % 9) / (result.length % 9)
+    ? Math.ceil(result.length / 9)
     : 30;
 
   const realresult = result?.slice((page - 1) * 9, page * 9);
