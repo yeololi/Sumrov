@@ -6,7 +6,10 @@ function MyPageset() {
     <div className="flex flex-row gap-[120px]">
       <div className="flex flex-col">
         {data.map((arg, key) => (
-          <div className="text-[12px] font-bold dark:text-white text-[#000] mb-[40px] min-w-[78px]">
+          <div
+            className="text-[12px] font-bold dark:text-white text-[#000] mb-[40px] min-w-[78px]"
+            key={key}
+          >
             {arg}
           </div>
         ))}
