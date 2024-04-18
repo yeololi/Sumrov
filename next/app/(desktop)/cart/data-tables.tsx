@@ -15,13 +15,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Dispatch, SetStateAction, useEffect } from "react";
+import React, { Dispatch, SetStateAction, useEffect } from "react";
 import { cart } from "./colums";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  setSelected: Dispatch<SetStateAction<cart[] | undefined>>;
+  setSelected: Dispatch<SetStateAction<any[] | undefined>>;
 }
 
 export function DataTable<TData, TValue>({
@@ -29,20 +29,22 @@ export function DataTable<TData, TValue>({
   data,
   setSelected,
 }: DataTableProps<TData, TValue>) {
+  const [rowSelection, setRowSelection] = React.useState({});
+
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    onRowSelectionChange: setRowSelection,
+    state: {
+      rowSelection,
+    },
   });
-  console.log(table.getFilteredSelectedRowModel().rows);
+
   useEffect(() => {
-    let temp:cart[] = [];
-    table.getFilteredSelectedRowModel().rows.forEach((ai) => {temp.push(ai.original)})
-    console.log(temp)
-    setSelected(
-      temp
-    );
-  }, [table.getFilteredSelectedRowModel().rows]);
+    setSelected(table.getSelectedRowModel().rows.map((ai, i) => ai.original));
+  }, [rowSelection]);
+
   return (
     <div className="rounded-none border border-t-0">
       <Table>

@@ -1,4 +1,4 @@
-import { cart} from "./colums";
+import { cart } from "./colums";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/util/authOption";
 import { redirect } from "next/navigation";
@@ -13,6 +13,8 @@ const data: cart[] = [
     color: "블랙",
     size: "L",
     image: "asd",
+    sale: 0,
+    desc: "Lorem ipsum dolor sit",
   },
   {
     id: "1",
@@ -22,6 +24,8 @@ const data: cart[] = [
     color: "블랙",
     size: "L",
     image: "asd",
+    sale: 0,
+    desc: "Lorem ipsum dolor sit",
   },
 ];
 
@@ -30,7 +34,7 @@ const Cart = async () => {
 
   !session && redirect("/login");
 
-  return <CartInner />;
+  return <CartInner data={data} />;
 };
 
 export default Cart;

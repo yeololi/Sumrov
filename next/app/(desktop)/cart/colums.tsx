@@ -24,6 +24,8 @@ export type cart = {
   color: string;
   size: string;
   image: string;
+  sale: number;
+  desc: string;
 };
 
 export const columns: ColumnDef<cart>[] = [
@@ -94,7 +96,6 @@ export const columns: ColumnDef<cart>[] = [
     accessorKey: "amount",
     header: () => <div className="text-center font-noto">수량</div>,
     cell: ({ row }) => {
-
       const amount = row.getValue("amount") as string;
       return (
         <div className="w-[70px] flex justify-center h-5">
@@ -106,7 +107,7 @@ export const columns: ColumnDef<cart>[] = [
     },
   },
   {
-    accessorKey: "price",
+    accessorKey: "total",
     header: () => <div className="text-center font-noto">합계</div>,
     cell: ({ row }) => {
       const payment = row.original;
