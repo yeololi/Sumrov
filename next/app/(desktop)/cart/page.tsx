@@ -8,7 +8,7 @@ import { ObjectId } from "mongodb";
 import { fetchPaymentData } from "@/lib/utils";
 import clientPromise from "@/util/database";
 
-const data: cart[] = [
+const dataInit: cart[] = [
   {
     id: "1",
     name: "Lorem ipsum dolor sit",
@@ -45,7 +45,7 @@ const Cart = async () => {
   );
   !session && redirect("/login");
   console.log(data);
-  return data && <CartInner data={data} />;
+  return data && <CartInner data={data ?? dataInit} />;
 };
 
 export default Cart;
