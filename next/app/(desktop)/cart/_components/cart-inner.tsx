@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Button } from "@/components/ui/button";
 import Footer from "../../_components/footer";
@@ -16,34 +16,35 @@ import {
 } from "@/components/ui/table";
 import { useState } from "react";
 import { Row } from "@tanstack/react-table";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
 
-const data: cart[] = [
-  {
-    id: "1",
-    name: "Lorem ipsum dolor sit",
-    price: 10000,
-    amount: 1,
-    color: "블랙",
-    size: "L",
-    image: "asd",
-  },
-  {
-    id: "1",
-    name: "Lorem ipsum dolor sit",
-    price: 10000,
-    amount: 1,
-    color: "블랙",
-    size: "L",
-    image: "asd",
-  },
-];
+const CartInner = ({ data }: { data: cart[] }) => {
+  const { toast } = useToast();
 
-const CartInner = () => {
+  const router = useRouter();
   const [selected, setSelected] = useState<cart[]>();
+
   let total = 0;
-  selected?.forEach((ai)=>{total += ai.price*ai.amount});
-  const sale=100, box=0;
-console.log(selected)
+
+  selected?.forEach((ai) => {
+    total += ai.price * ai.amount;
+  });
+  const sale = 0,
+    box = 3000; // 3,000원 고정
+
+  console.log(selected);
+  const selectOrder = () => {
+    if (!selected || selected?.length == 0) {
+      toast({
+        title: "제품을 선택해주세요",
+        variant: "default",
+      });
+      return;
+    } else {
+      router.push(`/payment?s=${selected[0].name}`);
+    }
+  };
 
   return (
     <>
@@ -54,7 +55,11 @@ console.log(selected)
             CART
           </div>
           <div className="flex-col justify-center items-center gap-10 flex">
-            <DataTable columns={columns} data={data} setSelected={setSelected} />
+            <DataTable
+              columns={columns}
+              data={data}
+              setSelected={setSelected}
+            />
             <Table>
               <TableHeader>
                 <TableRow>
@@ -74,10 +79,18 @@ console.log(selected)
               </TableHeader>
               <TableBody>
                 <TableRow>
-                  <TableCell className="text-center">KRW {total.toLocaleString()}</TableCell>
-                  <TableCell className="text-center">KRW {sale.toLocaleString()}</TableCell>
-                  <TableCell className="text-center">KRW {box.toLocaleString()}</TableCell>
-                  <TableCell className="text-center">KRW {(total-sale+box).toLocaleString()}</TableCell>
+                  <TableCell className="text-center">
+                    KRW {total.toLocaleString()}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    KRW {sale.toLocaleString()}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    KRW {box.toLocaleString()}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    KRW {(total - sale + box).toLocaleString()}
+                  </TableCell>
                 </TableRow>
               </TableBody>
             </Table>
@@ -91,6 +104,7 @@ console.log(selected)
             모든 항목 주문
           </Button>
           <Button
+            onClick={selectOrder}
             variant={"signup"}
             className="w-[425px] h-[50px] py-[9px] border border-neutral-900 justify-center items-center gap-2.5 flex text-base font-semibold font-noto text-center "
           >

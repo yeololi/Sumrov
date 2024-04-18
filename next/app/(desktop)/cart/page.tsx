@@ -16,6 +16,8 @@ const data: cart[] = [
     color: "블랙",
     size: "L",
     image: "asd",
+    sale: 0,
+    desc: "Lorem ipsum dolor sit",
   },
   {
     id: "1",
@@ -25,6 +27,8 @@ const data: cart[] = [
     color: "블랙",
     size: "L",
     image: "asd",
+    sale: 0,
+    desc: "Lorem ipsum dolor sit",
   },
 ];
 
