@@ -7,6 +7,11 @@ declare module "next-auth" {
       name: string;
       email: string;
       accessToken: string;
+      _id: string;
+      address: string;
+      addrDetails: string;
+      zonecode: string;
+      tel: string;
     };
   }
 }

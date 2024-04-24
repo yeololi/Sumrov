@@ -3,7 +3,6 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/util/authOption";
 import { redirect } from "next/navigation";
 import CartInner from "./_components/cart-inner";
-import { connectDB } from "@/lib/database";
 import { ObjectId } from "mongodb";
 import { fetchPaymentData } from "@/lib/utils";
 import clientPromise from "@/util/database";
@@ -40,6 +39,7 @@ const Cart = async () => {
     .collection("cart")
     .find({ UserUuid: new ObjectId(session?.user._id) })
     .toArray();
+
   const data = await Promise.all(
     result.map((ai) => fetchPaymentData(ai.OriginUuid))
   );
