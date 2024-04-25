@@ -147,8 +147,9 @@ const ShopDetailPage = async ({ params }: { params: { pageId: string } }) => {
 
         <div className="mt-[98px] flex flex-col items-center">
           <div className="gap-[25.21px] flex flex-col">
-            {result?.DetailImages.map((image) => (
+            {result?.DetailImages.map((image, i) => (
               <img
+                key={i}
                 className="w-[300px] h-[400px] border border-black"
                 src={image}
               />
