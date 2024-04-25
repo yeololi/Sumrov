@@ -119,7 +119,7 @@ const Signup = () => {
       name: name,
       email: email,
       password: password,
-      zonecode: +zonecode,
+      zonecode: zonecode,
       address: address,
       addrDetail: addrDetail,
       tel: tel,
@@ -263,11 +263,11 @@ const Signup = () => {
                     </div>
                   </div>
                   <div className="h-[37px] w-[650px] justify-between items-center flex">
-                    <Input className="w-[175px]" id="tel1" />
+                    <Input className="w-[175px]" id="tel1" maxLength={3} />
                     <div className="w-[5px] h-px bg-black" />
-                    <Input className="w-[175px]" id="tel2" />
+                    <Input className="w-[175px]" id="tel2" maxLength={4} />
                     <div className="w-[5px] h-px bg-black" />
-                    <Input className="w-[175px]" id="tel3" />
+                    <Input className="w-[175px]" id="tel3" maxLength={4} />
                   </div>
                 </div>
               </div>

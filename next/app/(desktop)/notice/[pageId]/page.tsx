@@ -89,7 +89,7 @@ const NoticePageDetail = async ({ params }: { params: { pageId: string } }) => {
                   <div className="flex-col justify-center items-center gap-[50px] flex">
                     <img
                       className="w-[680px] h-[680px]"
-                      src="/images/notice.png"
+                      src={data[0].Images[0]}
                     />
                     <div className="w-[890px] text-black dark:text-neutral-50 text-sm font-light font-pre whitespace-pre-wrap uppercase tracking-wide">
                       {data[0].Description}
@@ -99,7 +99,7 @@ const NoticePageDetail = async ({ params }: { params: { pageId: string } }) => {
               </div>
             </div>
             <Link
-              href={"/notice"}
+              href={"/notice?page=1"}
               className="w-[100px] h-[30px] pt-1.5 pb-[7px] border border-gray-200 dark:neutral-50 justify-center items-center inline-flex"
             >
               <div className="text-black dark:text-neutral-50 text-sm font-light font-pre uppercase tracking-wide">

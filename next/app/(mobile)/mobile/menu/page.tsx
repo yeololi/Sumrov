@@ -1,4 +1,3 @@
-import { X } from "lucide-react";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import ShopMenu from "./_components/shopmenu";

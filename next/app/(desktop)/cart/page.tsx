@@ -1,25 +1,13 @@
-
-import { Button } from "@/components/ui/button";
-import Footer from "../_components/footer";
-import Header from "../_components/header";
-import { cart, columns } from "./colums";
-import { DataTable } from "./data-tables";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { cart } from "./colums";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/util/authOption";
 import { redirect } from "next/navigation";
-import { Row } from "@tanstack/react-table";
 import CartInner from "./_components/cart-inner";
+import { ObjectId } from "mongodb";
+import { fetchPaymentData } from "@/lib/utils";
+import clientPromise from "@/util/database";
 
-const data: cart[] = [
+const dataInit: cart[] = [
   {
     id: "1",
     name: "Lorem ipsum dolor sit",
@@ -28,6 +16,8 @@ const data: cart[] = [
     color: "블랙",
     size: "L",
     image: "asd",
+    sale: 0,
+    desc: "Lorem ipsum dolor sit",
   },
   {
     id: "1",
@@ -37,19 +27,25 @@ const data: cart[] = [
     color: "블랙",
     size: "L",
     image: "asd",
+    sale: 0,
+    desc: "Lorem ipsum dolor sit",
   },
 ];
 
 const Cart = async () => {
-  const session = await getServerSession(authOptions) 
+  const db = (await clientPromise).db("sumrov");
+  const session = await getServerSession(authOptions);
+  const result = await db
+    .collection("cart")
+    .find({ UserUuid: new ObjectId(session?.user._id) })
+    .toArray();
 
-  console.log(session);
-
-  !session && redirect("/login");
-
-  return (
-    <CartInner/>
+  const data = await Promise.all(
+    result.map((ai) => fetchPaymentData(ai.OriginUuid))
   );
+  !session && redirect("/login");
+  console.log(data);
+  return data && <CartInner data={data ?? dataInit} />;
 };
 
 export default Cart;
