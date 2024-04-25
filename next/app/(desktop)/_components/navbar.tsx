@@ -65,8 +65,8 @@ const NavBar = () => {
           </Link>
         </Button>
         {datas.map((args, i) => (
-          <NavigationMenu key={i}>
-            <NavigationMenuList>
+          <NavigationMenu className="" key={i}>
+            <NavigationMenuList className="">
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="w-[102px] bg-white bg-opacity-0 text-black dark:text-white text-lg font-bold font-nav whitespace-nowrap">
                   {args.title}
