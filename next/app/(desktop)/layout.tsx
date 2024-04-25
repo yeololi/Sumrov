@@ -5,7 +5,9 @@ const DesktopLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="bg-neutral-50 dark:bg-inherit">
       {" "}
-      <Suspense fallback={<Spinner />}>{children}</Suspense>
+      <Suspense fallback={<Spinner className="h-screen" />}>
+        {children}
+      </Suspense>
     </div>
   );
 };

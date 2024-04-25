@@ -1,5 +1,6 @@
 "use client";
 
+import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -45,59 +46,77 @@ const NavBar = () => {
   const { data: session } = useSession();
 
   return (
-    <div className="justify-center items-start gap-[50px] flex flex-1">
-      {datas.map((args, i) => (
-        <NavigationMenu key={i}>
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger className="w-[102px] bg-white bg-opacity-0 text-black dark:text-white text-xl font-bold font-nav whitespace-nowrap">
-                {args.title}
-              </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="flex flex-col p-3 gap-1 w-[102px] bg-opacity-10 bg-white">
-                  {args.items.map((arg, j) => (
-                    <ListItem key={j} href={arg.href}>
-                      {arg.list}
-                    </ListItem>
-                  ))}
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
-      ))}
-      <Button
-        variant={"ghost"}
-        className="flex items-center justify-center hover:bg-opacity-0 hover:bg-white"
-        asChild
-      >
-        <Link href={"/cart"}>
-          <span className="text-black dark:text-white text-xl font-bold font-nav whitespace-nowrap">
-            Cart (
-          </span>
-          <span className="text-black dark:text-white text-base font-normal font-num">
-            0
-          </span>
-          <span className="text-black dark:text-white text-xl font-bold font-nav whitespace-nowrap">
-            )
-          </span>
-        </Link>
-      </Button>
-      {session ? (
+    <div className="justify-between items-center flex flex-1">
+      <Link href="/" className="justify-start items-center gap-2.5 inline-flex">
+        <div className="text-neutral-950 dark:text-white text-2xl w-[200px] font-semibold font-nav">
+          SUMROV
+        </div>
+      </Link>
+      <div className="flex gap-[30px]">
         <Button
           variant={"ghost"}
-          className="text-black dark:text-white text-xl font-bold font-nav whitespace-nowrap hover:bg-opacity-0 hover:bg-white"
+          className="flex items-center justify-center hover:bg-opacity-0 hover:bg-white"
+          asChild
         >
-          <Link href={"/mypage"}>My Page</Link>
+          <Link href={"/cart"}>
+            <span className="text-black dark:text-white text-lg font-bold font-nav">
+              Sumrov
+            </span>
+          </Link>
         </Button>
-      ) : (
+        {datas.map((args, i) => (
+          <NavigationMenu key={i}>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className="w-[102px] bg-white bg-opacity-0 text-black dark:text-white text-lg font-bold font-nav whitespace-nowrap">
+                  {args.title}
+                </NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="flex flex-col p-3 gap-1 w-[102px] bg-opacity-10 bg-white">
+                    {args.items.map((arg, j) => (
+                      <ListItem key={j} href={arg.href}>
+                        {arg.list}
+                      </ListItem>
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+        ))}
+      </div>
+      <div className="flex gap-[20px]">
         <Button
           variant={"ghost"}
-          className="text-black dark:text-white text-xl font-bold font-nav whitespace-nowrap hover:bg-opacity-0 hover:bg-white"
+          className="flex items-center justify-center hover:bg-opacity-0 hover:bg-white"
+          asChild
         >
-          <Link href={"/login"}>Log in</Link>
+          <Link href={"/cart"}>
+            <span className="text-black dark:text-white text-lg font-bold font-nav whitespace-nowrap">
+              Cart
+            </span>
+          </Link>
         </Button>
-      )}
+        {session ? (
+          <Button
+            variant={"ghost"}
+            className="text-black dark:text-white text-lg font-bold font-nav whitespace-nowrap hover:bg-opacity-0 hover:bg-white"
+          >
+            <Link href={"/mypage"}>My Page</Link>
+          </Button>
+        ) : (
+          <Button
+            variant={"ghost"}
+            className="text-black dark:text-white text-lg font-bold font-nav whitespace-nowrap hover:bg-opacity-0 hover:bg-white"
+          >
+            <Link href={"/login"}>Log in</Link>
+          </Button>
+        )}
+
+        <div className="flex">
+          <ModeToggle />
+        </div>
+      </div>
     </div>
   );
 };
