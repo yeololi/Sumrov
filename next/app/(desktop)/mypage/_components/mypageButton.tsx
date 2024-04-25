@@ -6,18 +6,21 @@ import Link from "next/link";
 
 const data = [
   <Button
+    key={0}
     variant={"ghost"}
     className="text-[12px] font-bold font-pre dark:text-white text-[#000] mb-[40px] min-w-[78px]"
   >
     주문내역 조회
   </Button>,
   <Button
+    key={1}
     variant={"ghost"}
     className="text-[12px] font-bold font-pre dark:text-white text-[#000] mb-[40px] min-w-[78px]"
   >
     회원정보
   </Button>,
   <Button
+    key={2}
     variant={"ghost"}
     className="text-[12px] font-bold font-pre dark:text-white text-[#000] mb-[40px] min-w-[78px]"
     asChild
@@ -26,6 +29,7 @@ const data = [
   </Button>,
 
   <Button
+    key={3}
     variant={"ghost"}
     className="text-[12px] font-bold font-pre dark:text-white text-[#000] mb-[40px] min-w-[78px]"
     onClick={() => {
