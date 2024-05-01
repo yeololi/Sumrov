@@ -100,7 +100,7 @@ export const columns: ColumnDef<cart>[] = [
       return (
         <div className="w-[70px] flex justify-center h-5">
           <div className="w-full text-center">
-            <div className="text-[16px]">{amount}</div>
+            <div className="text-[16px] text-sm">{amount}</div>
           </div>
         </div>
       );

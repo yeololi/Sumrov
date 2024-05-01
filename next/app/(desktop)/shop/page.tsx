@@ -22,7 +22,7 @@ export interface Product {
   Size: string[];
   Color: string[];
   MainImage: string;
-  DetailImage: string[];
+  DetailImages: string[];
   Category: category;
 }
 
@@ -51,7 +51,7 @@ async function fetchData(category: category) {
         method: "GET",
       }).then((r) => r.json());
     }
-    console.log(response);
+    // console.log(response);
     if (response) {
       return response.results;
     } else {
@@ -73,9 +73,7 @@ const ShopPage = async ({
   const category = searchParams.category;
 
   const result = await fetchData(category);
-  let totalPages = result
-    ? Math.ceil(result.length / 9)
-    : 30;
+  let totalPages = result ? Math.ceil(result.length / 9) : 30;
 
   const realresult = result?.slice((page - 1) * 9, page * 9);
 

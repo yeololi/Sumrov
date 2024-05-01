@@ -18,11 +18,12 @@ import { useState } from "react";
 import { Row } from "@tanstack/react-table";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
+import { Product } from "../../shop/page";
 
 const CartInner = ({ data }: { data: cart[] }) => {
   const { toast } = useToast();
-
   const router = useRouter();
+
   const [selected, setSelected] = useState<cart[]>();
 
   let total = 0;
@@ -33,7 +34,6 @@ const CartInner = ({ data }: { data: cart[] }) => {
   const sale = 0,
     box = 3000; // 3,000원 고정
 
-  console.log(selected);
   const selectOrder = () => {
     if (!selected || selected?.length == 0) {
       toast({
@@ -49,7 +49,7 @@ const CartInner = ({ data }: { data: cart[] }) => {
   return (
     <>
       <Header />
-      <div className="flex-col justify-center items-center gap-10 flex pt-[150px] pb-[300px]">
+      <div className="flex-col justify-center items-center gap-10 flex pt-[225px] pb-[300px]">
         <div className="flex-col justify-center items-center gap-6 flex">
           <div className="text-center text-black text-[26px] font-semibold font-nav tracking-[2.60px]">
             CART
