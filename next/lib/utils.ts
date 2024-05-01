@@ -1,4 +1,4 @@
-import { post } from "@/app/(desktop)/shop/_components/shopOption";
+import { Product } from "@/app/(desktop)/shop/page";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export async function fetchPaymentData(uuid: string) {
   try {
-    const response: { results: post[] } = await fetch(
+    const response: { results: Product[] } = await fetch(
       `http://3.39.237.151:8080/post/uuid/${atob(uuid)}`,
       {
         method: "GET",
