@@ -42,7 +42,8 @@ const CartInner = ({ data }: { data: cart[] }) => {
       });
       return;
     } else {
-      router.push(`/payment?s=${selected[0].name}`);
+      const prop = selected.map((ai) => ai._id);
+      router.push(`/payment?s=${JSON.stringify(prop)}`);
     }
   };
 

@@ -11,6 +11,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useRouter } from "next/navigation";
 import { Label as Label3 } from "@/components/ui/label";
+import { cart } from "../../cart/colums";
 
 declare global {
   interface Window {
@@ -36,7 +37,7 @@ export interface Postpp {
   color: string;
   cnt: number;
 }
-const Payment = ({ data }: { data?: Postpp[] }) => {
+const Payment = ({ data }: { data: cart[] }) => {
   const pricesum = data
     ?.map((ai, i) => ai.Price)
     .reduce((pre, cur) => pre + cur, 0);
@@ -121,7 +122,6 @@ const Payment = ({ data }: { data?: Postpp[] }) => {
         (document.getElementById("zonecode") as HTMLInputElement).value =
           data.zonecode;
         document.getElementById("addrDetail")?.focus();
-      
       },
     }).open();
   };

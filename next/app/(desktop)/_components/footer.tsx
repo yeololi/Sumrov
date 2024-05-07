@@ -1,9 +1,7 @@
-import { ChevronRight } from "lucide-react";
-
 const Footer = () => {
   return (
     <>
-      <div className="w-full h-[500px] px-[100px] py-[106px] bg-neutral-900 justify-center items-center inline-flex">
+      <div className="w-full h-[500px] px-[100px] py-[106px] bg-[#2C2C2C] justify-center items-center inline-flex">
         <div className="grow shrink basis-0 self-stretch flex-col justify-between items-end inline-flex">
           <div className="self-stretch justify-between items-start inline-flex">
             <div className="flex-col justify-center items-start gap-[15px] inline-flex">
