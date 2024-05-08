@@ -9,25 +9,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
+import { authOptions } from "@/util/authOption";
 import { Minus, Plus } from "lucide-react";
-import Link from "next/link";
+import { getSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { ResultItem } from "../../cart/page";
+import { Product } from "../page";
 
-export interface post {
-  Uuid: string;
-  Title: string;
-  Price: string;
-  Sale: number;
-  Description: string;
-  Category: "all" | "top" | "bottom" | "acc";
-  Size: string[];
-  Color: string[];
-  MainImage: string;
-  DetailImages: string[];
-}
-
-const ShopOption = ({ result }: { result: post }) => {
+const ShopOption = ({ result }: { result: Product }) => {
   const [selectValue, setSelectValue] = useState<{
     color: string;
     size: string;
@@ -59,16 +49,49 @@ const ShopOption = ({ result }: { result: post }) => {
   const handleAddCart = () => {};
 
   const handleBuyNow = () => {
-    if(selectValue.color && selectValue.size) {
-      router.push(`/payment?OriginUuid=${btoa(result.Uuid)}&Cnt=${itemCounter}&size=${selectValue.size}&color=${selectValue.color}`);
-    }
-    else {
+    if (selectValue.color && selectValue.size) {
+      router.push(
+        `/payment?OriginUuid=${btoa(result.Uuid)}&Cnt=${itemCounter}&size=${
+          selectValue.size
+        }&color=${selectValue.color}`
+      );
+    } else {
       toast({
         title: "상품 옵션을 모두 선택해주세요",
         variant: "destructive",
       });
     }
-  }
+  };
+
+  const newCart = async () => {
+    const session = await getSession();
+
+    if (selectValue.size === "" || selectValue.color === "") {
+      toast({
+        title: "상품 옵션을 모두 선택해주세요",
+        variant: "destructive",
+      });
+      return;
+    }
+    const body = {
+      UserUuid: session?.user._id,
+      OriginUuid: btoa(result.Uuid),
+      Size: selectValue.size,
+      Color: selectValue.color,
+      Cnt: itemCounter,
+    };
+
+    const res = await fetch("/api/post/newCart/", {
+      method: "POST",
+      body: JSON.stringify(body),
+    }).then((r) => r.json());
+
+    console.log(res);
+
+    if (res) {
+      router.push("/cart");
+    }
+  };
 
   return (
     <>
@@ -190,10 +213,7 @@ const ShopOption = ({ result }: { result: post }) => {
           </div>
         </>
 
-        <div
-          className="flex mt-[39px]"
-          onClick={handleBuyNow}
-        >
+        <div className="flex mt-[39px]" onClick={handleBuyNow}>
           <button className="w-[315px] h-[41px] bg-black cursor-pointer">
             <div className="text-neutral-50 h-full text-[11px] flex justify-center items-center font-medium font-pre">
               Buy it Now
@@ -201,7 +221,10 @@ const ShopOption = ({ result }: { result: post }) => {
           </button>
         </div>
         <div className="flex mt-1.5">
-          <button className="w-[315px] h-[41px] bg-neutral-50 border border-black cursor-pointer">
+          <button
+            className="w-[315px] h-[41px] bg-neutral-50 border border-black cursor-pointer"
+            onClick={newCart}
+          >
             <div className="text-black text-[11px] h-full font-medium font-body flex justify-center items-center">
               Add to Cart
             </div>

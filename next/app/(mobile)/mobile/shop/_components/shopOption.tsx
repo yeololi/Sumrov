@@ -139,6 +139,7 @@ const ShopOption = ({ result }: { result: post }) => {
             </div>
             <div className="flex gap-1">
               <input
+                readOnly
                 value={itemCounter}
                 onChange={handleInputChange}
                 className="text-[10px] text-black font-normal font-pre w-[37px] h-[18px] pl-2 rounded-sm border border-neutral-300 dark:bg-white"

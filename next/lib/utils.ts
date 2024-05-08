@@ -1,18 +1,18 @@
-import { post } from "@/app/(desktop)/shop/_components/shopOption";
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { Product } from "@/app/(desktop)/shop/page";
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
-
 
 export async function fetchPaymentData(uuid: string) {
   try {
-    const response: { results: post[] } = await fetch(
+    const response: { results: Product[] } = await fetch(
       `http://3.39.237.151:8080/post/uuid/${atob(uuid)}`,
       {
         method: "GET",
+        cache: "no-store",
       }
     ).then((r) => r.json());
 
@@ -26,4 +26,4 @@ export async function fetchPaymentData(uuid: string) {
     console.error(error);
     return;
   }
-}  
+}

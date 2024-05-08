@@ -1,47 +1,16 @@
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-import { Minus, Plus } from "lucide-react";
 import Footer from "../../_components/footer";
 import Header from "../../_components/header";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ShopOption from "../_components/shopOption";
+import { Product } from "../page";
 
 const data = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}];
 const yes = true;
 
-interface CartItem {
-  _id: string;
-  OriginUuid: string;
-  Title: string;
-  Cnt: number;
-  Price: string;
-  Sale: number;
-  Option: string;
-}
-
-interface post {
-  Uuid: string;
-  Title: string;
-  Price: string;
-  Sale: number;
-  Description: string;
-  Category: "all" | "top" | "bottom" | "acc";
-  Size: string[];
-  Color: string[];
-  MainImage: string;
-  DetailImages: string[];
-}
-
 async function fetchData(uuid: string) {
   try {
-    const response: { results: post[] } = await fetch(
+    const response: { results: Product[] } = await fetch(
       `http://3.39.237.151:8080/post/uuid/${atob(uuid)}`,
       {
         method: "GET",

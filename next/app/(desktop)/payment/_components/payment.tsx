@@ -121,6 +121,7 @@ const Payment = ({ data }: { data?: Postpp[] }) => {
         (document.getElementById("zonecode") as HTMLInputElement).value =
           data.zonecode;
         document.getElementById("addrDetail")?.focus();
+      
       },
     }).open();
   };

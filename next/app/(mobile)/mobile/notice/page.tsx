@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 import Footer from "../_components/footer";
 import Header from "../_components/header";
 
@@ -25,8 +26,6 @@ async function fetchData() {
       // const chunkData = chunk(response.results, 9)
       //   .map((subArray) => chunk(subArray, 3))
       //   .flat();
-
-      console.log(response);
 
       return response.results;
     } else {
@@ -57,29 +56,26 @@ const NoticePage = async () => {
               i == 0 ? "border-y" : "border-b"
             )}
           >
-            <div className="h-full w-full flex flex-col gap-1">
+            <Link
+              href={"/mobile/notice/" + btoa(args.Uuid)}
+              className="h-full w-full flex flex-col gap-1"
+            >
               <div className="flex">
                 <div className="text-zinc-800 dark:text-white text-xs font-normal font-body">
-                  Lorem ipsum dolor sit amet,
-                </div>
-                <div className="text-zinc-800 dark:text-white text-xs font-normal font-body">
-                  로램잇섬
+                  {args.Title}
                 </div>
               </div>
               <div className="flex gap-[13px]">
-                <div className="text-neutral-400 text-[10px] font-medium font-body tracking-widest">
-                  SUMROV
+                <div className="text-neutral-400 text-[10px] font-medium font-body tracking-widest uppercase">
+                  sumrov
                 </div>
                 <div className="text-neutral-400 text-[10px] font-medium font-body tracking-wide">
-                  2024-02-11 16:04:15
+                  {args.Date}
                 </div>
               </div>
-            </div>
+            </Link>
           </div>
         ))}
-        <div className="mt-[30px] dark:text-white text-black text-[11px] font-medium font-body">
-          Load more (1/1)
-        </div>
       </div>
       <Footer />
     </>

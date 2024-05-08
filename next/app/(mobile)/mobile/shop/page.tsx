@@ -45,21 +45,22 @@ const ShopPage = async ({
         <div className="mt-[25px] gap-y-[25px] grid grid-cols-2 gap-x-[19px]">
           {result?.map((product, i) => (
             <Link
-            href={"/mobile/shop/" + btoa(product.Uuid)}
+              href={"/mobile/shop/" + btoa(product.Uuid)}
               key={i}
               className="w-[162px] flex-col justify-start items-center gap-[11px] inline-flex"
-            >{product.MainImage ? (
-              <img
-                className="w-[162px] h-[213px] shadow"
-                src={product.MainImage}
-              />
-            ) : (
-              <img
-                className="w-[162px] h-[213px] shadow"
-                src="https://via.placeholder.com/162x213"
-              />
-            )}
-              <div className="w-[114px] h-[35px] flex flex-col items-center">
+            >
+              {product.MainImage ? (
+                <img
+                  className="w-[162px] h-[213px] shadow"
+                  src={product.MainImage}
+                />
+              ) : (
+                <img
+                  className="w-[162px] h-[213px] shadow"
+                  src="https://via.placeholder.com/162x213"
+                />
+              )}
+              <div className="flex flex-col items-center">
                 <div className="text-black dark:text-white text-[11px] font-medium font-body">
                   {product.Title}
                 </div>
@@ -72,11 +73,6 @@ const ShopPage = async ({
               </div>
             </Link>
           ))}
-        </div>
-        <div className="mt-[89px] pb-[49px] border-b flex justify-center items-center w-full border-black border-opacity-25">
-          <div className="text-black dark:text-white text-[11px] font-medium font-body">
-            Load more (1/1)
-          </div>
         </div>
       </div>
       <Footer />
