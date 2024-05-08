@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Button } from "@/components/ui/button";
 import Footer from "../../_components/footer";
@@ -41,20 +41,27 @@ const data: cart[] = [
 const CartInner = () => {
   const [selected, setSelected] = useState<cart[]>();
   let total = 0;
-  selected?.forEach((ai)=>{total += ai.price*ai.amount});
-  const sale=100, box=0;
-console.log(selected)
+  selected?.forEach((ai) => {
+    total += ai.price * ai.amount;
+  });
+  const sale = 100,
+    box = 0;
+  console.log(selected);
 
   return (
     <>
       <Header />
       <div className="flex-col justify-center items-center gap-10 flex pt-[150px] pb-[300px]">
         <div className="flex-col justify-center items-center gap-6 flex">
-          <div className="text-center text-black text-[26px] font-semibold font-nav tracking-[2.60px]">
+          <div className="text-center text-black dark:text-neutral-50 text-[26px] font-semibold font-nav tracking-[2.60px]">
             CART
           </div>
           <div className="flex-col justify-center items-center gap-10 flex">
-            <DataTable columns={columns} data={data} setSelected={setSelected} />
+            <DataTable
+              columns={columns}
+              data={data}
+              setSelected={setSelected}
+            />
             <Table>
               <TableHeader>
                 <TableRow>
@@ -74,10 +81,18 @@ console.log(selected)
               </TableHeader>
               <TableBody>
                 <TableRow>
-                  <TableCell className="text-center">KRW {total.toLocaleString()}</TableCell>
-                  <TableCell className="text-center">KRW {sale.toLocaleString()}</TableCell>
-                  <TableCell className="text-center">KRW {box.toLocaleString()}</TableCell>
-                  <TableCell className="text-center">KRW {(total-sale+box).toLocaleString()}</TableCell>
+                  <TableCell className="text-center">
+                    KRW {total.toLocaleString()}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    KRW {sale.toLocaleString()}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    KRW {box.toLocaleString()}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    KRW {(total - sale + box).toLocaleString()}
+                  </TableCell>
                 </TableRow>
               </TableBody>
             </Table>

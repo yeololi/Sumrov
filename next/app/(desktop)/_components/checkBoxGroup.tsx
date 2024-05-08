@@ -104,7 +104,7 @@ const CheckboxGroup = ({ isChecked }: { isChecked: boolean }) => {
           />
         </div>
         <div className="self-stretch px-4 py-[17px] rounded-sm border border-neutral-300 justify-start items-center gap-2.5 inline-flex">
-          <ScrollArea className="w-[760px] h-[300px] text-black text-[11px] font-light font-pre whitespace-pre-wrap break-all ">
+          <ScrollArea className="w-[760px] h-[300px] text-black dark:text-neutral-50  text-[11px] font-light font-pre whitespace-pre-wrap break-all ">
             {`서비스 이용약관
 제1조(목적)
 이 약관은 sumrov회사(전자상거래 사업자)가 운영하는 sumrov사이버 몰(이하 “몰”이라 한다)에서 제공하는 인터넷 관련 서비스(이하 “서비스”라 한다)를 이용함에 있어 사이버 몰과 이용자의 권리.의무 및 책임사항을 규정함을 목적으로 합니다.
@@ -279,7 +279,7 @@ const CheckboxGroup = ({ isChecked }: { isChecked: boolean }) => {
           />
         </div>
         <div className="self-stretch px-4 py-[17px] rounded-sm border border-neutral-300 justify-start items-center gap-2.5 inline-flex">
-          <ScrollArea className="w-[760px] h-[300px] text-black text-[11px] font-light font-pre whitespace-pre-wrap">
+          <ScrollArea className="w-[760px] h-[300px] text-black dark:text-neutral-50  text-[11px] font-light font-pre whitespace-pre-wrap">
             {`개인정보 처리방침 (회원 구매 시)
 sumrov는 (이하 “회사”는) 고객님 의 개인정보를 중요시하며, “정보통신망 이용촉진 및 정보보호”에 관한 법률을 준수하고있습니다.
 회사는 개인정보처리방침을 통하여 고객님 께서 제공하시는 개인정보가 어떠한 용도와 방식으로 이용되고 있으며, 개인정보보호를 위해 어떠한 조치가 취해지고 있는지 알려드립니다.
