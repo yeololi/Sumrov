@@ -145,18 +145,18 @@ const Signup = () => {
         async
       />
       <Header />
-      <div className="w-full justify-center flex pt-[200px] pb-[120px]">
-        <div className="w-[800px] flex-col justify-start items-center inline-flex">
-          <div className="text-black text-[32px] font-semibold font-nav tracking-[3.20px]">
+      <div className="w-full justify-center flex pt-[200px] pb-[120px] ">
+        <div className="w-[800px] flex-col justify-start items-center inline-flex ">
+          <div className="text-black dark:text-neutral-50 text-[32px] font-semibold font-nav tracking-[3.20px]">
             SIGN UP
           </div>
           <form
             onSubmit={onSubmit}
             className="flex-col justify-center items-center gap-10 flex"
           >
-            <div className="self-stretch w-[800px] py-6 flex-col justify-center items-center gap-6 flex">
-              <div className="h-[35px] flex-col justify-center items-start gap-4 flex w-full">
-                <div className="text-center text-black text-base font-medium font-noto">
+            <div className="self-stretch  w-[800px] py-6 flex-col justify-center items-center gap-6 flex">
+              <div className="h-[35px]  flex-col justify-center items-start gap-4 flex w-full">
+                <div className="text-center text-black dark:text-neutral-50 text-base font-medium font-noto">
                   기본 정보
                 </div>
                 <div className="self-stretch h-[0px] border-2 border-gray-200"></div>
@@ -164,7 +164,7 @@ const Signup = () => {
               <div className="w-[800px] flex-col justify-start items-start gap-6 flex">
                 <div className="self-stretch h-[37px] justify-between items-center inline-flex">
                   <Label className="h-6 justify-start items-center gap-1 flex">
-                    <div className="text-black text-sm font-light font-pre">
+                    <div className="text-black dark:text-neutral-50 text-sm font-light font-pre">
                       이름
                     </div>
                     <div className="text-blue-500 text-xl font-normal font-pre">
@@ -175,7 +175,7 @@ const Signup = () => {
                 </div>
                 <div className="self-stretch h-[37px] justify-between items-center inline-flex">
                   <div className="justify-start items-center gap-1 flex">
-                    <div className="text-black text-sm font-light font-pre">
+                    <div className="text-black dark:text-neutral-50 text-sm font-light font-pre">
                       E-mail
                     </div>
                     <div className="text-blue-500 text-xl font-normal font-pre">
@@ -192,7 +192,7 @@ const Signup = () => {
                 </div>
                 <div className="self-stretch h-[37px] justify-between items-center inline-flex">
                   <div className="justify-start items-center gap-1 flex">
-                    <div className="text-black text-sm font-light font-pre">
+                    <div className="text-black dark:text-neutral-50 text-sm font-light font-pre">
                       Password
                     </div>
                     <div className="text-blue-500 text-xl font-normal font-pre">
@@ -203,7 +203,7 @@ const Signup = () => {
                 </div>
                 <div className="self-stretch h-[37px] justify-between items-center inline-flex">
                   <div className="justify-start items-center gap-1 flex">
-                    <div className="text-black text-sm font-light font-pre">
+                    <div className="text-black dark:text-neutral-50  text-sm font-light font-pre">
                       Password 확인
                     </div>
                     <div className="text-blue-500 text-xl font-normal font-pre">
@@ -218,7 +218,7 @@ const Signup = () => {
                 </div>
                 <div className="self-stretch justify-between items-start inline-flex">
                   <div className="justify-start items-center gap-1 flex">
-                    <div className="text-black text-sm font-light font-pre">
+                    <div className="text-black dark:text-neutral-50  text-sm font-light font-pre">
                       주소
                     </div>
                     <div className="text-blue-500 text-xl font-normal font-pre">
@@ -236,7 +236,7 @@ const Signup = () => {
                         onClick={searchAddress}
                         className="cursor-pointer w-[125px] h-[37px] flex justify-center items-center bg-gray-200 rounded-none dark:placeholder:text-neutral-400 dark:bg-gray-200 dark:border-neutral-300  border border-neutral-300"
                       >
-                        <div className="flex items-center dark:text-black justify-center text-black text-[13px] font-medium font-pre">
+                        <div className="flex items-center dark:text-black justify-center text-black  text-[13px] font-medium font-pre">
                           주소검색
                         </div>
                       </div>
@@ -255,7 +255,7 @@ const Signup = () => {
                 </div>
                 <div className="self-stretch justify-between items-center inline-flex">
                   <div className="justify-start items-center gap-1 flex">
-                    <div className="text-black text-sm font-light font-pre">
+                    <div className="text-black dark:text-neutral-50  text-sm font-light font-pre">
                       휴대전화
                     </div>
                     <div className="text-blue-500 text-xl font-normal font-pre">
@@ -277,9 +277,9 @@ const Signup = () => {
 
             <button
               type="submit"
-              className="cursor-pointer h-[50px] px-[234px] py-[9px] bg-black justify-center items-center gap-2.5 inline-flex"
+              className="cursor-pointer h-[50px] px-[234px] py-[9px] bg-black dark:bg-white justify-center items-center gap-2.5 inline-flex"
             >
-              <div className="text-center text-white text-base font-semibold font-noto">
+              <div className="text-center text-white dark:text-black text-base font-semibold font-noto">
                 회원가입
               </div>
             </button>
