@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const Footer = () => {
   return (
     <>
@@ -22,9 +24,12 @@ const Footer = () => {
                   <div className="text-neutral-50 text-xs font-light font-pre">
                     ojh@sumrov.com
                   </div>
-                  <div className="text-neutral-50 text-xs font-light font-pre">
-                    sumrov._
-                  </div>
+                  <Link
+                    href={"https://www.instagram.com/sumrov._"}
+                    className="text-neutral-50 text-xs font-light font-pre"
+                  >
+                    @sumrov._
+                  </Link>
                   <div className="text-neutral-50 text-xs font-light font-pre">
                     AM 10:00 ~ PM 06:00
                   </div>
