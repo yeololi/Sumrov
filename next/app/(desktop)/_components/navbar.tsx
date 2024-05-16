@@ -13,6 +13,7 @@ import {
   NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
+import { ShoppingCart } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
@@ -92,9 +93,7 @@ const NavBar = () => {
           asChild
         >
           <Link href={"/cart"}>
-            <span className="text-black dark:text-white text-lg font-bold font-nav whitespace-nowrap">
-              Cart
-            </span>
+            <ShoppingCart />
           </Link>
         </Button>
         {session ? (

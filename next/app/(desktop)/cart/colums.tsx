@@ -17,6 +17,7 @@ import { Minus, MoreHorizontal, Plus } from "lucide-react";
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type cart = {
+  _id: string;
   id: string;
   name: string;
   price: number;
@@ -70,10 +71,10 @@ export const columns: ColumnDef<cart>[] = [
       const payment = row.original;
       return (
         <div className="w-[400px] h-12 flex-col justify-center items-start gap-4 inline-flex">
-          <div className="text-black text-sm font-medium font-noto">
+          <div className="text-black dark:text-neutral-50 text-sm font-medium font-noto">
             {payment.name}
           </div>
-          <div className="text-zinc-600 text-xs font-normal font-noto">
+          <div className="text-zinc-600 dark:text-zinc-400 text-xs font-normal font-noto">
             [옵션 : {payment.color} / {payment.size}]
           </div>
         </div>

@@ -42,7 +42,8 @@ const CartInner = ({ data }: { data: cart[] }) => {
       });
       return;
     } else {
-      router.push(`/payment?s=${selected[0].name}`);
+      const prop = selected.map((ai) => ai._id);
+      router.push(`/payment?s=${JSON.stringify(prop)}`);
     }
   };
 
@@ -51,7 +52,7 @@ const CartInner = ({ data }: { data: cart[] }) => {
       <Header />
       <div className="flex-col justify-center items-center gap-10 flex pt-[225px] pb-[300px]">
         <div className="flex-col justify-center items-center gap-6 flex">
-          <div className="text-center text-black text-[26px] font-semibold font-nav tracking-[2.60px]">
+          <div className="text-center text-black dark:text-neutral-50 text-[26px] font-semibold font-nav tracking-[2.60px]">
             CART
           </div>
           <div className="flex-col justify-center items-center gap-10 flex">

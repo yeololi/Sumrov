@@ -9,7 +9,7 @@ import clientPromise from "@/util/database";
 import { Product } from "../shop/page";
 
 export interface ResultItem {
-  _id?: ObjectId;
+  _id: ObjectId;
   OriginUuid: string;
   Cnt: number;
   Size: string;
@@ -17,12 +17,13 @@ export interface ResultItem {
   UserUuid: ObjectId;
 }
 
-function transformData(data: Product[], results: ResultItem[]) {
+export function transformData(data: Product[], results: ResultItem[]) {
   return results
     .map((result) => {
       const item = data.find((d) => d.Uuid === atob(result.OriginUuid));
       if (item) {
         return {
+          _id: result._id.toString(),
           id: item.Uuid,
           name: item.Title,
           price: parseInt(item.Price, 10),

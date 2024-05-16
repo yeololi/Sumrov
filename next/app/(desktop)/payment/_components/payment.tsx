@@ -11,6 +11,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useRouter } from "next/navigation";
 import { Label as Label3 } from "@/components/ui/label";
+import { cart } from "../../cart/colums";
 
 declare global {
   interface Window {
@@ -21,27 +22,13 @@ interface IAddr {
   address: string;
   zonecode: string;
 }
-export interface Postpp {
-  Uuid: string;
-  Title: string;
-  Price: number;
-  Sale: number;
-  Description: string;
-  Category: "all" | "top" | "bottom" | "acc";
-  Size: string[];
-  Color: string[];
-  MainImage: string;
-  DetailImages: string[];
-  size: string;
-  color: string;
-  cnt: number;
-}
-const Payment = ({ data }: { data?: Postpp[] }) => {
+
+const Payment = ({ data }: { data: cart[] }) => {
   const pricesum = data
-    ?.map((ai, i) => ai.Price)
+    ?.map((ai, i) => ai.price)
     .reduce((pre, cur) => pre + cur, 0);
   const salesum = data
-    ?.map((ai, i) => (ai.Price * ai.Sale) / 100)
+    ?.map((ai, i) => (ai.price * ai.sale) / 100)
     .reduce((pre, cur) => pre + cur, 0);
   const [checked, setChecked] = React.useState("false");
   const [recipient, setRecipient] = useState("");
@@ -121,7 +108,6 @@ const Payment = ({ data }: { data?: Postpp[] }) => {
         (document.getElementById("zonecode") as HTMLInputElement).value =
           data.zonecode;
         document.getElementById("addrDetail")?.focus();
-      
       },
     }).open();
   };
@@ -162,7 +148,7 @@ const Payment = ({ data }: { data?: Postpp[] }) => {
               <div className="flex-col justify-center items-center gap-[50px] flex">
                 <div className="flex-col justify-center items-center gap-[50px] flex">
                   <div className="h-[53px] flex-col justify-center items-start gap-[25px] flex">
-                    <div className="text-center text-lg font-medium font-noto">
+                    <div className="text-center text-lg font-medium font-pre">
                       배송지
                     </div>
                     <div className="w-[700px] h-[0px] border border-stone-300"></div>
@@ -280,16 +266,16 @@ const Payment = ({ data }: { data?: Postpp[] }) => {
               </div>
             </form>
             <div className="w-[700px] flex-col justify-start items-start gap-[50px] flex">
-              <div className="text-lg font-medium font-noto">주문상품 확인</div>
+              <div className="text-lg font-medium font-pre">주문상품 확인</div>
               {data?.map((post, i) => (
                 <div
                   className="justify-start items-center gap-[50px] inline-flex"
                   key={i}
                 >
-                  {post.MainImage ? (
+                  {post.image ? (
                     <img
                       className="w-[171px] h-[204px] border border-neutral-50"
-                      src={post.MainImage}
+                      src={post.image}
                     />
                   ) : (
                     <img
@@ -297,16 +283,23 @@ const Payment = ({ data }: { data?: Postpp[] }) => {
                       src="https://via.placeholder.com/171x204"
                     />
                   )}
-                  <div className="self-stretch flex-col justify-start items-start gap-[25px] inline-flex">
-                    <div className="text-sm font-medium font-noto">
-                      {post.Title}
+                  <div className="self-stretch flex-col justify-start items-start gap-[20px] inline-flex">
+                    <div className="text-sm font-medium font-pre">
+                      {post.name}
                     </div>
-                    <div className="text-neutral-400 text-xs font-normal font-noto">
-                      {post.Description}
-                      <br />-{post.color}/{post.size}
+                    <div className="text-neutral-400 text-xs font-normal font-pre text-overflow whitespace-pre-wrap h-[80px]">
+                      {post.desc}
                     </div>
-                    <div className="text-sm font-medium font-noto">
-                      KWR {post.Price.toLocaleString()}
+                    <div className="flex justify-between w-full flex-col">
+                      <div className="text-sm font-medium font-pre">
+                        -{post.color}/{post.size}
+                      </div>
+                      <div className="text-sm font-medium font-pre">
+                        {post.amount}개
+                      </div>
+                      <div className="text-sm font-medium font-pre">
+                        KRW {post.price.toLocaleString()}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -315,45 +308,42 @@ const Payment = ({ data }: { data?: Postpp[] }) => {
             <div className="w-[700px] h-[0px] border border-stone-300"></div>
             <div className="h-[190px] flex-col justify-start items-start flex">
               <div className="h-[190px] flex-col justify-start items-start gap-[50px] flex">
-                <div className="text-center text-lg font-medium font-noto">
+                <div className="text-center text-lg font-medium font-pre">
                   결제 정보
                 </div>
                 <div className="h-[118px] flex-col justify-start items-start gap-[30px] flex">
                   <div className="h-[71px] flex-col justify-start items-start gap-2.5 flex">
                     <div className="w-[700px] px-5 justify-between items-center inline-flex">
-                      <div className="text-neutral-400 text-sm font-normal font-noto">
+                      <div className="text-neutral-400 text-sm font-normal font-pre">
                         상품금액
                       </div>
-                      <div className="text-right text-neutral-400 text-sm font-normal font-noto">
-                        KWR {pricesum?.toLocaleString()}
+                      <div className="text-right text-neutral-400 text-sm font-normal font-pre">
+                        KRW {pricesum?.toLocaleString()}
                       </div>
                     </div>
                     <div className="w-[700px] px-5 justify-between items-center inline-flex">
-                      <div className="text-neutral-400 text-sm font-normal font-noto">
+                      <div className="text-neutral-400 text-sm font-normal font-pre">
                         총 할인금액
                       </div>
-                      <div className="text-right text-neutral-400 text-sm font-normal font-noto">
-                        KWR {salesum?.toLocaleString()}
+                      <div className="text-right text-neutral-400 text-sm font-normal font-pre">
+                        KRW {salesum?.toLocaleString()}
                       </div>
                     </div>
                     <div className="w-[700px] px-5 justify-between items-center inline-flex">
-                      <div className="text-neutral-400 text-sm font-normal font-noto">
+                      <div className="text-neutral-400 text-sm font-normal font-pre">
                         배송비
                       </div>
-                      <div className="text-right text-neutral-400 text-sm font-normal font-noto">
-                        KWR 3,000
+                      <div className="text-right text-neutral-400 text-sm font-normal font-pre">
+                        KRW 3,000
                       </div>
                     </div>
                   </div>
                   <div className="w-[700px] px-5 justify-between items-center inline-flex">
-                    <div className="text-sm font-normal font-noto">
+                    <div className="text-sm font-normal font-pre">
                       총 결제 금액
                     </div>
-                    <div className="text-right text-sm font-normal font-noto">
-                      KWR{" "}
-                      {pricesum &&
-                        salesum &&
-                        (pricesum - salesum + 3000).toLocaleString()}
+                    <div className="text-right text-sm font-normal font-pre">
+                      KRW {(pricesum - salesum + 3000).toLocaleString()}
                     </div>
                   </div>
                 </div>
@@ -447,7 +437,7 @@ const Payment = ({ data }: { data?: Postpp[] }) => {
               onClick={toCheck}
               className="w-[700px] h-[50px] px-[234px] py-[9px] bg-black justify-center items-center gap-2.5 inline-flex"
             >
-              <div className="text-center text-white text-base font-semibold font-noto">
+              <div className="text-center text-white text-base font-semibold font-pre">
                 결제하기
               </div>
             </button>

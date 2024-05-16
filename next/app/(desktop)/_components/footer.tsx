@@ -1,9 +1,9 @@
-import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 const Footer = () => {
   return (
     <>
-      <div className="w-full h-[500px] px-[100px] py-[106px] bg-neutral-900 justify-center items-center inline-flex">
+      <div className="w-full h-[500px] px-[100px] py-[106px] bg-[#2C2C2C] justify-center items-center inline-flex">
         <div className="grow shrink basis-0 self-stretch flex-col justify-between items-end inline-flex">
           <div className="self-stretch justify-between items-start inline-flex">
             <div className="flex-col justify-center items-start gap-[15px] inline-flex">
@@ -24,9 +24,12 @@ const Footer = () => {
                   <div className="text-neutral-50 text-xs font-light font-pre">
                     ojh@sumrov.com
                   </div>
-                  <div className="text-neutral-50 text-xs font-light font-pre">
-                    sumrov._
-                  </div>
+                  <Link
+                    href={"https://www.instagram.com/sumrov._"}
+                    className="text-neutral-50 text-xs font-light font-pre"
+                  >
+                    @sumrov._
+                  </Link>
                   <div className="text-neutral-50 text-xs font-light font-pre">
                     AM 10:00 ~ PM 06:00
                   </div>
