@@ -86,7 +86,8 @@ func UpdateSale(c *gin.Context, db *gorm.DB) {
 	puid := c.Param("uuid")
 	var sale entity.Sale
 	var status struct {
-		Status string `json:"status"`
+		PostNum string `json:"PostNum"`
+		Status  string `json:"status"`
 	}
 
 	// 요청 바디에서 상태 정보를 바인딩
@@ -107,6 +108,7 @@ func UpdateSale(c *gin.Context, db *gorm.DB) {
 
 	// 판매 정보의 상태를 업데이트
 	sale.Status = status.Status
+	sale.PostNum = status.PostNum
 	if err := db.Save(&sale).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": "판매 정보를 업데이트하는 중 오류가 발생했습니다.",
