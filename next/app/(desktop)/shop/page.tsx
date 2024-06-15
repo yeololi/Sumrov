@@ -73,6 +73,9 @@ const ShopPage = async ({
   const category = searchParams.category;
 
   const result = await fetchData(category);
+
+  result?.reverse();
+
   let totalPages = result ? Math.ceil(result.length / 9) : 30;
 
   const realresult = result?.slice((page - 1) * 9, page * 9);

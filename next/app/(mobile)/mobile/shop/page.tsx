@@ -37,6 +37,9 @@ const ShopPage = async ({
 }) => {
   const category = searchParams.category;
   const result = await fetchData(category);
+
+  result?.reverse();
+
   return (
     <>
       <Header />
