@@ -42,13 +42,10 @@ const NoticePage = async ({
 
   const data = await fetchData();
 
-  let totalPages = data
-    ? Math.ceil(data.length / 10)
-    : 30;
+  let totalPages = data ? Math.ceil(data.length / 10) : 30;
 
   const realdata = data?.slice((page - 1) * 10, page * 10);
 
-  console.log(data);
   return (
     <>
       <Header />

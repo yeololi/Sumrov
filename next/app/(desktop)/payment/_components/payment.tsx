@@ -25,11 +25,13 @@ interface IAddr {
 
 const Payment = ({ data }: { data: cart[] }) => {
   const pricesum = data
-    ?.map((ai, i) => ai.price)
+    ?.map((ai, i) => ai.price * ai.amount)
     .reduce((pre, cur) => pre + cur, 0);
+
   const salesum = data
     ?.map((ai, i) => (ai.price * ai.sale) / 100)
     .reduce((pre, cur) => pre + cur, 0);
+
   const [checked, setChecked] = React.useState("false");
   const [recipient, setRecipient] = useState("");
   const [zonecode, setZonecode] = useState("");
@@ -287,15 +289,10 @@ const Payment = ({ data }: { data: cart[] }) => {
                     <div className="text-sm font-medium font-pre">
                       {post.name}
                     </div>
-                    <div className="text-neutral-400 text-xs font-normal font-pre text-overflow whitespace-pre-wrap h-[80px]">
-                      {post.desc}
-                    </div>
-                    <div className="flex justify-between w-full flex-col">
-                      <div className="text-sm font-medium font-pre">
-                        -{post.color}/{post.size}
-                      </div>
-                      <div className="text-sm font-medium font-pre">
-                        {post.amount}개
+
+                    <div className="flex gap-4 w-full flex-col">
+                      <div className="text-zinc-600 text-xs font-normal font-pre">
+                        -{post.color}/{post.size}&nbsp; 수량 {post.amount}개
                       </div>
                       <div className="text-sm font-medium font-pre">
                         KRW {post.price.toLocaleString()}

@@ -39,7 +39,9 @@ async function fetchData() {
 }
 
 const NoticePage = async () => {
-  const data = await fetchData();
+  let data = await fetchData();
+
+  data?.reverse();
 
   return (
     <>

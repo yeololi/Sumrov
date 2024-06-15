@@ -53,13 +53,12 @@ export const columns: ColumnDef<cart>[] = [
   {
     accessorKey: "image",
     header: () => <div className="text-center font-noto">이미지</div>,
-    cell: () => {
+    cell: ({ row }) => {
+      const image: string = row.getValue("image");
+
       return (
         <div className="w-[150px] flex justify-center">
-          <img
-            className="w-20 h-[95px] border border-black"
-            src="https://via.placeholder.com/80x95"
-          />
+          <img className="w-20 h-[95px] border border-slate-800" src={image} />
         </div>
       );
     },

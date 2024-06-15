@@ -47,6 +47,11 @@ const CartInner = ({ data }: { data: cart[] }) => {
     }
   };
 
+  const allOrder = () => {
+    const prop = data.map((ai) => ai._id);
+    router.push(`/payment?s=${JSON.stringify(prop)}`);
+  };
+
   return (
     <>
       <Header />
@@ -99,6 +104,7 @@ const CartInner = ({ data }: { data: cart[] }) => {
         </div>
         <div className="justify-center items-center gap-5 inline-flex">
           <Button
+            onClick={allOrder}
             variant={"login"}
             className="rounded-none w-[425px] h-[50px] py-[9px] bg-neutral-900 justify-center items-center gap-2.5 flex text-base font-semibold font-noto text-center "
           >
