@@ -160,7 +160,7 @@ const ShopOption = ({ result }: { result: Product }) => {
           <div className="w-[299px] flex mt-3 flex-col">
             <div className="flex flex-col">
               <div className="text-neutral-600 dark:text-neutral-400 text-[10px] font-normal font-pre">
-                Lorem ipsum dolor sit
+                {result.Title}
               </div>
               <div className="text-neutral-600 dark:text-neutral-400 text-[10px] font-normal font-pre">
                 {selectValue ? (
