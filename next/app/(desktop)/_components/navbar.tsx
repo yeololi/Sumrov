@@ -59,7 +59,7 @@ const NavBar = () => {
           className="flex items-center justify-center hover:bg-opacity-0 hover:bg-white"
           asChild
         >
-          <Link href={"/cart"}>
+          <Link href={"/info"}>
             <span className="text-black dark:text-white text-lg font-bold font-nav">
               Sumrov
             </span>

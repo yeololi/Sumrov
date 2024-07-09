@@ -5,8 +5,9 @@ export default function Home() {
   return (
     <>
       <Header />
-      <img src="/images/main1.png" alt="" className="w-screen" />
-      <img src="/images/main2.png" alt="" className="w-screen" />
+      <div className="pt-[50px]">
+        <img src="/images/main1.jpg" alt="" className="w-screen" />
+      </div>
       <Footer />
     </>
   );
