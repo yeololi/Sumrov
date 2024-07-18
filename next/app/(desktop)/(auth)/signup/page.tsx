@@ -5,8 +5,9 @@ import Header from "../../_components/header";
 import { Input } from "../_components/input";
 import CheckboxGroup from "../../_components/checkBoxGroup";
 import { useToast } from "@/components/ui/use-toast";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 declare global {
   interface Window {
@@ -33,6 +34,7 @@ interface formElement extends HTMLFormControlsCollection {
   tel3: HTMLInputElement;
   check2: HTMLInputElement;
   check3: HTMLInputElement;
+  birth: HTMLInputElement;
 }
 
 interface formData extends HTMLFormElement {
@@ -43,6 +45,8 @@ const Signup = () => {
   const router = useRouter();
 
   const { toast } = useToast();
+
+  const [inputs, setInputs] = useState({ gender: "" });
 
   const searchAddress = () => {
     new window.daum.Postcode({
@@ -68,6 +72,7 @@ const Signup = () => {
     const zonecode = target.zonecode.value;
     const address = target.address.value;
     const addrDetail = target.addrDetail.value;
+    const birth = target.birth.value;
 
     if (!/^[가-힣]{2,10}$/.test(name)) {
       toast({
@@ -115,6 +120,16 @@ const Signup = () => {
       return;
     }
 
+    if (!/^(19|20)\d{2}-(0[1-9]|1[0-2])-([0-2][1-9]|3[01])$/.test(birth)) {
+      toast({
+        title: "생년월일이 형식에 맞지 않습니다.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const [year, month, day] = birth.split("-");
+
     const body = {
       name: name,
       email: email,
@@ -123,8 +138,13 @@ const Signup = () => {
       address: address,
       addrDetail: addrDetail,
       tel: tel,
+      year: year,
+      month: month,
+      day: day,
+      ci: "",
+      gender: inputs.gender,
     };
-    // console.log(body);
+    console.log(body);
 
     try {
       await fetch("/api/auth/signup", {
@@ -162,16 +182,43 @@ const Signup = () => {
                 <div className="self-stretch h-[0px] border-2 border-gray-200"></div>
               </div>
               <div className="w-[800px] flex-col justify-start items-start gap-6 flex">
-                <div className="self-stretch h-[37px] justify-between items-center inline-flex">
-                  <Label className="h-6 justify-start items-center gap-1 flex">
-                    <div className="text-black dark:text-neutral-50 text-sm font-light font-pre">
-                      이름
-                    </div>
-                    <div className="text-blue-500 text-xl font-normal font-pre">
-                      *
-                    </div>
-                  </Label>
-                  <Input className="w-[650px]" id="name" />
+                <div className="flex w-full justify-between">
+                  <div className="w-full self-stretch h-[37px] justify-between items-center inline-flex">
+                    <Label className="h-6 justify-start items-center gap-1 flex">
+                      <div className="text-black dark:text-neutral-50 text-sm font-light font-pre">
+                        이름
+                      </div>
+                      <div className="text-blue-500 text-xl font-normal font-pre">
+                        *
+                      </div>
+                    </Label>
+                    <Input className="w-[410px]" id="name" />
+                  </div>
+                  <div className="w-[300px] h-[37px] justify-between items-center inline-flex ml-[10px] mr-[20px]">
+                    <Label className="w-[50px] ml-[40px] mr-[10px] h-6 justify-start items-center gap-1 flex">
+                      <div className="text-black dark:text-neutral-50 text-sm font-light font-pre">
+                        성별
+                      </div>
+                      <div className="text-blue-500 text-xl font-normal font-pre">
+                        *
+                      </div>
+                    </Label>
+                    <RadioGroup
+                      defaultValue="male"
+                      className="flex flex-1 justify-between"
+                      onValueChange={(value) => {
+                        console.log(value);
+                        setInputs(() => ({
+                          gender: value,
+                        }));
+                      }}
+                    >
+                      <RadioGroupItem value="male" id="male" />
+                      <Label htmlFor="male">남</Label>
+                      <RadioGroupItem value="female" id="female" />
+                      <Label htmlFor="female">여</Label>
+                    </RadioGroup>
+                  </div>
                 </div>
                 <div className="self-stretch h-[37px] justify-between items-center inline-flex">
                   <div className="justify-start items-center gap-1 flex">
@@ -264,10 +311,28 @@ const Signup = () => {
                   </div>
                   <div className="h-[37px] w-[650px] justify-between items-center flex">
                     <Input className="w-[175px]" id="tel1" maxLength={3} />
-                    <div className="w-[5px] h-px bg-black" />
+                    <div className="w-[5px] h-px bg-black dark:bg-white" />
                     <Input className="w-[175px]" id="tel2" maxLength={4} />
-                    <div className="w-[5px] h-px bg-black" />
+                    <div className="w-[5px] h-px bg-black dark:bg-white" />
                     <Input className="w-[175px]" id="tel3" maxLength={4} />
+                  </div>
+                </div>
+                <div className="self-stretch justify-between items-center inline-flex">
+                  <div className="justify-start items-center gap-1 flex">
+                    <div className="text-black dark:text-neutral-50  text-sm font-light font-pre">
+                      생년월일
+                    </div>
+                    <div className="text-blue-500 text-xl font-normal font-pre">
+                      *
+                    </div>
+                  </div>
+                  <div className="h-[37px] w-[650px] justify-between items-center flex">
+                    <Input
+                      className="w-[650px]"
+                      id="birth"
+                      type="text"
+                      placeholder="년도-월-일    예시) 2000-01-01"
+                    />
                   </div>
                 </div>
               </div>
