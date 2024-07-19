@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Footer from "../../_components/footer";
 import Header from "../../_components/header";
-import { qna_data } from "../page";
+import { qna_data } from "../data";
 
 const FAQ = ({ params }: { params: { pageId: number } }) => {
   return (
