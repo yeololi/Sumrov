@@ -7,11 +7,19 @@ import { ObjectId } from "mongodb";
 import { ResultItem, transformData } from "../cart/page";
 import { Product } from "../shop/page";
 
-const Page = async ({ searchParams }: { searchParams: { s: string } }) => {
-  const array: string[] = JSON.parse(searchParams.s);
+const Page = async ({
+  searchParams,
+}: {
+  searchParams: {
+    OriginUuid: string;
+    Cnt: string;
+    size: string;
+    color: string;
+  };
+}) => {
   const db = (await clientPromise).db("sumrov");
 
-  const query = { _id: { $in: array.map((id) => new ObjectId(id)) } };
+  const query = { OriginUuid: searchParams.OriginUuid };
   const result = await db.collection<ResultItem>("cart").find(query).toArray();
 
   const data: (Product | undefined)[] = await Promise.all(

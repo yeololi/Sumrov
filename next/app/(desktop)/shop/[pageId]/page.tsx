@@ -80,37 +80,9 @@ const ShopPageDetail = async ({ params }: { params: { pageId: string } }) => {
                 </div>
               </div>
               <div className="flex-col justify-start items-start gap-10 flex">
-                {data.DetailImages ? (
-                  <>
-                    <img
-                      className="w-[550px] h-[733.33px]"
-                      src={data.DetailImages[0]}
-                    />
-                    <img
-                      className="w-[550px] h-[733.33px]"
-                      src={data.DetailImages[1]}
-                    />
-                    <img
-                      className="w-[550px] h-[733.33px]"
-                      src={data.DetailImages[2]}
-                    />
-                  </>
-                ) : (
-                  <>
-                    <img
-                      className="w-[550px] h-[733.33px]"
-                      src="https://via.placeholder.com/550x733"
-                    />
-                    <img
-                      className="w-[550px] h-[733.33px]"
-                      src="https://via.placeholder.com/550x733"
-                    />
-                    <img
-                      className="w-[550px] h-[733.33px]"
-                      src="https://via.placeholder.com/550x733"
-                    />
-                  </>
-                )}
+                {data.DetailImages.map((ai, i) => (
+                  <img className="w-[550px] h-[733.33px]" src={ai} />
+                ))}
               </div>
             </div>
 
