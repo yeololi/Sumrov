@@ -7,11 +7,11 @@ const MobilePage = () => {
     <>
       <Header />
       <Image
-        src="/images/mobile/main.png"
+        src="/images/mobile/main.jpg"
         alt=""
-        className=""
-        width={425}
-        height={920.27}
+        className="h-[100vh] w-[100vw] object-contain"
+        width={848}
+        height={916}
       />
       <Footer />
     </>
