@@ -36,9 +36,6 @@ const Payment = ({ data }: { data: cart[] }) => {
 
   const [checked, setChecked] = useState(false);
   const [recipient, setRecipient] = useState("");
-  const [zonecode, setZonecode] = useState("");
-  const [address, setAddress] = useState("");
-  const [addrDetail, setAddrDetail] = useState("");
   const [tel1, setTel1] = useState("");
   const [tel2, setTel2] = useState("");
   const [tel3, setTel3] = useState("");
@@ -48,7 +45,13 @@ const Payment = ({ data }: { data: cart[] }) => {
 
   const { toast } = useToast();
 
-  const toCheck = () => {
+  const router = useRouter();
+
+  const toCheck = (addr: {
+    zonecode: string;
+    address: string;
+    addrDetail: string;
+  }) => {
     const email = email1 + "@" + email2;
     const tel = tel1 + "-" + tel2 + "-" + tel3;
 
@@ -57,35 +60,35 @@ const Payment = ({ data }: { data: cart[] }) => {
         title: "수령인명이 비어있습니다.",
         variant: "destructive",
       });
-      return;
+      return false;
     }
     if (!/^[가-힣]{2,10}$/.test(recipient)) {
       toast({
         title: "이름이 한글이 아닙니다.",
         variant: "destructive",
       });
-      return;
+      return false;
     }
-    if (!zonecode || !address) {
+    if (!addr.zonecode || !addr.address) {
       toast({
         title: "주소가 비어있습니다.",
         variant: "destructive",
       });
-      return;
+      return false;
     }
     if (!tel1 || !tel2 || !tel3) {
       toast({
         title: "번화번호가 비어있습니다.",
         variant: "destructive",
       });
-      return;
+      return false;
     }
     if (!/^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/.test(tel)) {
       toast({
         title: "전화번호가 형식에 맞지 않습니다.",
         variant: "destructive",
       });
-      return;
+      return false;
     }
     if (
       !/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i.test(
@@ -96,15 +99,16 @@ const Payment = ({ data }: { data: cart[] }) => {
         title: "이메일 형식이 맞지 않습니다.",
         variant: "destructive",
       });
-      return;
+      return false;
     }
     if (!checked) {
       toast({
         title: "약관에 동의해주세요.",
         variant: "destructive",
       });
-      return;
+      return false;
     }
+    return true;
   };
 
   const searchAddress = () => {
@@ -121,27 +125,48 @@ const Payment = ({ data }: { data: cart[] }) => {
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const target = e.currentTarget;
 
-    toCheck();
+    try {
+      const zonecode = target.zonecode.value as string;
+      const address = target.address.value as string;
+      const addrDetail = target.addrDetail.value as string;
 
-    const tel = tel1 + "-" + tel2 + "-" + tel3;
+      const par = { zonecode, address, addrDetail };
 
-    const body: salePostType = {
-      customer_name: recipient,
-      addr: [zonecode, address, addrDetail].join(";"),
-      product: JSON.stringify(data.map((value) => value.id)),
-      amount: JSON.stringify(data.map((value) => value.amount)),
-      phone: tel,
-      price: JSON.stringify(data.map((value) => value.price)),
-      post_num: "",
-    };
+      if (!toCheck(par)) {
+        return;
+      }
 
-    const res = await fetch("/api/sale/post", {
-      method: "POST",
-      body: JSON.stringify(body),
-    }).then((r) => r.json());
+      const tel = tel1 + "-" + tel2 + "-" + tel3;
 
-    console.log(res);
+      const body: salePostType = {
+        customer_name: recipient,
+        addr: [zonecode, address, addrDetail].join(";"),
+        product: JSON.stringify(data.map((value) => value.id)),
+        amount: JSON.stringify(
+          data.map((value) => ({
+            amount: value.amount,
+            color: value.color,
+            size: value.size,
+          }))
+        ),
+        phone: tel,
+        price: JSON.stringify(data.map((value) => value.price)),
+        post_num: "",
+      };
+
+      const res = await fetch("/api/sale/post", {
+        method: "POST",
+        body: JSON.stringify(body),
+      });
+
+      console.log(res);
+
+      router.replace("/orderList");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -207,9 +232,8 @@ const Payment = ({ data }: { data: cart[] }) => {
                         <div className="flex flex-col gap-[10px]">
                           <div className="flex flex-row gap-[23px] items-center">
                             <Input
-                              value={zonecode}
-                              onChange={(e) => setZonecode(e.target.value)}
                               id="zonecode"
+                              name="zonecode"
                               placeholder="우편 번호"
                               className="w-[150px] h-[30px] rounded-sm border border-stone-300"
                             />
@@ -224,16 +248,14 @@ const Payment = ({ data }: { data: cart[] }) => {
                             </button>
                           </div>
                           <Input
-                            value={address}
                             id="address"
-                            onChange={(e) => setAddress(e.target.value)}
+                            name="address"
                             placeholder="기본주소"
                             className="w-[550px] h-[30px] rounded-sm border border-stone-300"
                           />
                           <Input
-                            value={addrDetail}
                             id="addrDetail"
-                            onChange={(e) => setAddrDetail(e.target.value)}
+                            name="addrDetail"
                             placeholder="상세주소 (선택)"
                             className="w-[550px] h-[30px] rounded-sm border border-stone-300"
                           />

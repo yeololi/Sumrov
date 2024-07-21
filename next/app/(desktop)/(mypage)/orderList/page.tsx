@@ -5,12 +5,88 @@ import { authOptions } from "@/util/authOption";
 import Header from "../../_components/header";
 import Footer from "../../_components/footer";
 import MypageButton from "../_components/mypageButton";
+import { fetchPaymentData } from "@/lib/utils";
+import { Product } from "../../shop/page";
 
-const data = [{}];
+export interface saleType {
+  Uuid: string;
+  CustomerName: string;
+  Product: string;
+  PostNum: string;
+  Addr: string;
+  Phone: string;
+  Price: string;
+  Amount: string;
+  Status: string;
+  Date: string;
+}
 
-async function mypage() {
+export interface newSaleType extends saleType {
+  price: number[];
+  amount: number[];
+  color: string[];
+  size: string[];
+}
+
+export async function fetchData(): Promise<
+  { data: saleType[]; postData: Product[] } | undefined
+> {
+  try {
+    const response: { results: saleType[] } = await fetch(
+      `http://3.39.237.151:8080/sale`,
+      {
+        cache: "no-store",
+        method: "GET",
+      }
+    ).then((r) => r.json());
+
+    const uuid: string[][] = response.results.map((v) => JSON.parse(v.Product));
+
+    let newUuid = uuid.reduce(function (prev, next) {
+      return prev.concat(next);
+    });
+
+    const postData = (await Promise.all(
+      newUuid.map((value) => fetchPaymentData(btoa(value)))
+    )) as Product[];
+
+    if (response) {
+      return { data: response.results, postData: postData };
+    } else {
+      console.log("res.result is not an array or res is undefined");
+      return;
+    }
+  } catch (error) {
+    console.error(error);
+    return;
+  }
+}
+
+async function orderList() {
   const session = await getServerSession();
   const user = session?.user;
+
+  const { data, postData } = (await fetchData()) as {
+    data: saleType[];
+    postData: Product[];
+  };
+
+  const set = new Set(
+    data.map((value) => value.Date.split(" ")[0].split("-").join(". "))
+  );
+
+  const uniqueArr = [...set];
+
+  console.log(JSON.parse(data[0].Amount));
+
+  const saleData: newSaleType[] = data.map((value) => ({
+    ...value,
+    Date: value.Date.split(" ")[0].split("-").join(". "),
+    price: JSON.parse(value.Price),
+    amount: JSON.parse(value.Amount).map((v: any) => v.amount),
+    size: JSON.parse(value.Amount).map((v: any) => v.color),
+    color: JSON.parse(value.Amount).map((v: any) => v.size),
+  }));
 
   return (
     <>
@@ -32,121 +108,73 @@ async function mypage() {
                   </div>
                 </div>
               </div>
-              <div className="flex-col justify-center items-start gap-4 flex">
-                <div className="text-black text-[17px] font-medium font-pre">
-                  2024. 07. 12
-                </div>
-                <div className="self-stretch py-4 border-t-2 border-gray-200 justify-start items-center gap-[15px] inline-flex">
-                  <div className="grow shrink basis-0 flex-col justify-center items-start gap-4 inline-flex">
-                    {data.map((value) => (
-                      <div className="w-[808px] h-[119px] pr-10 flex-col justify-center items-center gap-4 flex">
-                        <div className="self-stretch justify-start items-center gap-5 inline-flex">
-                          <div className="justify-start items-center gap-[11px] flex">
-                            <div className="justify-center items-center flex">
-                              <img
-                                className="w-[84px] h-[100px] border border-black"
-                                src="https://via.placeholder.com/84x100"
-                              />
-                            </div>
-                          </div>
-                          <div className="grow shrink basis-0 h-14 justify-between items-center flex">
-                            <div className="px-4 py-2 flex-col justify-center items-start gap-2 inline-flex">
-                              <div className="text-black text-sm font-normal font-pre">
-                                Lorem ipsum dolor sit Lorem ipsum (BLACK, RED,
-                                GREEN){" "}
-                              </div>
-                              <div className="justify-center items-center gap-2 inline-flex">
-                                <div className="text-zinc-600 text-xs font-normal font-pre">
-                                  [옵션 : 블랙 / S]
+              {uniqueArr.map((date, key) => (
+                <div
+                  key={key}
+                  className="flex-col justify-center items-start gap-4 flex"
+                >
+                  <div className="text-black text-[17px] font-medium font-pre">
+                    {date}
+                  </div>
+                  <div className="self-stretch py-4 border-t-2 border-gray-200 justify-start items-center gap-[15px] inline-flex">
+                    <div className="grow shrink basis-0 flex-col justify-center items-start gap-4 inline-flex">
+                      {postData?.map(
+                        (value, i) =>
+                          saleData[i].Date === date && (
+                            <div
+                              key={i}
+                              className="w-[808px] h-[119px] pr-10 flex-col justify-center items-center gap-4 flex"
+                            >
+                              <div className="self-stretch justify-start items-center gap-5 inline-flex">
+                                <div className="justify-start items-center gap-[11px] flex">
+                                  <div className="justify-center items-center flex">
+                                    <img
+                                      className="w-[84px] h-[100px] border border-black"
+                                      src={value.MainImage}
+                                    />
+                                  </div>
                                 </div>
-                                <div className="text-zinc-600 text-xs font-normal font-pre">
-                                  |
-                                </div>
-                                <div className="justify-start items-center gap-10 flex">
-                                  <div className="text-center text-zinc-600 text-xs font-normal font-pre">
-                                    3pcs
+                                <div className="grow shrink basis-0 h-14 justify-between items-center flex">
+                                  <div className="px-4 py-2 flex-col justify-center items-start gap-2 inline-flex">
+                                    <div className="text-black text-sm font-normal font-pre">
+                                      {value.Title}
+                                    </div>
+                                    <div className="justify-center items-center gap-2 inline-flex">
+                                      <div className="text-zinc-600 text-xs font-normal font-pre">
+                                        [옵션 : {saleData[i].color} /{" "}
+                                        {saleData[i].size}]
+                                      </div>
+                                      <div className="text-zinc-600 text-xs font-normal font-pre">
+                                        |
+                                      </div>
+                                      <div className="justify-start items-center gap-10 flex">
+                                        <div className="text-center text-zinc-600 text-xs font-normal font-pre">
+                                          {saleData[i].amount}pcs
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="justify-start items-center gap-10 flex">
+                                    <div className="text-center text-black text-sm font-medium font-pre">
+                                      KRW {saleData[i].price.toLocaleString()}
+                                    </div>
+                                  </div>
+                                  <div className="flex-col justify-center items-center inline-flex">
+                                    <div className="h-[25px] px-2 bg-zinc-800 justify-center items-center gap-4 inline-flex">
+                                      <div className="text-center text-neutral-50 text-xs font-medium font-pre">
+                                        상세보기
+                                      </div>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                            <div className="justify-start items-center gap-10 flex">
-                              <div className="text-center text-black text-sm font-medium font-pre">
-                                KWR 10,000
-                              </div>
-                            </div>
-                            <div className="flex-col justify-center items-center inline-flex">
-                              <div className="h-[25px] px-2 bg-zinc-800 justify-center items-center gap-4 inline-flex">
-                                <div className="text-center text-neutral-50 text-xs font-medium font-pre">
-                                  상세보기
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              <div className="h-[222px] flex-col justify-center items-start gap-4 flex">
-                <div className="text-black text-[17px] font-medium font-pre">
-                  2024.07.14
-                </div>
-                <div className="self-stretch py-4 border-t-2 border-gray-200 justify-start items-center gap-[15px] inline-flex">
-                  <div className="grow shrink basis-0 flex-col justify-center items-start gap-4 inline-flex">
-                    <div className="justify-start items-end gap-[7px] inline-flex">
-                      <div className="text-center text-neutral-400 text-base font-semibold font-pre">
-                        구매 확정
-                      </div>
-                    </div>
-                    <div className="w-[808px] h-[119px] pr-10 flex-col justify-center items-center gap-4 flex">
-                      <div className="self-stretch justify-start items-center gap-5 inline-flex">
-                        <div className="justify-start items-center gap-[11px] flex">
-                          <div className="justify-center items-center flex">
-                            <img
-                              className="w-[84px] h-[100px] border border-black"
-                              src="https://via.placeholder.com/84x100"
-                            />
-                          </div>
-                        </div>
-                        <div className="grow shrink basis-0 h-14 justify-between items-center flex">
-                          <div className="px-4 py-2 flex-col justify-center items-start gap-2 inline-flex">
-                            <div className="text-black text-sm font-normal font-pre">
-                              Lorem ipsum dolor sit Lorem ipsum (BLACK, RED,
-                              GREEN){" "}
-                            </div>
-                            <div className="justify-center items-center gap-2 inline-flex">
-                              <div className="text-zinc-600 text-xs font-normal font-pre">
-                                [옵션 : 블랙 / S]
-                              </div>
-                              <div className="text-zinc-600 text-xs font-normal font-pre">
-                                |
-                              </div>
-                              <div className="justify-start items-center gap-10 flex">
-                                <div className="text-center text-zinc-600 text-xs font-normal font-pre">
-                                  3pcs
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="justify-start items-center gap-10 flex">
-                            <div className="text-center text-black text-sm font-medium font-pre">
-                              KWR 10,000
-                            </div>
-                          </div>
-                          <div className="flex-col justify-center items-center inline-flex">
-                            <div className="h-[25px] px-2 bg-zinc-800 justify-center items-center gap-4 inline-flex">
-                              <div className="text-center text-neutral-50 text-xs font-medium font-pre">
-                                상세보기
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                          )
+                      )}
                     </div>
                   </div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
@@ -156,4 +184,4 @@ async function mypage() {
   );
 }
 
-export default mypage;
+export default orderList;
