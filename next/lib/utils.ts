@@ -32,7 +32,7 @@ export async function fetchPaymentData(uuid: string) {
 
 export async function fetchData(
   name: string
-): Promise<{ data: saleType[]; postData: Product[] } | undefined> {
+): Promise<{ data: saleType[] | undefined; postData: Product[] | undefined }> {
   try {
     const response: { results: saleType[] } = await fetch(
       `http://3.39.237.151:8080/sale`,
@@ -60,10 +60,10 @@ export async function fetchData(
       return { data: data, postData: postData };
     } else {
       console.log("res.result is not an array or res is undefined");
-      return;
+      return { data: undefined, postData: undefined };
     }
   } catch (error) {
     console.error(error);
-    return;
+    return { data: undefined, postData: undefined };
   }
 }

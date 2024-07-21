@@ -1,3 +1,5 @@
+import clientPromise from "@/util/database";
+
 interface res {
   title: string;
   price: string;
@@ -17,10 +19,9 @@ export async function DELETE(
   const uid = params.uid;
 
   try {
-    const result = await fetch(`http://3.39.237.151:8080/post/${uid}`, {
-      method: "DELETE",
-    }).then((r) => r.json());
-    console.log(result);
+    const db = (await clientPromise).db("sumrov");
+    let result = await db.collection("cart").insertOne(body); // todo
+
     if (result) {
     } else {
       return new Response("failed read body", { status: 404 });

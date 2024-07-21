@@ -20,7 +20,7 @@ export interface ResultItem {
 export function transformData(data: Product[], results: ResultItem[]) {
   return results
     .map((result) => {
-      const item = data.find((d) => d.Uuid === atob(result.OriginUuid));
+      const item = data.find((d) => d?.Uuid === atob(result.OriginUuid));
       if (item) {
         return {
           _id: result._id.toString(),

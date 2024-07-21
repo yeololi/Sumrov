@@ -33,18 +33,15 @@ async function orderList() {
   const session = await getServerSession();
   const user = session?.user;
 
-  let { data, postData } = (await fetchData(user?.name as string)) as {
-    data: saleType[];
-    postData: Product[];
-  };
+  let { data, postData } = await fetchData(user?.name as string);
 
   const set = new Set(
-    data.map((value) => value.Date.split(" ")[0].split("-").join(". "))
+    data?.map((value) => value.Date.split(" ")[0].split("-").join(". "))
   );
 
   const uniqueArr = [...set];
 
-  const saleData: newSaleType[] = data.map((value) => ({
+  const saleData: newSaleType[] | undefined = data?.map((value) => ({
     ...value,
     Date: value.Date.split(" ")[0].split("-").join(". "),
     price: JSON.parse(value.Price),
@@ -83,69 +80,70 @@ async function orderList() {
                   </div>
                   <div className="self-stretch py-4 border-t-2 border-gray-200 justify-start items-center gap-[15px] inline-flex">
                     <div className="grow shrink basis-0 flex-col justify-center items-start gap-4 inline-flex">
-                      {saleData?.map(
-                        (value, i) =>
-                          value.Date === date && (
-                            <div
-                              key={i}
-                              className="w-[808px] h-[119px] pr-10 flex-col justify-center items-center gap-4 flex"
-                            >
-                              <div className="self-stretch justify-start items-center gap-5 inline-flex">
-                                <div className="justify-start items-center gap-[11px] flex">
-                                  <div className="justify-center items-center flex">
-                                    <img
-                                      className="w-[84px] h-[100px] border border-black"
-                                      src={postData[i].MainImage}
-                                    />
-                                  </div>
-                                </div>
-                                <div className="grow shrink basis-0 h-14 justify-between items-center flex">
-                                  <div className="px-4 py-2 flex-col justify-center items-start gap-2 inline-flex">
-                                    <div className="text-black text-sm font-normal font-pre">
-                                      {postData[i].Title}
+                      {postData !== undefined &&
+                        saleData?.map(
+                          (value, i) =>
+                            value.Date === date && (
+                              <div
+                                key={i}
+                                className="w-[808px] h-[119px] pr-10 flex-col justify-center items-center gap-4 flex"
+                              >
+                                <div className="self-stretch justify-start items-center gap-5 inline-flex">
+                                  <div className="justify-start items-center gap-[11px] flex">
+                                    <div className="justify-center items-center flex">
+                                      <img
+                                        className="w-[84px] h-[100px] border border-black"
+                                        src={postData![0].MainImage}
+                                      />
                                     </div>
-                                    <div className="justify-center items-center gap-2 inline-flex">
-                                      <div className="text-zinc-600 text-xs font-normal font-pre">
-                                        [옵션 : {saleData[i].color[0]} /{" "}
-                                        {saleData[i].size[0]}]
+                                  </div>
+                                  <div className="grow shrink basis-0 h-14 justify-between items-center flex">
+                                    <div className="px-4 py-2 flex-col justify-center items-start gap-2 inline-flex">
+                                      <div className="text-black text-sm font-normal font-pre">
+                                        {postData![i].Title}
                                       </div>
-                                      <div className="text-zinc-600 text-xs font-normal font-pre">
-                                        |
-                                      </div>
-                                      <div className="justify-start items-center gap-10 flex">
-                                        <div className="text-center text-zinc-600 text-xs font-normal font-pre">
-                                          {saleData[i].amount.reduce(
-                                            (acc, cur) => acc + cur,
-                                            0
-                                          )}
-                                          pcs
+                                      <div className="justify-center items-center gap-2 inline-flex">
+                                        <div className="text-zinc-600 text-xs font-normal font-pre">
+                                          [옵션 : {saleData[i].color[0]} /{" "}
+                                          {saleData[i].size[0]}]
+                                        </div>
+                                        <div className="text-zinc-600 text-xs font-normal font-pre">
+                                          |
+                                        </div>
+                                        <div className="justify-start items-center gap-10 flex">
+                                          <div className="text-center text-zinc-600 text-xs font-normal font-pre">
+                                            {saleData[i].amount.reduce(
+                                              (acc, cur) => acc + cur,
+                                              0
+                                            )}
+                                            pcs
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
-                                  </div>
-                                  <div className="justify-start items-center gap-10 flex">
-                                    <div className="text-center text-black text-sm font-medium font-pre">
-                                      KRW{" "}
-                                      {saleData[i].price
-                                        .reduce((acc, cur) => acc + cur, 0)
-                                        .toLocaleString()}
-                                    </div>
-                                  </div>
-                                  <div className="flex-col justify-center items-center inline-flex">
-                                    <Link
-                                      href={"/orderList/" + saleData[i].Uuid}
-                                      className="h-[25px] px-2 bg-zinc-800 justify-center items-center gap-4 inline-flex"
-                                    >
-                                      <div className="text-center text-neutral-50 text-xs font-medium font-pre">
-                                        상세보기
+                                    <div className="justify-start items-center gap-10 flex">
+                                      <div className="text-center text-black text-sm font-medium font-pre">
+                                        KRW{" "}
+                                        {saleData[i].price
+                                          .reduce((acc, cur) => acc + cur, 0)
+                                          .toLocaleString()}
                                       </div>
-                                    </Link>
+                                    </div>
+                                    <div className="flex-col justify-center items-center inline-flex">
+                                      <Link
+                                        href={"/orderList/" + saleData[i].Uuid}
+                                        className="h-[25px] px-2 bg-zinc-800 justify-center items-center gap-4 inline-flex"
+                                      >
+                                        <div className="text-center text-neutral-50 text-xs font-medium font-pre">
+                                          상세보기
+                                        </div>
+                                      </Link>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                          )
-                      )}
+                            )
+                        )}
                     </div>
                   </div>
                 </div>
