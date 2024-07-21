@@ -46,12 +46,10 @@ const ShopOption = ({ result }: { result: Product }) => {
     }
   };
 
-  const handleAddCart = () => {};
-
   const handleBuyNow = () => {
     if (selectValue.color && selectValue.size) {
       router.push(
-        `/payment?OriginUuid=${btoa(result.Uuid)}&Cnt=${itemCounter}&size=${
+        `/paymentnow?OriginUuid=${btoa(result.Uuid)}&Cnt=${itemCounter}&size=${
           selectValue.size
         }&color=${selectValue.color}`
       );

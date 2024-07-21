@@ -12,6 +12,8 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useRouter } from "next/navigation";
 import { Label as Label3 } from "@/components/ui/label";
 import { cart } from "../../cart/colums";
+import { json } from "stream/consumers";
+import { salePostType } from "@/app/api/sale/post/route";
 
 declare global {
   interface Window {
@@ -32,7 +34,7 @@ const Payment = ({ data }: { data: cart[] }) => {
     ?.map((ai, i) => (ai.price * ai.sale) / 100)
     .reduce((pre, cur) => pre + cur, 0);
 
-  const [checked, setChecked] = React.useState("false");
+  const [checked, setChecked] = useState(false);
   const [recipient, setRecipient] = useState("");
   const [zonecode, setZonecode] = useState("");
   const [address, setAddress] = useState("");
@@ -43,10 +45,13 @@ const Payment = ({ data }: { data: cart[] }) => {
   const [email1, setEmail1] = useState("");
   const [email2, setEmail2] = useState("");
   const [dm, setDm] = useState("");
-  const email = email1 + "@" + email2;
-  const tel = tel1 + "-" + tel2 + "-" + tel3;
+
   const { toast } = useToast();
+
   const toCheck = () => {
+    const email = email1 + "@" + email2;
+    const tel = tel1 + "-" + tel2 + "-" + tel3;
+
     if (!recipient) {
       toast({
         title: "수령인명이 비어있습니다.",
@@ -93,7 +98,7 @@ const Payment = ({ data }: { data: cart[] }) => {
       });
       return;
     }
-    if (checked != "false") {
+    if (!checked) {
       toast({
         title: "약관에 동의해주세요.",
         variant: "destructive",
@@ -114,6 +119,31 @@ const Payment = ({ data }: { data: cart[] }) => {
     }).open();
   };
 
+  const submit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    toCheck();
+
+    const tel = tel1 + "-" + tel2 + "-" + tel3;
+
+    const body: salePostType = {
+      customer_name: recipient,
+      addr: [zonecode, address, addrDetail].join(";"),
+      product: JSON.stringify(data.map((value) => value.id)),
+      amount: JSON.stringify(data.map((value) => value.amount)),
+      phone: tel,
+      price: JSON.stringify(data.map((value) => value.price)),
+      post_num: "",
+    };
+
+    const res = await fetch("/api/sale/post", {
+      method: "POST",
+      body: JSON.stringify(body),
+    }).then((r) => r.json());
+
+    console.log(res);
+  };
+
   return (
     <>
       <script
@@ -122,7 +152,7 @@ const Payment = ({ data }: { data: cart[] }) => {
       />
       <div className="dark:bg-neutral-900 flex items-center flex-col">
         <div className="h-[106px] flex-col justify-center items-center flex">
-          <div className="w-[800px] py-[15px] bg-white justify-end items-center gap-[306px] inline-flex">
+          <div className="w-[800px] py-[15px] bg-white dark:bg-neutral-900 justify-end items-center gap-[306px] inline-flex">
             <div className="pr-[15px] justify-center items-center gap-[305px] flex">
               <div className="justify-center items-center gap-2.5 flex">
                 <Image
@@ -144,9 +174,12 @@ const Payment = ({ data }: { data: cart[] }) => {
             </div>
           </div>
         </div>
-        <div className="w-[800px] py-[50px] border border-stone-300 flex-col justify-center items-center inline-flex">
+        <form
+          onSubmit={submit}
+          className="w-[800px] py-[50px] border border-stone-300 flex-col justify-center items-center inline-flex"
+        >
           <div className="flex-col justify-center items-center gap-[50px] flex">
-            <form>
+            <div>
               <div className="flex-col justify-center items-center gap-[50px] flex">
                 <div className="flex-col justify-center items-center gap-[50px] flex">
                   <div className="h-[53px] flex-col justify-center items-start gap-[25px] flex">
@@ -182,6 +215,7 @@ const Payment = ({ data }: { data: cart[] }) => {
                             />
                             <button
                               onClick={searchAddress}
+                              type="button"
                               className="w-[72px] h-[26px] flex justify-center items-center bg-gray-200 rounded-sm border border-neutral-300"
                             >
                               <div className="w-[39px] h-[11px] flex items-center dark:text-neutral-900 dark:bg-stone-300 justify-center text-neutral-900 text-[11px] font-normal font-pre">
@@ -266,7 +300,7 @@ const Payment = ({ data }: { data: cart[] }) => {
                 </div>
                 <div className="w-[700px] h-[0px] border border-stone-300"></div>
               </div>
-            </form>
+            </div>
             <div className="w-[700px] flex-col justify-start items-start gap-[50px] flex">
               <div className="text-lg font-medium font-pre">주문상품 확인</div>
               {data?.map((post, i) => (
@@ -352,7 +386,7 @@ const Payment = ({ data }: { data: cart[] }) => {
                 결제수단
               </div>
               <div className="flex flex-col w-full h-[109px] bg-white dark:bg-black border dark:border-none border-gray-200 justify-center">
-                <form>
+                <div>
                   <RadioGroup
                     defaultValue="option-one"
                     className="w-full flex justify-center"
@@ -364,12 +398,12 @@ const Payment = ({ data }: { data: cart[] }) => {
                           className="text-neutral-400 text-[13px] font-normal font-pre"
                           htmlFor="one"
                         >
-                          무통장입금
+                          &nbsp;&nbsp;무통장입금
                         </label>
                       </div>
                     </div>
                   </RadioGroup>
-                </form>
+                </div>
               </div>
             </div>
             <div className="w-[700px] h-[0px] border border-stone-300"></div>
@@ -378,7 +412,7 @@ const Payment = ({ data }: { data: cart[] }) => {
                 현금영수증
               </div>
               <div className="flex flex-col w-full h-[109px] dark:bg-black dark:border-nonejustify-center">
-                <form className="h-full">
+                <div className="h-full">
                   <RadioGroup
                     defaultValue="option-two"
                     className="w-full h-full flex justify-center items-center"
@@ -390,7 +424,7 @@ const Payment = ({ data }: { data: cart[] }) => {
                           className="text-neutral-400 text-[13px] font-normal font-pre"
                           htmlFor="two"
                         >
-                          현금영수증 신청
+                          &nbsp;&nbsp;현금영수증 신청
                         </label>
                       </div>
                       <div className="flex flex-row">
@@ -399,12 +433,12 @@ const Payment = ({ data }: { data: cart[] }) => {
                           className="text-neutral-400 text-[13px] font-normal font-pre"
                           htmlFor="three"
                         >
-                          신청 안함
+                          &nbsp;&nbsp;신청 안함
                         </label>
                       </div>
                     </div>
                   </RadioGroup>
-                </form>
+                </div>
               </div>
             </div>
             <div className="w-[700px] h-[0px] border border-stone-300"></div>
@@ -413,12 +447,7 @@ const Payment = ({ data }: { data: cart[] }) => {
                 <Checkbox
                   id="allCheck"
                   onCheckedChange={(e) => {
-                    if (checked == "true") {
-                      setChecked("false");
-                    } else {
-                      setChecked("true");
-                    }
-                    console.log(checked);
+                    setChecked((value) => !value);
                   }}
                 />
                 <Label3
@@ -431,7 +460,6 @@ const Payment = ({ data }: { data: cart[] }) => {
             </div>
             <button
               type="submit"
-              onClick={toCheck}
               className="w-[700px] h-[50px] px-[234px] py-[9px] bg-black justify-center items-center gap-2.5 inline-flex"
             >
               <div className="text-center text-white text-base font-semibold font-pre">
@@ -439,7 +467,7 @@ const Payment = ({ data }: { data: cart[] }) => {
               </div>
             </button>
           </div>
-        </div>
+        </form>
       </div>
       <Footer />
     </>

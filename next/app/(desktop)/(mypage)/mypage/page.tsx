@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { getServerSession } from "next-auth";
 import { signOut } from "next-auth/react";
-import Footer from "../_components/footer";
 import { authOptions } from "@/util/authOption";
-import Header from "../_components/header";
-import MypageButton from "./_components/mypageButton";
+import MypageButton from "../_components/mypageButton";
+import Header from "../../_components/header";
+import Footer from "../../_components/footer";
 
 const data2 = ["입금전", "배송준비중", "배송중", "배송완료", "교환/반품"];
 

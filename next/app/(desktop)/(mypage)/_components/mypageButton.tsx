@@ -9,8 +9,9 @@ const data = [
     key={0}
     variant={"ghost"}
     className="text-[12px] font-bold font-pre dark:text-white text-[#000] mb-[40px] min-w-[78px]"
+    asChild
   >
-    주문내역 조회
+    <Link href={"/orderList"}>주문내역 조회</Link>
   </Button>,
   <Button
     key={1}
