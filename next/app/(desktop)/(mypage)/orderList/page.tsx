@@ -125,7 +125,10 @@ async function orderList() {
                                   </div>
                                   <div className="justify-start items-center gap-10 flex">
                                     <div className="text-center text-black text-sm font-medium font-pre">
-                                      KRW {saleData[i].price.toLocaleString()}
+                                      KRW{" "}
+                                      {saleData[i].price
+                                        .reduce((acc, cur) => acc + cur, 0)
+                                        .toLocaleString()}
                                     </div>
                                   </div>
                                   <div className="flex-col justify-center items-center inline-flex">

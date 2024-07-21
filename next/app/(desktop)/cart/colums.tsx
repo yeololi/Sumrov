@@ -143,7 +143,10 @@ export const columns: ColumnDef<cart>[] = [
             >
               주문하기
             </DropdownMenuItem>
-            <DropdownMenuItem className="font-semibold font-noto cursor-pointer">
+            <DropdownMenuItem
+              onClick={() => {}}
+              className="font-semibold font-noto cursor-pointer"
+            >
               삭제
             </DropdownMenuItem>
           </DropdownMenuContent>
