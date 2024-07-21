@@ -66,7 +66,10 @@ async function orderListDetail({ params }: { params: { pageId: string } }) {
               </div>
               <div className="self-stretch pr-10 flex-col justify-start items-start gap-20 flex">
                 {thisData.price.map((value, i) => (
-                  <div className="self-stretch justify-center items-start gap-10 inline-flex">
+                  <div
+                    key={i}
+                    className="self-stretch justify-center items-start gap-10 inline-flex"
+                  >
                     <div className="justify-start items-center gap-[11px] flex">
                       <div className="justify-center items-center flex">
                         <img

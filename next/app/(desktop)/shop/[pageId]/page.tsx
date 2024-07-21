@@ -81,7 +81,7 @@ const ShopPageDetail = async ({ params }: { params: { pageId: string } }) => {
               </div>
               <div className="flex-col justify-start items-start gap-10 flex">
                 {data.DetailImages.map((ai, i) => (
-                  <img className="w-[550px] h-[733.33px]" src={ai} />
+                  <img key={i} className="w-[550px] h-[733.33px]" src={ai} />
                 ))}
               </div>
             </div>
