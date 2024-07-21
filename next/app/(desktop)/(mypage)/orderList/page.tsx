@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { getServerSession } from "next-auth";
+import { getServerSession, Session } from "next-auth";
 import { signOut } from "next-auth/react";
 import { authOptions } from "@/util/authOption";
 import Header from "../../_components/header";
@@ -7,6 +7,7 @@ import Footer from "../../_components/footer";
 import MypageButton from "../_components/mypageButton";
 import { fetchPaymentData } from "@/lib/utils";
 import { Product } from "../../shop/page";
+import Link from "next/link";
 
 export interface saleType {
   Uuid: string;
@@ -28,9 +29,9 @@ export interface newSaleType extends saleType {
   size: string[];
 }
 
-export async function fetchData(): Promise<
-  { data: saleType[]; postData: Product[] } | undefined
-> {
+export async function fetchData(
+  name: string
+): Promise<{ data: saleType[]; postData: Product[] } | undefined> {
   try {
     const response: { results: saleType[] } = await fetch(
       `http://3.39.237.151:8080/sale`,
@@ -40,7 +41,11 @@ export async function fetchData(): Promise<
       }
     ).then((r) => r.json());
 
-    const uuid: string[][] = response.results.map((v) => JSON.parse(v.Product));
+    let data = response.results.filter((item) => item.CustomerName === name);
+
+    let uuid: string[][] = data.map((v) => JSON.parse(v.Product));
+
+    uuid = uuid.map((value) => [...new Set(value)]);
 
     let newUuid = uuid.reduce(function (prev, next) {
       return prev.concat(next);
@@ -51,7 +56,7 @@ export async function fetchData(): Promise<
     )) as Product[];
 
     if (response) {
-      return { data: response.results, postData: postData };
+      return { data: data, postData: postData };
     } else {
       console.log("res.result is not an array or res is undefined");
       return;
@@ -66,7 +71,7 @@ async function orderList() {
   const session = await getServerSession();
   const user = session?.user;
 
-  const { data, postData } = (await fetchData()) as {
+  let { data, postData } = (await fetchData(user?.name as string)) as {
     data: saleType[];
     postData: Product[];
   };
@@ -76,8 +81,6 @@ async function orderList() {
   );
 
   const uniqueArr = [...set];
-
-  console.log(JSON.parse(data[0].Amount));
 
   const saleData: newSaleType[] = data.map((value) => ({
     ...value,
@@ -118,9 +121,9 @@ async function orderList() {
                   </div>
                   <div className="self-stretch py-4 border-t-2 border-gray-200 justify-start items-center gap-[15px] inline-flex">
                     <div className="grow shrink basis-0 flex-col justify-center items-start gap-4 inline-flex">
-                      {postData?.map(
+                      {saleData?.map(
                         (value, i) =>
-                          saleData[i].Date === date && (
+                          value.Date === date && (
                             <div
                               key={i}
                               className="w-[808px] h-[119px] pr-10 flex-col justify-center items-center gap-4 flex"
@@ -130,26 +133,30 @@ async function orderList() {
                                   <div className="justify-center items-center flex">
                                     <img
                                       className="w-[84px] h-[100px] border border-black"
-                                      src={value.MainImage}
+                                      src={postData[i].MainImage}
                                     />
                                   </div>
                                 </div>
                                 <div className="grow shrink basis-0 h-14 justify-between items-center flex">
                                   <div className="px-4 py-2 flex-col justify-center items-start gap-2 inline-flex">
                                     <div className="text-black text-sm font-normal font-pre">
-                                      {value.Title}
+                                      {postData[i].Title}
                                     </div>
                                     <div className="justify-center items-center gap-2 inline-flex">
                                       <div className="text-zinc-600 text-xs font-normal font-pre">
-                                        [옵션 : {saleData[i].color} /{" "}
-                                        {saleData[i].size}]
+                                        [옵션 : {saleData[i].color[0]} /{" "}
+                                        {saleData[i].size[0]}]
                                       </div>
                                       <div className="text-zinc-600 text-xs font-normal font-pre">
                                         |
                                       </div>
                                       <div className="justify-start items-center gap-10 flex">
                                         <div className="text-center text-zinc-600 text-xs font-normal font-pre">
-                                          {saleData[i].amount}pcs
+                                          {saleData[i].amount.reduce(
+                                            (acc, cur) => acc + cur,
+                                            0
+                                          )}
+                                          pcs
                                         </div>
                                       </div>
                                     </div>
@@ -160,11 +167,14 @@ async function orderList() {
                                     </div>
                                   </div>
                                   <div className="flex-col justify-center items-center inline-flex">
-                                    <div className="h-[25px] px-2 bg-zinc-800 justify-center items-center gap-4 inline-flex">
+                                    <Link
+                                      href={"/orderList/" + saleData[i].Uuid}
+                                      className="h-[25px] px-2 bg-zinc-800 justify-center items-center gap-4 inline-flex"
+                                    >
                                       <div className="text-center text-neutral-50 text-xs font-medium font-pre">
                                         상세보기
                                       </div>
-                                    </div>
+                                    </Link>
                                   </div>
                                 </div>
                               </div>

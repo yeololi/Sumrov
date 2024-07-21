@@ -8,9 +8,13 @@ import MypageButton from "../../_components/mypageButton";
 import { fetchPaymentData } from "@/lib/utils";
 import { Product } from "@/app/(desktop)/shop/page";
 import { fetchData, newSaleType, saleType } from "../page";
+import Link from "next/link";
 
-async function orderListDetail() {
-  const { data, postData } = (await fetchData()) as {
+async function orderListDetail({ params }: { params: { pageId: string } }) {
+  const session = await getServerSession();
+  const user = session?.user;
+
+  const { data, postData } = (await fetchData(user?.name as string)) as {
     data: saleType[];
     postData: Product[];
   };
@@ -18,12 +22,21 @@ async function orderListDetail() {
   const saleData: newSaleType[] = data.map((value) => ({
     ...value,
     Date:
-      value.Date.split(" ")[0].split("-").join(". ") + value.Date.split(" ")[1],
+      value.Date.split(" ")[0].split("-").join(". ") +
+      " " +
+      value.Date.split(" ")[1],
     price: JSON.parse(value.Price),
     amount: JSON.parse(value.Amount).map((v: any) => v.amount),
     size: JSON.parse(value.Amount).map((v: any) => v.color),
     color: JSON.parse(value.Amount).map((v: any) => v.size),
   }));
+
+  const thisData = saleData.filter((item) => item.Uuid === params.pageId)[0];
+  const thisPostData = postData.filter(
+    (item) => item.Uuid === JSON.parse(thisData.Product)[0]
+  );
+
+  console.log(thisData, thisPostData);
 
   return (
     <>
@@ -39,154 +52,189 @@ async function orderListDetail() {
             </div>
             <div className="w-[814px] px-2 flex-col justify-start items-start gap-20 inline-flex">
               <div className="self-stretch py-4 border-b border-gray-200 justify-center items-center gap-[26px] inline-flex">
-                <div className="text-black text-lg font-medium font-['Pretendard']">
+                <div className="text-black text-lg font-medium font-pre">
                   상세 주문내역
                 </div>
                 <div className="grow shrink basis-0 h-[17px] justify-between items-start flex">
-                  <div className="text-black text-sm font-normal font-['Pretendard']">
-                    주문번호 : 1020392093029
+                  <div className="text-black text-sm font-normal font-pre">
+                    주문번호 : {thisData.Uuid}
                   </div>
-                  <div className="text-neutral-400 text-[11px] font-normal font-['Pretendard']">
-                    결제 날짜 : 2024. 02. 16 16:04:15
+                  <div className="text-neutral-400 text-[11px] font-normal font-pre">
+                    결제 날짜 : {thisData.Date}
                   </div>
                 </div>
               </div>
               <div className="self-stretch pr-10 flex-col justify-start items-start gap-20 flex">
-                <div className="self-stretch justify-center items-start gap-10 inline-flex">
-                  <div className="justify-start items-center gap-[11px] flex">
-                    <div className="justify-center items-center flex">
-                      <img
-                        className="w-[84px] h-[100px] border border-black"
-                        src="https://via.placeholder.com/84x100"
-                      />
-                    </div>
-                  </div>
-                  <div className="grow shrink basis-0 flex-col justify-center items-start gap-6 inline-flex">
-                    <div className="flex-col justify-center items-start gap-4 flex">
-                      <div className="text-neutral-900 text-lg font-bold font-['Cormorant Garamond']">
-                        SUMROV
+                {thisData.price.map((value, i) => (
+                  <div className="self-stretch justify-center items-start gap-10 inline-flex">
+                    <div className="justify-start items-center gap-[11px] flex">
+                      <div className="justify-center items-center flex">
+                        <img
+                          className="w-[84px] h-[100px] border border-black"
+                          src={thisPostData[i].MainImage}
+                        />
                       </div>
-                      <div className="justify-center items-center gap-2 inline-flex">
-                        <div className="p-0.5 border border-black justify-start items-end flex">
-                          <div className="text-center text-black text-xs font-normal font-['Inter']">
-                            구매 확정
+                    </div>
+                    <div className="grow shrink basis-0 flex-col justify-center items-start gap-6 inline-flex">
+                      <div className="flex-col justify-center items-start gap-4 flex">
+                        <div className="text-neutral-900 text-lg font-bold font-nav">
+                          SUMROV
+                        </div>
+                        <div className="justify-center items-center gap-2 inline-flex">
+                          <div className="p-1 border border-black justify-start items-end flex">
+                            <div className="text-center text-black text-xs font-semibold font-pre">
+                              {thisData.Status}
+                            </div>
+                          </div>
+                          <div className="text-black text-sm font-normal font-pre">
+                            {thisPostData[i].Title}
                           </div>
                         </div>
-                        <div className="text-black text-sm font-normal font-['Inter']">
-                          Lorem ipsum dolor sit Lorem ipsum (BLACK, RED, GREEN){" "}
+                        <div className="justify-start items-center gap-10 inline-flex">
+                          <div className="text-center text-black text-sm font-medium font-pre">
+                            KWR {value.toLocaleString()}
+                          </div>
+                        </div>
+                        <div className="justify-start items-center gap-10 inline-flex">
+                          <div className="text-center text-zinc-600 text-xs font-normal font-pre">
+                            주문수량 : {thisData.amount[i]}pcs
+                          </div>
+                        </div>
+                        <div className="justify-center items-center gap-2 inline-flex">
+                          <div className="text-zinc-600 text-xs font-normal font-pre">
+                            [옵션 : {thisData.color[i]} / {thisData.size[i]}]
+                          </div>
+                        </div>
+                        <div className="text-zinc-900 text-xs font-normal font-pre">
+                          구매 확정일 : {thisData.Date}
                         </div>
                       </div>
-                      <div className="justify-start items-center gap-10 inline-flex">
-                        <div className="text-center text-black text-sm font-medium font-['Inter']">
-                          KWR 10,000
+                      <div className="self-stretch justify-between items-center inline-flex">
+                        <div className="px-[120px] py-3 bg-zinc-800 justify-center items-center gap-4 flex">
+                          <div className="text-center text-neutral-50 text-sm font-medium font-pre">
+                            배송조회
+                          </div>
                         </div>
-                      </div>
-                      <div className="justify-start items-center gap-10 inline-flex">
-                        <div className="text-center text-zinc-600 text-xs font-normal font-['Inter']">
-                          주문수량 : 3pcs
-                        </div>
-                      </div>
-                      <div className="justify-center items-center gap-2 inline-flex">
-                        <div className="text-zinc-600 text-xs font-normal font-['Inter']">
-                          [옵션 : 블랙 / S]
-                        </div>
-                      </div>
-                      <div className="text-zinc-900 text-xs font-normal font-['Pretendard']">
-                        구매 확정일 : 2024. 02. 16
-                      </div>
-                    </div>
-                    <div className="self-stretch justify-between items-center inline-flex">
-                      <div className="px-[120px] py-3 bg-zinc-800 justify-center items-center gap-4 flex">
-                        <div className="text-center text-neutral-50 text-sm font-medium font-['Inter']">
-                          배송조회
-                        </div>
-                      </div>
-                      <div className="px-[120px] py-3 bg-zinc-800 justify-center items-center gap-4 flex">
-                        <div className="text-center text-neutral-50 text-sm font-medium font-['Inter']">
-                          재구매
-                        </div>
+                        <Link
+                          href={"/shop/" + btoa(thisPostData[i].Uuid)}
+                          className="px-[120px] py-3 bg-zinc-800 justify-center items-center gap-4 flex"
+                        >
+                          <div className="text-center text-neutral-50 text-sm font-medium font-pre">
+                            재구매
+                          </div>
+                        </Link>
                       </div>
                     </div>
                   </div>
-                </div>
+                ))}
                 <div className="self-stretch h-[244px] flex-col justify-center items-end gap-10 flex">
                   <div className="self-stretch py-4 border-b border-gray-200 justify-start items-center inline-flex">
-                    <div className="text-black text-lg font-medium font-['Pretendard']">
+                    <div className="text-black text-lg font-medium font-pre">
                       결제 정보
                     </div>
                   </div>
                   <div className="self-stretch h-[151px] flex-col justify-center items-center gap-4 flex">
                     <div className="self-stretch justify-between items-center inline-flex">
-                      <div className="text-neutral-400 text-sm font-medium font-['Pretendard']">
+                      <div className="text-neutral-400 text-sm font-medium font-pre">
                         결제 방법
                       </div>
-                      <div className="text-neutral-400 text-sm font-medium font-['Pretendard']">
+                      <div className="text-neutral-400 text-sm font-medium font-pre">
                         무통장입금
                       </div>
                     </div>
                     <div className="self-stretch justify-between items-center inline-flex">
-                      <div className="text-neutral-400 text-sm font-medium font-['Pretendard']">
+                      <div className="text-neutral-400 text-sm font-medium font-pre">
                         총 상품금액
                       </div>
-                      <div className="text-neutral-400 text-sm font-medium font-['Pretendard']">
-                        30,000원
+                      <div className="text-neutral-400 text-sm font-medium font-pre">
+                        {Number(
+                          thisData.price.reduce(
+                            (acc, cur, i) => acc + cur * thisData.amount[i],
+                            0
+                          )
+                        ).toLocaleString()}
+                        원
                       </div>
                     </div>
                     <div className="self-stretch justify-between items-center inline-flex">
-                      <div className="text-neutral-400 text-sm font-medium font-['Pretendard']">
+                      <div className="text-neutral-400 text-sm font-medium font-pre">
                         상품 할인금액
                       </div>
-                      <div className="text-neutral-400 text-sm font-medium font-['Pretendard']">
-                        0원
+                      <div className="text-neutral-400 text-sm font-medium font-pre">
+                        {thisPostData
+                          .reduce((acc, cur) => acc + cur.Sale, 0)
+                          .toLocaleString()}
+                        원
                       </div>
                     </div>
                     <div className="self-stretch justify-between items-center inline-flex">
-                      <div className="text-neutral-400 text-sm font-medium font-['Pretendard']">
+                      <div className="text-neutral-400 text-sm font-medium font-pre">
                         배송비
                       </div>
-                      <div className="text-neutral-400 text-sm font-medium font-['Pretendard']">
-                        3,000원
+                      <div className="text-neutral-400 text-sm font-medium font-pre">
+                        {Number(3000).toLocaleString()}원
                       </div>
                     </div>
                     <div className="self-stretch justify-between items-center inline-flex">
-                      <div className="text-black text-base font-medium font-['Pretendard']">
-                        총 3개 결제금액
+                      <div className="text-black text-base font-medium font-pre">
+                        총 {thisData.amount.reduce((acc, cur) => acc + cur, 0)}
+                        개 결제금액
                       </div>
-                      <div className="text-black text-base font-medium font-['Pretendard']">
-                        33,000원
+                      <div className="text-black text-base font-medium font-pre">
+                        {(
+                          thisData.price.reduce(
+                            (acc, cur, i) =>
+                              acc +
+                              cur * thisData.amount[i] -
+                              thisPostData.reduce(
+                                (acc, cur) => acc + cur.Sale,
+                                0
+                              ),
+                            0
+                          ) + 3000
+                        ).toLocaleString()}
+                        원
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className="self-stretch h-[186px] flex-col justify-start items-start gap-10 flex">
                   <div className="self-stretch py-4 border-b border-gray-200 justify-start items-center inline-flex">
-                    <div className="text-black text-lg font-medium font-['Pretendard']">
+                    <div className="text-black text-lg font-medium font-pre">
                       배송지 정보
                     </div>
                   </div>
                   <div className="self-stretch h-[93px] flex-col justify-center items-center gap-[21px] flex">
                     <div className="self-stretch justify-between items-start inline-flex">
-                      <div className="text-neutral-900 text-sm font-medium font-['Pretendard']">
+                      <div className="text-neutral-900 text-sm font-medium font-pre">
                         받는분
                       </div>
-                      <div className="text-neutral-900 text-sm font-medium font-['Pretendard']">
-                        Lorem
+                      <div className="text-neutral-900 text-sm font-medium font-pre">
+                        {thisData.CustomerName}
                       </div>
                     </div>
                     <div className="self-stretch justify-between items-start inline-flex">
-                      <div className="text-neutral-900 text-sm font-medium font-['Pretendard']">
+                      <div className="text-neutral-900 text-sm font-medium font-pre">
                         주소
                       </div>
-                      <div className="text-neutral-900 text-sm font-medium font-['Pretendard']">
-                        로램 로램 로램 로램 로램 로맴
+                      <div className="text-neutral-900 text-sm font-medium font-pre">
+                        {thisData.Addr.split(";").join(" ")}
                       </div>
                     </div>
                     <div className="self-stretch justify-between items-start inline-flex">
-                      <div className="text-neutral-900 text-sm font-medium font-['Pretendard']">
+                      <div className="text-neutral-900 text-sm font-medium font-pre">
                         연락처
                       </div>
-                      <div className="text-neutral-900 text-sm font-medium font-['Pretendard']">
-                        010-2222-2222
+                      <div className="text-neutral-900 text-sm font-medium font-pre">
+                        {thisData.Phone}
+                      </div>
+                    </div>
+                    <div className="self-stretch justify-between items-start inline-flex">
+                      <div className="text-neutral-900 text-sm font-medium font-pre">
+                        송장 번호
+                      </div>
+                      <div className="text-neutral-900 text-sm font-medium font-pre">
+                        {thisData.PostNum}
                       </div>
                     </div>
                   </div>

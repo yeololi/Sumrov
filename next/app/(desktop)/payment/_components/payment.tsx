@@ -14,6 +14,7 @@ import { Label as Label3 } from "@/components/ui/label";
 import { cart } from "../../cart/colums";
 import { json } from "stream/consumers";
 import { salePostType } from "@/app/api/sale/post/route";
+import { useSession } from "next-auth/react";
 
 declare global {
   interface Window {
@@ -26,6 +27,8 @@ interface IAddr {
 }
 
 const Payment = ({ data }: { data: cart[] }) => {
+  const { data: session } = useSession();
+
   const pricesum = data
     ?.map((ai, i) => ai.price * ai.amount)
     .reduce((pre, cur) => pre + cur, 0);
@@ -35,7 +38,7 @@ const Payment = ({ data }: { data: cart[] }) => {
     .reduce((pre, cur) => pre + cur, 0);
 
   const [checked, setChecked] = useState(false);
-  const [recipient, setRecipient] = useState("");
+  const [recipient, setRecipient] = useState(session?.user.name!);
   const [tel1, setTel1] = useState("");
   const [tel2, setTel2] = useState("");
   const [tel3, setTel3] = useState("");
@@ -219,9 +222,9 @@ const Payment = ({ data }: { data: cart[] }) => {
                       <Input
                         value={recipient}
                         type="text"
-                        onChange={(e) => setRecipient(e.target.value)}
+                        readOnly
                         id="Recipient"
-                        className="w-[550px] h-[30px] rounded-sm border border-stone-300"
+                        className="w-[550px] h-[30px] rounded-sm border border-stone-300 text-neutral-600"
                       />
                     </div>
                     <div className="w-full justify-start items-start gap-10 inline-flex">
