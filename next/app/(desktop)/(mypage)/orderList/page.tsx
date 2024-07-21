@@ -5,7 +5,7 @@ import { authOptions } from "@/util/authOption";
 import Header from "../../_components/header";
 import Footer from "../../_components/footer";
 import MypageButton from "../_components/mypageButton";
-import { fetchPaymentData } from "@/lib/utils";
+import { fetchData, fetchPaymentData } from "@/lib/utils";
 import { Product } from "../../shop/page";
 import Link from "next/link";
 
@@ -27,44 +27,6 @@ export interface newSaleType extends saleType {
   amount: number[];
   color: string[];
   size: string[];
-}
-
-export async function fetchData(
-  name: string
-): Promise<{ data: saleType[]; postData: Product[] } | undefined> {
-  try {
-    const response: { results: saleType[] } = await fetch(
-      `http://3.39.237.151:8080/sale`,
-      {
-        cache: "no-store",
-        method: "GET",
-      }
-    ).then((r) => r.json());
-
-    let data = response.results.filter((item) => item.CustomerName === name);
-
-    let uuid: string[][] = data.map((v) => JSON.parse(v.Product));
-
-    uuid = uuid.map((value) => [...new Set(value)]);
-
-    let newUuid = uuid.reduce(function (prev, next) {
-      return prev.concat(next);
-    });
-
-    const postData = (await Promise.all(
-      newUuid.map((value) => fetchPaymentData(btoa(value)))
-    )) as Product[];
-
-    if (response) {
-      return { data: data, postData: postData };
-    } else {
-      console.log("res.result is not an array or res is undefined");
-      return;
-    }
-  } catch (error) {
-    console.error(error);
-    return;
-  }
 }
 
 async function orderList() {

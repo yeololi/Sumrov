@@ -5,9 +5,9 @@ import { authOptions } from "@/util/authOption";
 import Header from "@/app/(desktop)/_components/header";
 import Footer from "@/app/(desktop)/_components/footer";
 import MypageButton from "../../_components/mypageButton";
-import { fetchPaymentData } from "@/lib/utils";
+import { fetchData } from "@/lib/utils";
 import { Product } from "@/app/(desktop)/shop/page";
-import { fetchData, newSaleType, saleType } from "../page";
+import { newSaleType, saleType } from "../page";
 import Link from "next/link";
 
 async function orderListDetail({ params }: { params: { pageId: string } }) {
