@@ -88,6 +88,7 @@ const ShopOption = ({ result }: { result: Product }) => {
 
     if (res) {
       router.push("/cart");
+      router.refresh();
     }
   };
 

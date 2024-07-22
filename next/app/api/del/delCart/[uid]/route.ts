@@ -1,4 +1,6 @@
 import clientPromise from "@/util/database";
+import { ObjectId } from "mongodb";
+import { NextResponse } from "next/server";
 
 interface res {
   title: string;
@@ -20,13 +22,20 @@ export async function DELETE(
 
   try {
     const db = (await clientPromise).db("sumrov");
-    let result = await db.collection("cart").insertOne(body); // todo
+    let result = await db
+      .collection("cart")
+      .deleteOne({ _id: new ObjectId(uid) });
 
     if (result) {
     } else {
-      return new Response("failed read body", { status: 404 });
+      return NextResponse.json({
+        message: "게시글이 성공적으로 삭제되었습니다.",
+      });
     }
-    return new Response("User has registered", { status: 200 });
+    return NextResponse.json(
+      { error: "서버 오류가 발생했습니다." },
+      { status: 500 }
+    );
   } catch (error) {
     console.error(error);
   }

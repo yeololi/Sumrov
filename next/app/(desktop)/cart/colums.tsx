@@ -122,7 +122,9 @@ export const columns: ColumnDef<cart>[] = [
     id: "actions",
     header: () => <div className="text-center font-noto">선택</div>,
     cell: ({ row }) => {
-      const payment = row.original;
+      const cart = row.original;
+
+      console.log(cart);
 
       return (
         <DropdownMenu>
@@ -139,12 +141,16 @@ export const columns: ColumnDef<cart>[] = [
             <DropdownMenuSeparator />
             <DropdownMenuItem
               className="font-semibold font-noto cursor-pointer"
-              onClick={() => navigator.clipboard.writeText(payment.id)}
+              onClick={() => navigator.clipboard.writeText(cart.id)}
             >
               주문하기
             </DropdownMenuItem>
             <DropdownMenuItem
-              onClick={() => {}}
+              onClick={async (e) => {
+                const result = await fetch(`/api/del/delCart/${cart._id}`, {
+                  method: "DELETE",
+                }).then((r) => r.json());
+              }}
               className="font-semibold font-noto cursor-pointer"
             >
               삭제
