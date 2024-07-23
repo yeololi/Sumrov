@@ -2,15 +2,17 @@
 
 import { Spinner } from "@/components/spinner";
 import { redirect } from "next/navigation";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import { useMediaQuery } from "usehooks-ts";
 
 const MobileLayout = ({ children }: { children: React.ReactNode }) => {
   const isMobile = useMediaQuery("(max-width: 768px)");
 
-  if (!isMobile) {
-    redirect("/");
-  }
+  useEffect(() => {
+    if (!isMobile) {
+      redirect("/");
+    }
+  }, []);
 
   return (
     <div className="w-full flex justify-center">

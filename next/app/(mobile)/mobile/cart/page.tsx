@@ -1,77 +1,35 @@
+import { ResultItem, transformData } from "@/app/(desktop)/cart/page";
+import { Product } from "@/app/(desktop)/shop/page";
 import { Button } from "@/components/ui/button";
+import { fetchPaymentData } from "@/lib/utils";
+import { authOptions } from "@/util/authOption";
+import clientPromise from "@/util/database";
 import { Minus, Plus } from "lucide-react";
+import { ObjectId } from "mongodb";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 import Footer from "../_components/footer";
 import Header from "../_components/header";
+import CartInner from "./_components/cartInner";
 
-const CartPage = () => {
-  return (
-    <>
-      <Header />
-      <div className="w-full h-[calc(100vh-99px)] flex flex-col items-center border-b border-black dark:border-white border-opacity-25 pb-[49px] mb-[32px]">
-        <div className="text-black dark:text-white text-[17px] font-semibold font-nav tracking-widest mt-[121px] mb-[26px]">
-          CART
-        </div>
-        <div className="w-[375px] h-[172px] flex-col justify-center items-start py-[18px] px-[20px] flex border-y border-gray-200">
-          <div className="justify-start items-start flex gap-[21px] w-full">
-            <img
-              className="w-[100px] h-[133px] border border-black"
-              src="https://via.placeholder.com/100x133"
-            />
-            <div>
-              <div className="text-black dark:text-white text-xs font-normal font-pre w-[119px]">
-                Lorem ipsum dolor sit KRW 10,000
-              </div>
-              <div className="text-neutral-600 dark:text-neutral-400 text-[10px] font-normal font-pre mt-[28px]">
-                -블랙/S
-              </div>
-              <div className="flex mt-[31px] gap-[5px] items-center">
-                <Minus size={16} />
-                <div className="text-black dark:text-white text-[16px] font-normal font-pre">
-                  1
-                </div>
-                <Plus size={16} />
-              </div>
-            </div>
-            <div className="h-full flex-1 flex justify-end">
-              <div className="text-neutral-600 dark:text-neutral-400 text-[10px] font-normal font-pre">
-                Remove
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="w-full flex-col justify-start items-start flex gap-[9px] mt-[18px] pb-[21px] border-b border-gray-200 px-[20.5px]">
-          <div className="flex justify-between items-center w-full">
-            <div className="text-neutral-600 dark:text-neutral-400 text-[10px] font-normal font-pre">
-              상품금액
-            </div>
-            <div className="text-neutral-600 dark:text-neutral-400 text-[10px] font-normal font-pre">
-              KRW 10,000
-            </div>
-          </div>
-          <div className="flex justify-between items-center w-full">
-            <div className="text-neutral-600 dark:text-neutral-400 text-[10px] font-normal font-pre">
-              총 할인금액
-            </div>
-            <div className="text-neutral-600 dark:text-neutral-400 text-[10px] font-normal font-pre">
-              KRW 0
-            </div>
-          </div>
-        </div>
-        <div className="w-[335px] justify-center items-start gap-[220px] flex mt-[18px]">
-          <div className="text-black dark:text-white text-[11px] font-medium font-pre">
-            총 결제 금액
-          </div>
-          <div className="text-black dark:text-white text-[11px] font-medium font-pre">
-            KRW 10,000
-          </div>
-        </div>
-        <Button className="mt-[28px] w-[335px] h-[41px] rounded-none mb-[61px] font-medium text-[13px] font-pre text-white dark:text-neutral-900">
-          결제하기
-        </Button>
-      </div>
-      <Footer />
-    </>
+const CartPage = async () => {
+  const db = (await clientPromise).db("sumrov");
+  const session = await getServerSession(authOptions);
+  const result = await db
+    .collection<ResultItem>("cart")
+    .find({ UserUuid: new ObjectId(session?.user._id) })
+    .toArray();
+
+  const data: (Product | undefined)[] = await Promise.all(
+    result.map((ai) => fetchPaymentData(ai.OriginUuid))
   );
+  !session && redirect("/login");
+  // console.log(data);
+  // console.log(result);
+
+  const body = transformData(data as Product[], result);
+
+  return body && <CartInner data={body} />;
 };
 
 export default CartPage;

@@ -8,7 +8,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useToast } from "@/components/ui/use-toast";
 import { Minus, Plus } from "lucide-react";
+import { getSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface post {
@@ -36,6 +39,9 @@ const ShopOption = ({ result }: { result: post }) => {
     size: "",
   });
 
+  const router = useRouter();
+  const { toast } = useToast();
+
   const [itemCounter, setitemCounter] = useState(1);
 
   const increment = () => {
@@ -52,6 +58,54 @@ const ShopOption = ({ result }: { result: post }) => {
     const value = parseInt(event.target.value);
     if (!isNaN(value) && value >= 1) {
       setitemCounter(value);
+    }
+  };
+
+  const handleBuyNow = () => {
+    if (selectValue.color && selectValue.size) {
+      router.push(
+        `/mobile/paymentnow?OriginUuid=${btoa(
+          result.Uuid
+        )}&Cnt=${itemCounter}&size=${selectValue.size}&color=${
+          selectValue.color
+        }`
+      );
+    } else {
+      toast({
+        title: "상품 옵션을 모두 선택해주세요",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const newCart = async () => {
+    const session = await getSession();
+
+    if (selectValue.size === "" || selectValue.color === "") {
+      toast({
+        title: "상품 옵션을 모두 선택해주세요",
+        variant: "destructive",
+      });
+      return;
+    }
+    const body = {
+      UserUuid: session?.user._id,
+      OriginUuid: btoa(result.Uuid),
+      Size: selectValue.size,
+      Color: selectValue.color,
+      Cnt: itemCounter,
+    };
+
+    const res = await fetch("/api/post/newCart/", {
+      method: "POST",
+      body: JSON.stringify(body),
+    }).then((r) => r.json());
+
+    console.log(res);
+
+    if (res) {
+      router.push("/mobile/cart");
+      router.refresh();
     }
   };
 
@@ -116,13 +170,12 @@ const ShopOption = ({ result }: { result: post }) => {
             </SelectContent>
           </Select>
         </div>
-
         <>
           <div className="w-[350px] h-0 border-2 border-neutral-300  mt-4" />
           <div className="w-[299px] flex mt-3 flex-col">
             <div className="flex flex-col">
               <div className="text-neutral-600 dark:text-neutral-400 text-[10px] font-normal font-pre">
-                Lorem ipsum dolor sit
+                {result.Title}
               </div>
               <div className="text-neutral-600 dark:text-neutral-400 text-[10px] font-normal font-pre">
                 {selectValue ? (
@@ -135,7 +188,7 @@ const ShopOption = ({ result }: { result: post }) => {
               </div>
             </div>
             <div className="text-black dark:text-white text-[11px] font-semibold font-pre flex justify-end w-full">
-              KRW 10,000
+              KRW {Number(result.Price).toLocaleString()}
             </div>
             <div className="flex gap-1">
               <input
@@ -154,13 +207,13 @@ const ShopOption = ({ result }: { result: post }) => {
             </div>
           </div>
           <div className="w-[350px] h-0 border-2 border-neutral-300 mt-4" />
-          <div className="mt-[17px] w-[299px] h-3.5 justify-center items-start gap-[167px] inline-flex">
+          <div className="mt-[17px] h-3.5 justify-center items-start gap-[167px] inline-flex">
             <div className="text-black dark:text-white text-[11px] font-semibold font-pre">
               총상품금액
             </div>
-            <div className="w-[84px] flex justify-center items-center">
+            <div className=" flex justify-center items-center">
               <div className="text-blue-500 text-[11px] font-semibold font-pre">
-                KRW 10,000
+                KRW {(Number(result.Price) * itemCounter).toLocaleString()}
               </div>
               <div className="text-blue-500 text-[10px] font-normal font-pre">
                 (1개)
@@ -168,15 +221,14 @@ const ShopOption = ({ result }: { result: post }) => {
             </div>
           </div>
         </>
-
-        <div className="flex mt-[39px]">
+        <button className="flex mt-[39px]" onClick={handleBuyNow} disabled>
           <div className="w-[315px] h-[41px] bg-black">
             <div className="text-neutral-50 h-full text-[11px] flex justify-center items-center font-medium font-pre">
               Buy it Now
             </div>
           </div>
-        </div>
-        <div className="flex mt-1.5">
+        </button>
+        <div className="flex mt-1.5" onClick={newCart}>
           <div className="w-[315px] h-[41px] bg-neutral-50 border border-black">
             <div className="text-black text-[11px] h-full font-medium font-body flex justify-center items-center">
               Add to Cart
