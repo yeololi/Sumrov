@@ -34,14 +34,14 @@ async function mypage() {
                 </div>
               </div>
               <div className="flex flex-row justify-around h-[132px] w-[815px] border-y border-[#EBEBEB] px-[56px] py-[40px]">
-                {data2.map((arg, key) => (
+                {/* {data2.map((arg, key) => (
                   <div className="flex flex-col" key={key}>
                     <div className="mb-[16px] text-[14px] font-bold text-zinc-400 whitespace-nowrap">
                       {arg}
                     </div>
                     <div className=" font-bold text-center">0</div>
                   </div>
-                ))}
+                ))} */}
               </div>
             </div>
           </div>

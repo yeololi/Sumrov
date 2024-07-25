@@ -27,15 +27,15 @@ export async function DELETE(
       .deleteOne({ _id: new ObjectId(uid) });
 
     if (result) {
-    } else {
       return NextResponse.json({
         message: "게시글이 성공적으로 삭제되었습니다.",
       });
+    } else {
+      return NextResponse.json(
+        { error: "서버 오류가 발생했습니다." },
+        { status: 500 }
+      );
     }
-    return NextResponse.json(
-      { error: "서버 오류가 발생했습니다." },
-      { status: 500 }
-    );
   } catch (error) {
     console.error(error);
   }

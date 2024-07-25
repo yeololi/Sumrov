@@ -35,7 +35,7 @@ const Payment = ({ data }: { data: cart[] }) => {
     ?.map((ai, i) => (ai.price * ai.sale) / 100)
     .reduce((pre, cur) => pre + cur, 0);
 
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(true);
   const [recipient, setRecipient] = useState(session?.user.name!);
   const [tel1, setTel1] = useState("");
   const [tel2, setTel2] = useState("");
@@ -164,7 +164,7 @@ const Payment = ({ data }: { data: cart[] }) => {
 
       console.log(res);
 
-      router.replace("/mypage_search");
+      router.replace("/mobile/orderList");
     } catch (error) {
       console.error(error);
     }
@@ -394,7 +394,7 @@ const Payment = ({ data }: { data: cart[] }) => {
                     무통장입금
                   </label>
                 </div>
-                <div className="flex items-center space-x-2">
+                {/* <div className="flex items-center space-x-2">
                   <RadioGroupItem value="option-two" id="two" />
                   <label
                     className="text-neutral-400 text-[13px] font-normal font-pre"
@@ -402,9 +402,9 @@ const Payment = ({ data }: { data: cart[] }) => {
                   >
                     신용카드
                   </label>
-                </div>
+                </div> */}
               </div>
-              <div className="flex items-center space-x-2 mt-[30px]">
+              {/* <div className="flex items-center space-x-2 mt-[30px]">
                 <RadioGroupItem value="option-three" id="three" />
                 <label
                   className="text-neutral-400 text-[13px] font-normal font-pre"
@@ -412,7 +412,7 @@ const Payment = ({ data }: { data: cart[] }) => {
                 >
                   실시간 계좌이체
                 </label>
-              </div>
+              </div> */}
             </RadioGroup>
           </div>
         </div>

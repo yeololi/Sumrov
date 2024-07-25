@@ -19,6 +19,7 @@ async function fetchData() {
       `http://3.39.237.151:8080/notice`,
       {
         method: "GET",
+        cache: "no-store",
       }
     ).then((r) => r.json());
 

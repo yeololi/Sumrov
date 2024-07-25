@@ -147,6 +147,14 @@ async function orderListDetail({ params }: { params: { pageId: string } }) {
                     </div>
                     <div className="self-stretch justify-between items-center inline-flex">
                       <div className="text-neutral-400 text-sm font-medium font-pre">
+                        입금 계좌번호
+                      </div>
+                      <div className="text-neutral-400 text-sm font-medium font-pre">
+                        3333-28-1677131 카카오뱅크 오재희(썸로브(sumrov))
+                      </div>
+                    </div>
+                    <div className="self-stretch justify-between items-center inline-flex">
+                      <div className="text-neutral-400 text-sm font-medium font-pre">
                         총 상품금액
                       </div>
                       <div className="text-neutral-400 text-sm font-medium font-pre">
