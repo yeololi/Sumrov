@@ -55,7 +55,7 @@ async function orderList() {
       <Header />
       <div className="flex justify-center pt-[200px] pb-[91px] bg-neutral-50 dark:bg-inherit">
         <div className="w-[1040px] flex-col justify-start items-center gap-[70px] inline-flex">
-          <div className="text-black dark:text-neutral-50 text-[32px] font-bold font-nav tracking-[3.20px]">
+          <div className="dark:text-neutral-50 text-[32px] font-bold font-nav tracking-[3.20px]">
             MY PAGE
           </div>
           <div className="flex flex-row gap-[120px]">
@@ -65,7 +65,7 @@ async function orderList() {
             <div className="w-[808px] flex-col justify-center items-start gap-10 inline-flex">
               <div className="self-stretch justify-between items-center inline-flex">
                 <div className="justify-center items-center gap-0.5 flex">
-                  <div className="text-black text-lg font-semibold font-pre">
+                  <div className="text-lg font-semibold font-pre">
                     {user?.name + " 님의 주문 내역"}
                   </div>
                 </div>
@@ -75,9 +75,7 @@ async function orderList() {
                   key={key}
                   className="flex-col justify-center items-start gap-4 flex"
                 >
-                  <div className="text-black text-[17px] font-medium font-pre">
-                    {date}
-                  </div>
+                  <div className="text-[17px] font-medium font-pre">{date}</div>
                   <div className="self-stretch py-4 border-t-2 border-gray-200 justify-start items-center gap-[15px] inline-flex">
                     <div className="grow shrink basis-0 flex-col justify-center items-start gap-4 inline-flex">
                       {postData !== undefined &&
@@ -99,7 +97,7 @@ async function orderList() {
                                   </div>
                                   <div className="grow shrink basis-0 h-14 justify-between items-center flex">
                                     <div className="px-4 py-2 flex-col justify-center items-start gap-2 inline-flex">
-                                      <div className="text-black text-sm font-normal font-pre">
+                                      <div className="text-sm font-normal font-pre">
                                         {postData![i].Title}
                                       </div>
                                       <div className="justify-center items-center gap-2 inline-flex">
@@ -122,7 +120,7 @@ async function orderList() {
                                       </div>
                                     </div>
                                     <div className="justify-start items-center gap-10 flex">
-                                      <div className="text-center text-black text-sm font-medium font-pre">
+                                      <div className="text-center text-sm font-medium font-pre">
                                         KRW{" "}
                                         {saleData[i].price
                                           .reduce((acc, cur) => acc + cur, 0)
