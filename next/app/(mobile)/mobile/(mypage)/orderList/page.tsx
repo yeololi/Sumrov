@@ -41,7 +41,7 @@ const Mypage_search = async () => {
               key={i}
               className="w-full h-[159px] relative flex flex-col gap-[11px]"
             >
-              <div className="text-black text-[13px] font-medium font-pre">
+              <div className="text-[13px] font-medium font-pre">
                 {value.Date}
               </div>
               <div className="flex">
@@ -52,10 +52,10 @@ const Mypage_search = async () => {
 
                 <div className="ml-[11px] flex flex-col">
                   <div className="flex-col justify-start items-start gap-[5px] inline-flex">
-                    <div className="text-black text-[11px] font-medium font-pre">
+                    <div className="text-[11px] font-medium font-pre">
                       {postData![i].Title}
                     </div>
-                    <div className="text-black text-[11px] font-semibold font-pre">
+                    <div className="text-[11px] font-semibold font-pre">
                       KRW{" "}
                       {value.price
                         .reduce((acc, cur) => acc + cur, 0)
