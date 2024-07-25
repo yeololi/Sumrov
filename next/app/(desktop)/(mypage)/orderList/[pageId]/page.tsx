@@ -150,7 +150,15 @@ async function orderListDetail({ params }: { params: { pageId: string } }) {
                         입금 계좌번호
                       </div>
                       <div className="text-neutral-400 text-sm font-medium font-pre">
-                        3333-28-1677131 카카오뱅크 오재희(썸로브(sumrov))
+                        3333-28-1677131 카카오뱅크
+                      </div>
+                    </div>
+                    <div className="self-stretch justify-between items-center inline-flex">
+                      <div className="text-neutral-400 text-sm font-medium font-pre">
+                        입금자명
+                      </div>
+                      <div className="text-neutral-400 text-sm font-medium font-pre">
+                        오재희(썸로브(sumrov))
                       </div>
                     </div>
                     <div className="self-stretch justify-between items-center inline-flex">
@@ -167,17 +175,7 @@ async function orderListDetail({ params }: { params: { pageId: string } }) {
                         원
                       </div>
                     </div>
-                    <div className="self-stretch justify-between items-center inline-flex">
-                      <div className="text-neutral-400 text-sm font-medium font-pre">
-                        상품 할인금액
-                      </div>
-                      <div className="text-neutral-400 text-sm font-medium font-pre">
-                        {thisPostData
-                          .reduce((acc, cur) => acc + cur.Sale, 0)
-                          .toLocaleString()}
-                        원
-                      </div>
-                    </div>
+
                     <div className="self-stretch justify-between items-center inline-flex">
                       <div className="text-neutral-400 text-sm font-medium font-pre">
                         배송비
