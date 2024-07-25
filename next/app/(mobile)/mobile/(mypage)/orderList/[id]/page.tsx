@@ -2,6 +2,7 @@ import { newSaleType, saleType } from "@/app/(desktop)/(mypage)/orderList/page";
 import { Product } from "@/app/(desktop)/shop/page";
 import { fetchData } from "@/lib/utils";
 import { getServerSession } from "next-auth";
+import Link from "next/link";
 
 const Mypage = async ({ params }: { params: { id: string } }) => {
   const session = await getServerSession();
@@ -126,17 +127,7 @@ const Mypage = async ({ params }: { params: { id: string } }) => {
               원
             </div>
           </div>
-          <div className="w-full flex flex-row items-start justify-between">
-            <div className="text-[11px] font-pre text-neutral-400 whitespace-nowrap">
-              상품 할인금액
-            </div>
-            <div className="text-[11px] font-pre text-neutral-400 whitespace-nowrap">
-              {thisPostData
-                .reduce((acc, cur) => acc + cur.Sale, 0)
-                .toLocaleString()}
-              원
-            </div>
-          </div>
+
           <div className="w-full flex flex-row items-start justify-between">
             <div className="text-[11px] font-pre text-neutral-400 whitespace-nowrap">
               배송비
@@ -164,6 +155,12 @@ const Mypage = async ({ params }: { params: { id: string } }) => {
           </div>
         </div>
         <div className="w-full h-0 shrink-0 border-[1px] border-solid border-[#ebebeb]"></div>
+        <Link
+          href={"http://pf.kakao.com/_xgMJYG"}
+          className="text-[11px] font-pre text-neutral-400 whitespace-nowrap"
+        >
+          배송정보 변경시 문의
+        </Link>
         <div className="w-full flex flex-col items-start justify-start gap-[15px]">
           <div className="text-[13px] font-pre font-medium whitespace-nowrap">
             배송지 정보

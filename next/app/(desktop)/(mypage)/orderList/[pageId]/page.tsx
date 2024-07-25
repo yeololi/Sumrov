@@ -210,6 +210,13 @@ async function orderListDetail({ params }: { params: { pageId: string } }) {
                 <div className="self-stretch h-[186px] flex-col justify-start items-start gap-10 flex">
                   <div className="self-stretch py-4 border-b border-gray-200 justify-start items-center inline-flex">
                     <div className="text-black text-lg font-medium font-pre">
+                      <Link
+                        href={"http://pf.kakao.com/_xgMJYG"}
+                        className="text-neutral-400 text-xs font-medium font-pre"
+                      >
+                        배송정보 변경시 문의
+                      </Link>
+                      <br />
                       배송지 정보
                     </div>
                   </div>
