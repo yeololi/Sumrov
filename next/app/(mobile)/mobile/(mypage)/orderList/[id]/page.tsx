@@ -100,7 +100,7 @@ const Mypage = async ({ params }: { params: { id: string } }) => {
                   입금 계좌번호
                 </div>
                 <div className="text-[11px] font-pre text-neutral-400 whitespace-nowrap">
-                  3333-28-1677131
+                  3333-28-1677131 카카오뱅크
                 </div>
               </div>
               <div className="w-full flex flex-row items-start justify-between overflow-hidden">
@@ -108,7 +108,7 @@ const Mypage = async ({ params }: { params: { id: string } }) => {
                   입금자명
                 </div>
                 <div className="text-[11px] font-pre text-neutral-400 whitespace-nowrap">
-                  카카오뱅크 오재희(썸로브(sumrov))
+                  오재희(썸로브(sumrov))
                 </div>
               </div>
             </>

@@ -163,6 +163,13 @@ const Payment = ({ data }: { data: cart[] }) => {
       });
 
       console.log(res);
+      await Promise.all(
+        data.map(async (value) => {
+          const delCart = await fetch(`/api/del/delCart/${value._id}`, {
+            method: "DELETE",
+          }).then((r) => r.json());
+        })
+      );
 
       router.replace("/mobile/orderList");
     } catch (error) {
