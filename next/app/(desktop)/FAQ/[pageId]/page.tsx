@@ -52,7 +52,7 @@ const FAQ = ({ params }: { params: { pageId: number } }) => {
                 <div className="w-[940px] h-[46px] pr-[795px] pt-[15px] pb-4 border-b border-gray-200 dark:neutral-50 justify-start items-center inline-flex">
                   <div className="self-stretch pl-[25px] justify-center items-center inline-flex">
                     <div className="text-black dark:text-neutral-50 text-xs font-light font-body uppercase">
-                      2022-04-05 21:36:16
+                      {qna_data[params.pageId - 1].date}
                     </div>
                   </div>
                 </div>
@@ -75,20 +75,22 @@ const FAQ = ({ params }: { params: { pageId: number } }) => {
               목록
             </div>
           </Link>
-          <div className="flex border border-gray-200 dark:neutral-50 h-10">
-            <div className="w-[150px] h-10 pt-[11px] pb-3 border-r border-gray-200 justify-center items-center inline-flex">
-              <div className="text-black dark:text-neutral-50 text-sm font-light font-pre tracking-wider">
-                다음글
+          {qna_data[params.pageId] && (
+            <div className="flex border border-gray-200 dark:neutral-50 h-10">
+              <div className="w-[150px] h-10 pt-[11px] pb-3 border-r border-gray-200 justify-center items-center inline-flex">
+                <div className="text-black dark:text-neutral-50 text-sm font-light font-pre tracking-wider">
+                  다음글
+                </div>
               </div>
-            </div>
-            <div className="w-[841px] h-10 justify-start items-center inline-flex">
-              <div className="self-stretch pl-[15px] justify-center items-center inline-flex">
-                <div className="text-black dark:text-neutral-50 text-[13px] font-normal font-body uppercase">
-                  {qna_data[params.pageId].title}
+              <div className="w-[841px] h-10 justify-start items-center inline-flex">
+                <div className="self-stretch pl-[15px] justify-center items-center inline-flex">
+                  <div className="text-black dark:text-neutral-50 text-[13px] font-normal font-body uppercase">
+                    {qna_data[params.pageId].title}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
       <Footer />

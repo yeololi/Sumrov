@@ -101,7 +101,7 @@ const NavBar = () => {
             variant={"ghost"}
             className="text-black dark:text-white text-lg font-bold font-nav whitespace-nowrap hover:bg-opacity-0 hover:bg-white"
           >
-            <Link href={"/mypage"}>My Page</Link>
+            <Link href={"/orderList"}>My Page</Link>
           </Button>
         ) : (
           <Button

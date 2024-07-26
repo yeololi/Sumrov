@@ -118,6 +118,9 @@ async function orderList() {
                                           </div>
                                         </div>
                                       </div>
+                                      <div className="text-xs font-normal font-pre">
+                                        {value.Status}
+                                      </div>
                                     </div>
                                     <div className="justify-start items-center gap-10 flex">
                                       <div className="text-center text-sm font-medium font-pre">

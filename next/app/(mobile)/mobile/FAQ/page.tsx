@@ -1,10 +1,11 @@
+import { qna_data } from "@/app/(desktop)/FAQ/data";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 import Footer from "../_components/footer";
 import Header from "../_components/header";
 
-const data = [{}, {}, {}, {}, {}, {}, {}];
-
 const NoticePage = () => {
+  const data = qna_data.reverse();
   return (
     <>
       <Header />
@@ -13,7 +14,8 @@ const NoticePage = () => {
           FAQ
         </div>
         {data.map((args, i) => (
-          <div
+          <Link
+            href={"/mobile/FAQ/" + (data.length - i)}
             key={i}
             className={cn(
               "w-full h-16 bg-white dark:bg-neutral-900 border-gray-200 py-[15px] px-[16px]",
@@ -23,10 +25,7 @@ const NoticePage = () => {
             <div className="h-full w-full flex flex-col gap-1">
               <div className="flex">
                 <div className="text-zinc-800 dark:text-white text-xs font-normal font-body">
-                  Lorem ipsum dolor sit amet,
-                </div>
-                <div className="text-zinc-800 dark:text-white text-xs font-normal font-body">
-                  로램잇섬
+                  {args.title}
                 </div>
               </div>
               <div className="flex gap-[13px]">
@@ -34,11 +33,11 @@ const NoticePage = () => {
                   SUMROV
                 </div>
                 <div className="text-neutral-400 text-[10px] font-medium font-body tracking-wide">
-                  2024-02-11 16:04:15
+                  {args.date}
                 </div>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
       <Footer />

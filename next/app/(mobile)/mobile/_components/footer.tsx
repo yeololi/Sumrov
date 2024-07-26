@@ -43,7 +43,7 @@ const Footer = () => {
                 </div>
                 <div className="self-stretch h-[58px] flex-col justify-start items-start gap-2 flex">
                   <Link
-                    href={"/mobile/mypage_search"}
+                    href={"/mobile/orderList"}
                     className="text-neutral-50 text-xs font-light font-pre"
                   >
                     배송조회

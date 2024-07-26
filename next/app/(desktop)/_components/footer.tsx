@@ -42,9 +42,12 @@ const Footer = () => {
                   </div>
                 </div>
                 <div className="h-[58px] flex-col justify-start items-start gap-2 flex">
-                  <div className="text-neutral-50 text-xs font-light font-pre">
+                  <Link
+                    href={"/orderList"}
+                    className="text-neutral-50 text-xs font-light font-pre"
+                  >
                     배송조회
-                  </div>
+                  </Link>
                   <div className="text-neutral-50 text-xs font-light font-pre">
                     개인정보
                   </div>

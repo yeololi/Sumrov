@@ -87,10 +87,12 @@ const NoticePageDetail = async ({ params }: { params: { pageId: string } }) => {
                     </div>
                   </div>
                   <div className="flex-col justify-center items-center gap-[50px] flex">
-                    <img
-                      className="w-[680px] h-[680px]"
-                      src={data[0].Images[0]}
-                    />
+                    {data[0].Images[0] && (
+                      <img
+                        className="w-[680px] h-[680px]"
+                        src={data[0].Images[0]}
+                      />
+                    )}
                     <div className="w-[890px] text-black dark:text-neutral-50 text-sm font-light font-pre whitespace-pre-wrap uppercase tracking-wide">
                       {data[0].Description}
                     </div>
@@ -100,9 +102,9 @@ const NoticePageDetail = async ({ params }: { params: { pageId: string } }) => {
             </div>
             <Link
               href={"/notice?page=1"}
-              className="w-[100px] h-[30px] pt-1.5 pb-[7px] border border-gray-200 bg-neutral-600 justify-center items-center inline-flex"
+              className="w-[100px] h-[30px] pt-1.5 pb-[7px] border border-gray-200 dark:bg-neutral-600 justify-center items-center inline-flex"
             >
-              <div className="text-black  dark:text-neutral-50 text-sm font-light font-pre uppercase tracking-wide">
+              <div className="text-black dark:text-neutral-50 text-sm font-light font-pre uppercase tracking-wide">
                 목록
               </div>
             </Link>

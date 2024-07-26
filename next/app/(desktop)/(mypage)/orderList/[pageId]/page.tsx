@@ -51,7 +51,7 @@ async function orderListDetail({ params }: { params: { pageId: string } }) {
               <MypageButton />
             </div>
             <div className="w-[814px] px-2 flex-col justify-start items-start gap-20 inline-flex">
-              <div className="self-stretch py-4 border-b border-gray-200 justify-center items-center gap-[26px] inline-flex">
+              <div className="self-stretch pb-4 border-b border-gray-200 justify-center items-center gap-[26px] inline-flex">
                 <div className="text-lg font-medium font-pre">
                   상세 주문내역
                 </div>
@@ -111,11 +111,14 @@ async function orderListDetail({ params }: { params: { pageId: string } }) {
                         </div>
                       </div>
                       <div className="self-stretch justify-between items-center inline-flex">
-                        <div className="px-[120px] py-3 bg-zinc-800 justify-center items-center gap-4 flex">
+                        <Link
+                          href={"/orderList"}
+                          className="px-[120px] py-3 bg-zinc-800 justify-center items-center gap-4 flex"
+                        >
                           <div className="text-center text-neutral-50 text-sm font-medium font-pre">
                             배송조회
                           </div>
-                        </div>
+                        </Link>
                         <Link
                           href={"/shop/" + btoa(thisPostData[i].Uuid)}
                           className="px-[120px] py-3 bg-zinc-800 justify-center items-center gap-4 flex"
@@ -128,13 +131,13 @@ async function orderListDetail({ params }: { params: { pageId: string } }) {
                     </div>
                   </div>
                 ))}
-                <div className="self-stretch h-[244px] flex-col justify-center items-end gap-10 flex">
-                  <div className="self-stretch py-4 border-b border-gray-200 justify-start items-center inline-flex">
+                <div className="self-stretch flex-col justify-center items-end gap-10 flex">
+                  <div className="self-stretch pb-4 border-b border-gray-200 justify-start items-center inline-flex">
                     <div className="text-lg font-medium font-pre">
                       결제 정보
                     </div>
                   </div>
-                  <div className="self-stretch h-[151px] flex-col justify-center items-center gap-4 flex">
+                  <div className="self-stretch flex-col justify-center items-center gap-4 flex">
                     <div className="self-stretch justify-between items-center inline-flex">
                       <div className="text-neutral-400 text-sm font-medium font-pre">
                         결제 방법
@@ -205,8 +208,8 @@ async function orderListDetail({ params }: { params: { pageId: string } }) {
                     </div>
                   </div>
                 </div>
-                <div className="self-stretch h-[186px] flex-col justify-start items-start gap-10 flex">
-                  <div className="self-stretch py-4 border-b border-gray-200 justify-start items-center inline-flex">
+                <div className="self-stretch flex-col justify-start items-start gap-10 flex">
+                  <div className="self-stretch pb-4 border-b border-gray-200 justify-start items-center inline-flex">
                     <div className="text-lg font-medium font-pre">
                       <Link
                         href={"http://pf.kakao.com/_xgMJYG"}
@@ -218,7 +221,7 @@ async function orderListDetail({ params }: { params: { pageId: string } }) {
                       배송지 정보
                     </div>
                   </div>
-                  <div className="self-stretch h-[93px] flex-col justify-center items-center gap-[21px] flex">
+                  <div className="self-stretch flex-col justify-center items-center gap-[21px] flex">
                     <div className="self-stretch justify-between items-start inline-flex">
                       <div className="text-sm font-medium font-pre">받는분</div>
                       <div className="text-sm font-medium font-pre">

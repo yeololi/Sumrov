@@ -12,11 +12,11 @@ const Mypage = async () => {
       <div className="w-[328px] flex-col justify-center items-start gap-[13px] flex">
         <div className="justify-start items-center gap-0.5 inline-flex w-full">
           <div className="text-[13px] font-medium font-pre">
-            {session?.user.name ?? "사용자"} 님의 주문 현황
+            {session?.user.name ?? "사용자"} 님
           </div>
-          <div className="text-neutral-400 text-[11px] font-normal font-pre">
-            (최근 3개월)
-          </div>
+          {/* <div className="text-neutral-400 text-[11px] font-normal font-pre">
+              (최근 3개월)
+            </div> */}
         </div>
         {/* <div className="flex-col justify-center items-center gap-3.5 flex w-full">
           <div className="self-stretch h-[0px] border border-gray-200"></div>
@@ -59,7 +59,8 @@ const Mypage = async () => {
             주문내역 조회
           </Link>
           <Link
-            href={"/mobile/mypage_mine"}
+            // href={"/mobile/mypage_mine"}
+            href={""}
             className="text-[13px] font-medium font-pre"
           >
             회원정보

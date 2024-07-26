@@ -64,12 +64,14 @@ const NoticePageDetail = async ({ params }: { params: { pageId: string } }) => {
               </div>
             </div>
             <div className="border-t border-gray-200 w-full flex flex-col items-center">
-              <div className="flex justify-center items-center h-[462.5px]">
-                <img
-                  className="w-[300px] h-[400px] shadow"
-                  src={data[0].Images[0]}
-                />
-              </div>
+              {data[0].Images[0] && (
+                <div className="flex justify-center items-center h-[462.5px]">
+                  <img
+                    className="w-[300px] h-[400px] shadow"
+                    src={data[0].Images[0]}
+                  />
+                </div>
+              )}
               <div className="w-[350px] h-[0px] border-2 border-neutral-300" />
               <div className="w-[350px] flex justify-center items-center border-b border-gray-200 mt-10 pb-10">
                 <div className="flex-col justify-start items-center gap-[9px] flex">

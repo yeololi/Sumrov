@@ -9,7 +9,7 @@ const FAQ = ({ searchParams }: { searchParams: { page: string } }) => {
 
   let totalPages = qna_data ? Math.ceil(qna_data.length / 10) : 30;
 
-  const realresult = qna_data?.slice((page - 1) * 10, page * 10);
+  const realresult = qna_data?.slice((page - 1) * 10, page * 10).reverse();
 
   return (
     <>
@@ -44,22 +44,20 @@ const FAQ = ({ searchParams }: { searchParams: { page: string } }) => {
                 </div>
               </div>
               {realresult.map((arg, i) => (
-                <div
+                <Link
+                  href={"/FAQ/" + (realresult.length - i)}
                   key={i}
                   className="h-10 w-full border-b border-gray-200 justify-center items-center inline-flex"
                 >
                   <div className="w-[70px] h-[30px] justify-center items-center flex">
                     <div className="text-black dark:text-neutral-50 text-xs font-light font-body uppercase">
-                      12
+                      {realresult.length - i}
                     </div>
                   </div>
                   <div className="w-[700px] h-[30px] justify-start items-center flex">
-                    <Link
-                      href={"/FAQ/" + (i + 1)}
-                      className="text-black dark:text-neutral-50 text-[13px] font-normal font-body uppercase"
-                    >
+                    <div className="text-black dark:text-neutral-50 text-[13px] font-normal font-body uppercase">
                       {arg.title}
-                    </Link>
+                    </div>
                   </div>
                   <div className="w-[70px] justify-center items-center flex">
                     <div className="text-black dark:text-neutral-50 text-xs font-light font-body uppercase">
@@ -68,10 +66,10 @@ const FAQ = ({ searchParams }: { searchParams: { page: string } }) => {
                   </div>
                   <div className="w-[200px] justify-center items-center flex">
                     <div className="text-black dark:text-neutral-50 text-xs font-light font-body uppercase">
-                      2022-04-05 21:36:16
+                      {arg.date}
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
             <Pagination totalPages={totalPages} currentPage={page} />
