@@ -50,6 +50,8 @@ async function orderList() {
     color: JSON.parse(value.Amount).map((v: any) => v.size),
   }));
 
+  console.log(saleData);
+
   return (
     <>
       <Header />

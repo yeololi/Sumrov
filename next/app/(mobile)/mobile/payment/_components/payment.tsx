@@ -3,6 +3,8 @@
 import { cart } from "@/app/(desktop)/cart/colums";
 import { salePostType } from "@/app/api/sale/post/route";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label as Label2 } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
@@ -35,7 +37,7 @@ const Payment = ({ data }: { data: cart[] }) => {
     ?.map((ai, i) => (ai.price * ai.sale) / 100)
     .reduce((pre, cur) => pre + cur, 0);
 
-  const [checked, setChecked] = useState(true);
+  const [checked, setChecked] = useState(false);
   const [recipient, setRecipient] = useState(session?.user.name!);
   const [tel1, setTel1] = useState("");
   const [tel2, setTel2] = useState("");
@@ -172,6 +174,7 @@ const Payment = ({ data }: { data: cart[] }) => {
       );
 
       router.replace("/mobile/orderList");
+      router.refresh();
     } catch (error) {
       console.error(error);
     }
@@ -448,9 +451,16 @@ const Payment = ({ data }: { data: cart[] }) => {
             </div>
           </RadioGroup>
         </div>
-        <div className="text-black dark:text-white text-[13px] font-normal font-pre w-full flex pl-[22px] py-[23px]">
-          구매조건 확인 및 결제진행 동의 <br />
-          주문 내용을 확인하였으며 약관에 동의합니다.
+        <div className="text-black dark:text-white text-[13px] gap-2 font-normal font-pre w-full flex pl-[22px] py-[23px]">
+          <Checkbox
+            id="allCheck"
+            onCheckedChange={(e) => {
+              setChecked((value) => !value);
+            }}
+          />
+          <Label2 htmlFor="allCheck" className="text-sm font-normal font-pre">
+            주문 내용을 확인하였으며 약관에 동의합니다.
+          </Label2>
         </div>
         <Button className="w-[335px] h-[41px] rounded-none mb-[61px] text-[13px] font-medium font-pre text-white dark:text-black">
           결제하기

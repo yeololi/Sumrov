@@ -221,7 +221,7 @@ const ShopOption = ({ result }: { result: post }) => {
             </div>
           </div>
         </>
-        <button className="flex mt-[39px]" onClick={handleBuyNow} disabled>
+        <button className="flex mt-[39px]" onClick={handleBuyNow}>
           <div className="w-[315px] h-[41px] bg-black">
             <div className="text-neutral-50 h-full text-[11px] flex justify-center items-center font-medium font-pre">
               Buy it Now
