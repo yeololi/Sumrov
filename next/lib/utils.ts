@@ -44,7 +44,7 @@ export async function fetchData(
 
     let data = response.results.filter((item) => item.CustomerName === name);
 
-    data.sort((a, b) => +new Date(a.Date) - +new Date(b.Date));
+    data.sort((a, b) => +new Date(b.Date) - +new Date(a.Date));
 
     let uuid: string[][] = data.map((v) => JSON.parse(v.Product));
 
