@@ -72,10 +72,12 @@ async function orderListDetail({ params }: { params: { pageId: string } }) {
                   >
                     <div className="justify-start items-center gap-[11px] flex">
                       <div className="justify-center items-center flex">
-                        <img
-                          className="w-[84px] h-[100px] border border-black"
-                          src={thisPostData[i].MainImage}
-                        />
+                        {thisPostData[i].MainImage && (
+                          <img
+                            className="w-[84px] h-[100px] border border-black"
+                            src={thisPostData[i].MainImage}
+                          />
+                        )}
                       </div>
                     </div>
                     <div className="grow shrink basis-0 flex-col justify-center items-start gap-6 inline-flex">
