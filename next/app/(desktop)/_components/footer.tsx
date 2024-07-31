@@ -49,7 +49,7 @@ const Footer = () => {
                     배송조회
                   </Link>
                   <Link
-                    href={"/personality"}
+                    href={"/law"}
                     className="text-neutral-50 text-xs font-light font-pre"
                   >
                     개인정보
