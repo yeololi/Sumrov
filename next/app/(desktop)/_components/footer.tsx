@@ -48,12 +48,18 @@ const Footer = () => {
                   >
                     배송조회
                   </Link>
-                  <div className="text-neutral-50 text-xs font-light font-pre">
+                  <Link
+                    href={"/personality"}
+                    className="text-neutral-50 text-xs font-light font-pre"
+                  >
                     개인정보
-                  </div>
-                  <div className="text-neutral-50 text-xs font-light font-pre">
+                  </Link>
+                  <Link
+                    href={"/law"}
+                    className="text-neutral-50 text-xs font-light font-pre"
+                  >
                     이용약관
-                  </div>
+                  </Link>
                 </div>
               </div>
             </div>
