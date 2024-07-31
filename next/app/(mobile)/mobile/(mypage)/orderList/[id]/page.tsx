@@ -54,7 +54,13 @@ const Mypage = async ({ params }: { params: { id: string } }) => {
               key={i}
               className="flex flex-row items-start justify-start gap-[10px]"
             >
-              <img width="70" height="93" src={thisPostData[i].MainImage}></img>
+              {thisPostData[i]?.MainImage && (
+                <img
+                  width="70"
+                  height="93"
+                  src={thisPostData[i].MainImage}
+                ></img>
+              )}
               <div className="flex flex-col items-start justify-start gap-[36px]">
                 <div className="flex flex-col items-start justify-start gap-[4px]">
                   <div className="text-[11px] font-pre font-medium whitespace-nowrap">
