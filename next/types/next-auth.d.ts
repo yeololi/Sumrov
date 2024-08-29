@@ -9,9 +9,14 @@ declare module "next-auth" {
       accessToken: string;
       _id: string;
       address: string;
-      addrDetails: string;
+      addrDetail: string;
       zonecode: string;
       tel: string;
+      year: string;
+      month: string;
+      day: string;
+      ci: string;
+      gender: "male" | "female";
     };
   }
 }

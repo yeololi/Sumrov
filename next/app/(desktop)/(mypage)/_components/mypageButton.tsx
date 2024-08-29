@@ -18,7 +18,7 @@ const data = [
     variant={"ghost"}
     className="text-[12px] font-bold font-pre dark:text-white text-[#000] mb-[40px] min-w-[78px]"
   >
-    회원정보
+    <Link href={"/myinfo"}>회원정보</Link>
   </Button>,
   <Button
     key={2}
