@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import { FormEvent } from "react";
 import CheckboxGroup from "../../_components/checkBoxGroup";
+import { useSession } from "next-auth/react";
 
 declare global {
   interface Window {
@@ -38,6 +39,8 @@ interface formData extends HTMLFormElement {
   readonly elements: formElement;
 }
 const Mypage_mine = () => {
+  const { data: session } = useSession();
+
   const { toast } = useToast();
 
   const searchAddress = () => {

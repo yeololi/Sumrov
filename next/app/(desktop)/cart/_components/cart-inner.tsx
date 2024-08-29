@@ -49,7 +49,14 @@ const CartInner = ({ data }: { data: cart[] }) => {
 
   const allOrder = () => {
     const prop = data.map((ai) => ai._id);
-    router.push(`/payment?s=${JSON.stringify(prop)}`);
+    if (data.length) router.push(`/payment?s=${JSON.stringify(prop)}`);
+    else {
+      toast({
+        title: "제품이 장바구니에 없습니다.",
+        variant: "default",
+      });
+      return;
+    }
   };
 
   return (

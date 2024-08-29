@@ -11,7 +11,7 @@ const CartInner = ({ data }: { data: cart[] }) => {
 
   const allOrder = () => {
     const prop = data.map((ai) => ai._id);
-    router.push(`/mobile/payment?s=${JSON.stringify(prop)}`);
+    if (data.length) router.push(`/mobile/payment?s=${JSON.stringify(prop)}`);
   };
 
   return (

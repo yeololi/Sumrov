@@ -60,7 +60,7 @@ const Mypage = async () => {
           </Link>
           <Link
             // href={"/mobile/mypage_mine"}
-            href={""}
+            href={"/mobile/myinfo"}
             className="text-[13px] font-medium font-pre"
           >
             회원정보
