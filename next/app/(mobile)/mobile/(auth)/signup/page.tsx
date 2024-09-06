@@ -70,6 +70,8 @@ const SignUp = () => {
     const zonecode = target.zonecode.value;
     const address = target.address.value;
     const addrDetail = target.addrDetail.value;
+    const check2 = target.check2.checked;
+    const check3 = target.check3.checked;
 
     if (!/^[가-힣]{2,10}$/.test(name)) {
       toast({
@@ -117,6 +119,14 @@ const SignUp = () => {
       return;
     }
 
+    if (!check2 && !check3) {
+      toast({
+        title: "약관에 동의해주세요.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     const body = {
       name: name,
       email: email,
@@ -126,7 +136,7 @@ const SignUp = () => {
       addrDetail: addrDetail,
       tel: tel,
     };
-    // console.log(body);
+    console.log(body);
 
     try {
       await fetch("/api/auth/signup", {
@@ -218,7 +228,7 @@ const SignUp = () => {
               />
             </div>
             <div className="text-neutral-400 text-[11px] font-medium font-pre">
-              (영문/특수문자가 하나이상, 8~16자)
+              (영문/특수문자(!@#$%^&*?_)가 하나 이상, 8~16자)
             </div>
             <div className="h-14 flex-col justify-start items-start gap-[9px] flex">
               <Label className=" flex gap-0.5">
@@ -315,7 +325,7 @@ const SignUp = () => {
               </div>
             </div>
           </div>
-          <CheckboxGroup isChecked={true} />
+          <CheckboxGroup isChecked={false} />
           <Button
             variant={"outline"}
             className="text-black dark:text-black text-sm font-normal font-pre w-[336px] h-[43px] rounded-none bg-white border border-neutral-300"

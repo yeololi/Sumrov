@@ -139,6 +139,7 @@ const Signup = () => {
                       </div>
                     </Label>
                     <RadioGroup
+                      disabled
                       defaultValue={input.gender}
                       className="flex flex-1 justify-between"
                     >

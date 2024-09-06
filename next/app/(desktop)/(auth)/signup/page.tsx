@@ -75,6 +75,8 @@ const Signup = () => {
     const address = target.address.value;
     const addrDetail = target.addrDetail.value;
     const birth = target.birth.value;
+    const check2 = target.check2.checked;
+    const check3 = target.check3.checked;
 
     if (!/^[가-힣]{2,10}$/.test(name)) {
       toast({
@@ -142,6 +144,14 @@ const Signup = () => {
       return;
     }
 
+    if (!check2 && !check3) {
+      toast({
+        title: "약관에 동의해주세요.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     const [year, month, day] = birth.split("-");
 
     const body = {
@@ -158,7 +168,7 @@ const Signup = () => {
       ci: "",
       gender: inputs.gender,
     };
-    console.log(body);
+    // console.log(body);
 
     try {
       await fetch("/api/auth/signup", {
