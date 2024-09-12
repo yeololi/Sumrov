@@ -11,7 +11,7 @@ const Login = () => {
           <LoginForm />
           <div className="justify-between items-center flex w-full">
             <Link
-              href={"/mobile/findId"}
+              href={"/mobile/findEmail"}
               className="text-black dark:text-white text-[11px] font-normal font-pre"
             >
               find ID

@@ -119,7 +119,7 @@ const SignUp = () => {
       return;
     }
 
-    if (!check2 && !check3) {
+    if (!check2 || !check3) {
       toast({
         title: "약관에 동의해주세요.",
         variant: "destructive",
@@ -258,6 +258,9 @@ const SignUp = () => {
                 <div className="text-black dark:text-white text-[11px] font-medium font-pre">
                   주소
                 </div>
+                <div className="w-1.5 h-[7px] text-blue-500 text-[11px] font-medium font-pre">
+                  *
+                </div>
               </Label>
               <div className="flex flex-col gap-2">
                 <div className="flex gap-2">
@@ -291,9 +294,15 @@ const SignUp = () => {
               </div>
             </div>
             <div className="flex-col justify-start items-start gap-[9px] flex">
-              <div className="text-black dark:text-white text-[11px] font-medium font-pre">
-                휴대전화
-              </div>
+              <Label className=" flex gap-0.5">
+                <div className="text-black dark:text-white text-[11px] font-medium font-pre">
+                  휴대전화
+                </div>
+                <div className="w-1.5 h-[7px] text-blue-500 text-[11px] font-medium font-pre">
+                  *
+                </div>
+              </Label>
+
               <div className="justify-start items-center gap-1.5 inline-flex">
                 <Input
                   className="w-[100px] h-[34px]"

@@ -144,7 +144,7 @@ const Signup = () => {
       return;
     }
 
-    if (!check2 && !check3) {
+    if (!check2 || !check3) {
       toast({
         title: "약관에 동의해주세요.",
         variant: "destructive",

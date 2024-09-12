@@ -44,7 +44,7 @@ const LoginPage = () => {
         {input.email ? (
           <div className="w-[450px] h-[314px] flex-col justify-center items-center gap-[75px] inline-flex">
             <div className="text-black dark:text-neutral-50 text-[28px] font-medium font-pre">
-              아이디 찾기
+              이메일 찾기
             </div>
             <div className="flex-col justify-center items-start gap-[27px] flex">
               <div className="flex-col justify-center items-start gap-5 flex">
@@ -81,7 +81,7 @@ const LoginPage = () => {
         ) : (
           <div className="w-[800px] h-[269px] flex-col justify-center items-center gap-[50px] inline-flex">
             <div className="text-black dark:text-neutral-50 text-[28px] font-medium font-pre">
-              아이디 찾기
+              이메일 찾기
             </div>
             <form
               onSubmit={onSubmit}
