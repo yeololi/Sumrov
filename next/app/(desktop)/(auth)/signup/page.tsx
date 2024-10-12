@@ -134,6 +134,16 @@ const Signup = () => {
       return;
     }
 
+    if (zonecode === "") {
+      toast({
+        title: "전화번호가 형식에 맞지 않습니다.",
+        variant: "destructive",
+      });
+      setIsLoading(() => false);
+
+      return;
+    }
+
     if (!/^(19|20)\d{2}-(0[1-9]|1[0-2])-([0-2][1-9]|3[01])$/.test(birth)) {
       toast({
         title: "생년월일이 형식에 맞지 않습니다.",

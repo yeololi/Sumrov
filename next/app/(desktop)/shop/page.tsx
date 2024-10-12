@@ -125,6 +125,15 @@ const ShopPage = async ({
             >
               ACC
             </Link>
+            <Link
+              href={{
+                pathname: "/shop",
+                query: { category: "outer", page: 1 },
+              }}
+              className="text-neutral-900 dark:text-neutral-50 text-xs font-medium font-nav"
+            >
+              OUTER
+            </Link>
           </div>
         </div>
         <div className="h-full grid gap-y-[100px] gap-x-[50px] grid-cols-3">

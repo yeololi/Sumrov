@@ -9,13 +9,13 @@ const ShopSelect = ({ category }: { category: string }) => {
   const modalRef = useRef<ElementRef<"div">>(null);
   const [isResetting, setIsResetting] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(true);
-  const categorys = ["All", "Top", "Bottom", "Acc"];
+  const categorys = ["All", "Top", "Bottom", "Acc", "Outer"];
   const resetWidth = () => {
     if (modalRef.current) {
       setIsCollapsed(false);
       setIsResetting(true);
 
-      modalRef.current.style.width = "123px";
+      modalRef.current.style.width = "163px";
 
       setTimeout(() => setIsResetting(false), 300);
     }
@@ -59,7 +59,7 @@ const ShopSelect = ({ category }: { category: string }) => {
               key={i}
               href={{
                 pathname: "/mobile/shop",
-                query: {category: category.toLowerCase()}
+                query: { category: category.toLowerCase() },
               }}
               onClick={collapse}
             >

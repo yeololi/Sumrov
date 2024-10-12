@@ -33,6 +33,7 @@ const LoginForm = () => {
         });
       } else {
         router.replace("/");
+        router.refresh();
       }
     } catch (error) {
       console.error(error);

@@ -20,7 +20,7 @@ interface post {
   Price: string;
   Sale: number;
   Description: string;
-  Category: "all" | "top" | "bottom" | "acc";
+  Category: "all" | "top" | "bottom" | "acc" | "outer";
   Size: string[];
   Color: string[];
   MainImage: string;

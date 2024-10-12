@@ -32,6 +32,7 @@ const datas: {
       { href: "/shop?category=top&page=1", list: "TOP" },
       { href: "/shop?category=bottom&page=1", list: "BOTTOM" },
       { href: "/shop?category=acc&page=1", list: "ACC" },
+      { href: "/shop?category=outer&page=1", list: "OUTER" },
     ],
   },
   {

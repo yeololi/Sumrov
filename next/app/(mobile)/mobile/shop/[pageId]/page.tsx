@@ -137,7 +137,7 @@ const ShopDetailPage = async ({ params }: { params: { pageId: string } }) => {
           <div className="text-black dark:text-white w-full text-[13px] font-medium font-pre mt-[12px]">
             {result?.Title}
           </div>
-          <div className="w-[315px] mt-[53px] text-neutral-600 dark:text-white text-[8px] font-normal font-pre">
+          <div className="w-[315px] mt-[53px] text-neutral-950 dark:text-white text-[10px] font-medium font-pre whitespace-pre">
             {result?.Description}
           </div>
         </div>

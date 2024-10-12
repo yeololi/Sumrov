@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { ElementRef, useRef, useState } from "react";
 
-const dataList = ["top", "bottom", "acc", "all"];
+const dataList = ["top", "bottom", "acc", "outer", "all"];
 
 const ShopMenu = () => {
   const modalRef = useRef<ElementRef<"div">>(null);
@@ -16,7 +16,7 @@ const ShopMenu = () => {
       setIsCollapsed(false);
       setIsResetting(true);
 
-      modalRef.current.style.height = "80px";
+      modalRef.current.style.height = "100px";
 
       setTimeout(() => setIsResetting(false), 300);
     }
