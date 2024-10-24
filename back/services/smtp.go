@@ -7,10 +7,10 @@ import (
 )
 
 func MailSend(mail string, code int) {
-	smtpHost := "smtp.zoho.com"
-	smtpPort := 465
-	email := "verify@sumrov.com"
-	password := "1237dasG!"
+	smtpHost := os
+	smtpPort := os
+	email := os
+	password := os
 
 	// 발신자 및 수신자 이메일 주소 설정
 	from := email
