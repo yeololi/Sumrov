@@ -6,7 +6,7 @@ import { Input } from "../_components/input";
 import CheckboxGroup from "../../_components/checkBoxGroup";
 import { useToast } from "@/components/ui/use-toast";
 import { FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 declare global {
@@ -44,9 +44,17 @@ interface formData extends HTMLFormElement {
 const Signup = () => {
   const router = useRouter();
 
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email");
+  const isKakao = email !== null;
+
   const { toast } = useToast();
 
-  const [inputs, setInputs] = useState({ gender: "male" });
+  const [inputs, setInputs] = useState({
+    gender: "male",
+    email1: "",
+    email2: "",
+  });
   const [isLoading, setIsLoading] = useState(false);
 
   const searchAddress = () => {
@@ -66,7 +74,9 @@ const Signup = () => {
     setIsLoading(() => true);
 
     const target = e.currentTarget.elements;
-    const email = target.email1.value + "@" + target.email2.value;
+    const email = isKakao
+      ? target.email1.value + "@" + target.email2.value
+      : inputs.email1 + "@" + inputs.email2;
     const tel =
       target.tel1.value + "-" + target.tel2.value + "-" + target.tel3.value;
     const password = target.password.value;
@@ -243,8 +253,8 @@ const Signup = () => {
                       defaultValue="male"
                       className="flex flex-1 justify-between"
                       onValueChange={(value) => {
-                        console.log(value);
-                        setInputs(() => ({
+                        setInputs((other) => ({
+                          ...other,
                           gender: value,
                         }));
                       }}
@@ -266,11 +276,33 @@ const Signup = () => {
                     </div>
                   </div>
                   <div className="w-[650px] self-stretch justify-between items-center flex">
-                    <Input className="w-[400px]" id="email1" />
+                    <Input
+                      className="w-[400px]"
+                      id="email1"
+                      onChange={(e) =>
+                        setInputs((other) => ({
+                          ...other,
+                          email1: e.target.value,
+                        }))
+                      }
+                      value={isKakao ? email.split("@")[0] : inputs.email1}
+                      readOnly={isKakao}
+                    />
                     <div className="w-[50px] text-center text-2xs font-bold font-pre">
                       @
                     </div>
-                    <Input className="w-[200px]" id="email2" />
+                    <Input
+                      className="w-[200px]"
+                      id="email2"
+                      onChange={(e) =>
+                        setInputs((other) => ({
+                          ...other,
+                          email2: e.target.value,
+                        }))
+                      }
+                      value={isKakao ? email.split("@")[1] : inputs.email2}
+                      readOnly={isKakao}
+                    />
                   </div>
                 </div>
                 <div className="self-stretch h-[37px] justify-between items-center inline-flex">

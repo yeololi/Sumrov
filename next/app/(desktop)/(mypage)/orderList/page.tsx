@@ -33,6 +33,8 @@ async function orderList() {
   const session = await getServerSession();
   const user = session?.user;
 
+  console.log(session);
+
   let { data, postData } = await fetchData(user?.name as string);
 
   const set = new Set(
