@@ -45,6 +45,7 @@ const Payment = ({ data }: { data: cart[] }) => {
   const [email1, setEmail1] = useState("");
   const [email2, setEmail2] = useState("");
   const [dm, setDm] = useState("");
+  const [isLoading, setisLoading] = useState(false);
 
   const { toast } = useToast();
 
@@ -127,6 +128,7 @@ const Payment = ({ data }: { data: cart[] }) => {
   };
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setisLoading(() => true);
     e.preventDefault();
     const target = e.currentTarget;
 
@@ -138,6 +140,8 @@ const Payment = ({ data }: { data: cart[] }) => {
       const par = { zonecode, address, addrDetail };
 
       if (!toCheck(par)) {
+        setisLoading(() => false);
+
         return;
       }
 
@@ -492,6 +496,7 @@ const Payment = ({ data }: { data: cart[] }) => {
               </div>
             </div>
             <button
+              disabled={isLoading}
               type="submit"
               className="w-[700px] h-[50px] px-[234px] py-[9px] bg-black justify-center items-center gap-2.5 inline-flex"
             >

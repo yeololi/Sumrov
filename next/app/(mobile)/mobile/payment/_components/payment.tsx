@@ -45,6 +45,7 @@ const Payment = ({ data }: { data: cart[] }) => {
   const [email1, setEmail1] = useState("");
   const [email2, setEmail2] = useState("");
   const [dm, setDm] = useState("");
+  const [isLoading, setisLoading] = useState(false);
 
   const { toast } = useToast();
 
@@ -127,6 +128,7 @@ const Payment = ({ data }: { data: cart[] }) => {
   };
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setisLoading(() => true);
     e.preventDefault();
     const target = e.currentTarget;
 
@@ -138,6 +140,7 @@ const Payment = ({ data }: { data: cart[] }) => {
       const par = { zonecode, address, addrDetail };
 
       if (!toCheck(par)) {
+        setisLoading(() => false);
         return;
       }
 
