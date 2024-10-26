@@ -1,12 +1,12 @@
 "use client";
 
 import { Label } from "@/components/ui/label";
-import Header from "../(desktop)/_components/header";
-import Header2 from "../(mobile)/mobile/_components/header";
-import { Input } from "../(desktop)/(auth)/_components/input";
+import Header from "../../(desktop)/_components/header";
+import Header2 from "../../(mobile)/mobile/_components/header";
+import { Input } from "../../(desktop)/(auth)/_components/input";
 import { Input as Input2 } from "@/components/ui/input";
-import CheckboxGroup from "../(desktop)/_components/checkBoxGroup";
-import CheckboxGroup2 from "../(mobile)/mobile/_components/checkBoxGroup";
+import CheckboxGroup from "../../(desktop)/_components/checkBoxGroup";
+import CheckboxGroup2 from "../../(mobile)/mobile/_components/checkBoxGroup";
 import { useToast } from "@/components/ui/use-toast";
 import { FormEvent, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
