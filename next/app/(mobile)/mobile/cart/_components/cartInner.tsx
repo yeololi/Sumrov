@@ -5,13 +5,18 @@ import { Minus, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Footer from "../../_components/footer";
 import Header from "../../_components/header";
+import { useState } from "react";
 
 const CartInner = ({ data }: { data: cart[] }) => {
   const router = useRouter();
 
+  const [isLoading, setisLoading] = useState(false);
+
   const allOrder = () => {
+    setisLoading(() => true);
     const prop = data.map((ai) => ai._id);
     if (data.length) router.push(`/mobile/payment?s=${JSON.stringify(prop)}`);
+    setisLoading(() => false);
   };
 
   return (
@@ -98,6 +103,7 @@ const CartInner = ({ data }: { data: cart[] }) => {
           </div>
         </div>
         <Button
+          disabled={isLoading}
           onClick={allOrder}
           className="mt-[28px] w-[335px] h-[41px] rounded-none mb-[61px] font-medium text-[13px] font-pre text-white dark:text-neutral-900"
         >

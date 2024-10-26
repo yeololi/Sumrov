@@ -41,6 +41,7 @@ const ShopOption = ({ result }: { result: post }) => {
 
   const router = useRouter();
   const { toast } = useToast();
+  const [isLoading, setisLoading] = useState(false);
 
   const [itemCounter, setitemCounter] = useState(1);
 
@@ -62,7 +63,10 @@ const ShopOption = ({ result }: { result: post }) => {
   };
 
   const handleBuyNow = () => {
+    setisLoading(() => true);
     if (selectValue.color && selectValue.size) {
+      setisLoading(() => false);
+
       router.push(
         `/mobile/paymentnow?OriginUuid=${btoa(
           result.Uuid
@@ -75,10 +79,13 @@ const ShopOption = ({ result }: { result: post }) => {
         title: "상품 옵션을 모두 선택해주세요",
         variant: "destructive",
       });
+      setisLoading(() => false);
     }
   };
 
   const newCart = async () => {
+    setisLoading(() => true);
+
     const session = await getSession();
 
     if (selectValue.size === "" || selectValue.color === "") {
@@ -86,6 +93,8 @@ const ShopOption = ({ result }: { result: post }) => {
         title: "상품 옵션을 모두 선택해주세요",
         variant: "destructive",
       });
+      setisLoading(() => false);
+
       return;
     }
     const body = {
@@ -102,6 +111,8 @@ const ShopOption = ({ result }: { result: post }) => {
     }).then((r) => r.json());
 
     console.log(res);
+
+    setisLoading(() => false);
 
     if (res) {
       router.push("/mobile/cart");
@@ -221,20 +232,24 @@ const ShopOption = ({ result }: { result: post }) => {
             </div>
           </div>
         </>
-        <button className="flex mt-[39px]" onClick={handleBuyNow}>
+        <button
+          disabled={isLoading}
+          className="flex mt-[39px]"
+          onClick={handleBuyNow}
+        >
           <div className="w-[315px] h-[41px] bg-black">
             <div className="text-neutral-50 h-full text-[11px] flex justify-center items-center font-medium font-pre">
               Buy it Now
             </div>
           </div>
         </button>
-        <div className="flex mt-1.5" onClick={newCart}>
+        <button disabled={isLoading} className="flex mt-1.5" onClick={newCart}>
           <div className="w-[315px] h-[41px] bg-neutral-50 border border-black">
             <div className="text-black text-[11px] h-full font-medium font-body flex justify-center items-center">
               Add to Cart
             </div>
           </div>
-        </div>
+        </button>
       </div>
     </>
   );
