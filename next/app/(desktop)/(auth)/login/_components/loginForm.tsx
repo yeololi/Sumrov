@@ -8,11 +8,12 @@ import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 
 const LoginForm = () => {
   const router = useRouter();
   const { toast } = useToast();
+  const [isLoading, setisLoading] = useState(false);
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -74,9 +75,11 @@ const LoginForm = () => {
         <div className="flex-col justify-center items-center gap-2.5 flex">
           <div className="flex-col justify-center items-center gap-[15px] flex">
             <Button
+              disabled={isLoading}
               variant={"login"}
               type="submit"
               className="w-[300px] h-[43px]"
+              onClick={() => setisLoading(() => true)}
             >
               Login
             </Button>
@@ -84,8 +87,12 @@ const LoginForm = () => {
               <Link href={"/signup"}>Sign Up</Link>
             </Button>
             <button
+              disabled={isLoading}
               type="button"
-              onClick={() => signIn("kakao", { callbackUrl: "/" })}
+              onClick={async () => {
+                setisLoading(() => true);
+                await signIn("kakao", { callbackUrl: "/" });
+              }}
             >
               <Image
                 className={"mb-10"}
