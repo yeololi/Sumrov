@@ -81,7 +81,7 @@ func GetSaleById(c *gin.Context, db *gorm.DB, mongo *mongo.Client) {
 	// UUID에 해당하는 판매 정보만 선택
 	db.Where("uuid = ?", puid).First(&sale)
 
-	mmoong := c.Param("uuid")
+	mmoong := sale.Product
 
 	// MongoDB 컬렉션 선택
 	collection := mongo.Database("sumrov").Collection("feed")
