@@ -89,7 +89,7 @@ const LoginForm = () => {
                         <Image
                             className={"mb-10"}
                             width={320}
-                            height={28}
+                            height={100}
                             src={"/kakao_login_medium_wide.png"}
                             alt="kakao login button"
                         />
