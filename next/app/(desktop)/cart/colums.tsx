@@ -139,12 +139,12 @@ export const columns: ColumnDef<cart>[] = [
               선택
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
+            {/* <DropdownMenuItem
               className="font-semibold font-noto cursor-pointer"
               onClick={() => navigator.clipboard.writeText(cart.id)}
             >
               주문하기
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
             <DropdownMenuItem
               onClick={async (e) => {
                 const result = await fetch(`/api/del/delCart/${cart._id}`, {

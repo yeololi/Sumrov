@@ -24,6 +24,8 @@ const CartInner = ({ data }: { data: cart[] }) => {
   const { toast } = useToast();
   const router = useRouter();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const [selected, setSelected] = useState<cart[]>();
 
   let total = 0;
@@ -35,26 +37,33 @@ const CartInner = ({ data }: { data: cart[] }) => {
     box = 3000; // 3,000원 고정
 
   const selectOrder = () => {
+    setIsLoading(() => true);
     if (!selected || selected?.length == 0) {
       toast({
         title: "제품을 선택해주세요",
         variant: "default",
       });
+      setIsLoading(() => false);
+
       return;
     } else {
       const prop = selected.map((ai) => ai._id);
+      setIsLoading(() => false);
       router.push(`/payment?s=${JSON.stringify(prop)}`);
     }
   };
 
   const allOrder = () => {
+    setIsLoading(() => true);
     const prop = data.map((ai) => ai._id);
+    setIsLoading(() => false);
     if (data.length) router.push(`/payment?s=${JSON.stringify(prop)}`);
     else {
       toast({
         title: "제품이 장바구니에 없습니다.",
         variant: "default",
       });
+      setIsLoading(() => false);
       return;
     }
   };
@@ -111,6 +120,7 @@ const CartInner = ({ data }: { data: cart[] }) => {
         </div>
         <div className="justify-center items-center gap-5 inline-flex">
           <Button
+            disabled={isLoading}
             onClick={allOrder}
             variant={"login"}
             className="rounded-none w-[425px] h-[50px] py-[9px] bg-neutral-900 justify-center items-center gap-2.5 flex text-base font-semibold font-noto text-center "
@@ -118,6 +128,7 @@ const CartInner = ({ data }: { data: cart[] }) => {
             모든 항목 주문
           </Button>
           <Button
+            disabled={isLoading}
             onClick={selectOrder}
             variant={"signup"}
             className="w-[425px] h-[50px] py-[9px] border border-neutral-900 justify-center items-center gap-2.5 flex text-base font-semibold font-noto text-center "
