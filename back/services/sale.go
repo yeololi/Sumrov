@@ -8,6 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"gorm.io/gorm"
+	"log"
 	"net/http"
 	"time"
 )
@@ -74,13 +75,13 @@ func GetAllSale(c *gin.Context, db *gorm.DB) {
 }
 
 func GetSaleById(c *gin.Context, db *gorm.DB, mongo *mongo.Client) {
-	uuid := c.Param("uuid")
+	puid := c.Param("uuid")
 	var sale entity.Sale
 
 	// UUID에 해당하는 판매 정보만 선택
-	db.Where("uuid = ?", uuid).First(&sale)
+	db.Where("uuid = ?", puid).First(&sale)
 
-	puid := c.Param("uuid")
+	mmoong := c.Param("uuid")
 
 	// MongoDB 컬렉션 선택
 	collection := mongo.Database("sumrov").Collection("feed")
@@ -89,8 +90,10 @@ func GetSaleById(c *gin.Context, db *gorm.DB, mongo *mongo.Client) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
+	log.Println(mmoong)
+
 	// 카테고리에 대한 필터 생성
-	filter := bson.D{{"uuid", puid}}
+	filter := bson.D{{"uuid", mmoong}}
 
 	// 컬렉션에서 데이터 가져오기
 	cur, err := collection.Find(ctx, filter)
