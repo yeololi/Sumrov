@@ -16,6 +16,7 @@ const LoginForm = () => {
   const [isLoading, setisLoading] = useState(false);
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    setisLoading(() => true);
     e.preventDefault();
     try {
       const email = e.currentTarget.email.value;
@@ -33,6 +34,7 @@ const LoginForm = () => {
           title: "아이디 혹은 비밀번호가 일치하지 않습니다!",
           variant: "destructive",
         });
+        setisLoading(() => false);
       } else {
         router.replace("/mobile");
         router.refresh();
@@ -75,7 +77,6 @@ const LoginForm = () => {
         <div className="flex-col justify-center items-center gap-2 flex">
           <Button
             disabled={isLoading}
-            onClick={() => setisLoading(() => true)}
             type="submit"
             className="dark:border dark:border-white text-white text-sm font-normal font-pre w-[320px] h-[43px] rounded-none bg-black"
           >

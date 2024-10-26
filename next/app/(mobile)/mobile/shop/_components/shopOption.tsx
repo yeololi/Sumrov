@@ -97,8 +97,10 @@ const ShopOption = ({ result }: { result: post }) => {
 
       return;
     }
+    const id = session?.user.id ? session.user.id : session?.user._id;
+
     const body = {
-      UserUuid: session?.user._id,
+      UserUuid: id,
       OriginUuid: btoa(result.Uuid),
       Size: selectValue.size,
       Color: selectValue.color,
@@ -109,10 +111,6 @@ const ShopOption = ({ result }: { result: post }) => {
       method: "POST",
       body: JSON.stringify(body),
     }).then((r) => r.json());
-
-    console.log(res);
-
-    setisLoading(() => false);
 
     if (res) {
       router.push("/mobile/cart");

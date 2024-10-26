@@ -72,8 +72,6 @@ export const authOptions: NextAuthOptions = {
 
         const users = await res.json();
 
-        console.log(users, account, profile, email, credentials);
-
         if (users.result && users.result.name) {
           return true;
         } else {
@@ -87,15 +85,6 @@ export const authOptions: NextAuthOptions = {
           return false;
         }
       }
-    },
-    async redirect({ url, baseUrl }) {
-      // Allows relative callback URLs
-
-      console.log(url, baseUrl);
-      if (url.startsWith("/")) return `${baseUrl}${url}`;
-      // Allows callback URLs on the same origin
-      else if (new URL(url).origin === baseUrl) return url;
-      return baseUrl;
     },
     //4. jwt 만들 때 실행되는 코드
     //user변수는 DB의 유저정보담겨있고 token.user에 뭐 저장하면 jwt에 들어갑니다.

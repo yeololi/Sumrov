@@ -80,21 +80,24 @@ const ShopOption = ({ result }: { result: Product }) => {
 
       return;
     }
+    const id = session?.user.id ? session.user.id : session?.user._id;
+
     const body = {
-      UserUuid: session?.user._id,
+      UserUuid: id,
       OriginUuid: btoa(result.Uuid),
       Size: selectValue.size,
       Color: selectValue.color,
       Cnt: itemCounter,
     };
 
-    const res = await fetch("/api/post/newCart/", {
+    console.log(body);
+
+    const res = await fetch("/api/post/newCart", {
       method: "POST",
       body: JSON.stringify(body),
     }).then((r) => r.json());
 
     console.log(res);
-    setisLoading(() => false);
 
     if (res) {
       router.push("/cart");

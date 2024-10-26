@@ -20,6 +20,8 @@ export async function POST(request: Request) {
       let hash = await bcrypt.hash(res.password, 10);
       res.password = hash;
 
+      console.log(res);
+
       const db = (await clientPromise).db("sumrov");
       let result = await db.collection("users").updateOne(
         {
