@@ -10,6 +10,7 @@ import (
 	"gorm.io/gorm"
 	"log"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -82,7 +83,7 @@ func GetSaleById(c *gin.Context, db *gorm.DB, mongo *mongo.Client) {
 	db.Where("uuid = ?", puid).First(&sale)
 
 	mmoong := sale.Product
-
+	mmoong = strings.Trim(mmoong, `[]"`)
 	// MongoDB 컬렉션 선택
 	collection := mongo.Database("sumrov").Collection("feed")
 
