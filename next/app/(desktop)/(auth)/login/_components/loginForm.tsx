@@ -17,6 +17,7 @@ const LoginForm = () => {
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setisLoading(() => true);
     try {
       const email = e.currentTarget.email.value;
       const password = e.currentTarget.password.value;
@@ -29,6 +30,7 @@ const LoginForm = () => {
       console.log(response);
 
       if (response?.status === 401) {
+        setisLoading(() => false);
         toast({
           title: "아이디 혹은 비밀번호가 일치하지 않습니다!",
           variant: "destructive",
@@ -38,6 +40,8 @@ const LoginForm = () => {
         router.refresh();
       }
     } catch (error) {
+      setisLoading(() => false);
+
       console.error(error);
     }
   };
@@ -79,7 +83,6 @@ const LoginForm = () => {
               variant={"login"}
               type="submit"
               className="w-[300px] h-[43px]"
-              onClick={() => setisLoading(() => true)}
             >
               Login
             </Button>

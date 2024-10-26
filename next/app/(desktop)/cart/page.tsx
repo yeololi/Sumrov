@@ -43,9 +43,10 @@ export function transformData(data: Product[], results: ResultItem[]) {
 const Cart = async () => {
   const db = (await clientPromise).db("sumrov");
   const session = await getServerSession(authOptions);
+  const id = session?.user.id ? session.user.id : session?.user._id;
   const result = await db
     .collection<ResultItem>("cart")
-    .find({ UserUuid: new ObjectId(session?.user._id) })
+    .find({ UserUuid: new ObjectId(id) })
     .toArray();
 
   const data: (Product | undefined)[] = await Promise.all(

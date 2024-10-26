@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { getServerSession, Session } from "next-auth";
+import { getServerSession } from "next-auth";
 import { signOut } from "next-auth/react";
 import { authOptions } from "@/util/authOption";
 import Header from "../../_components/header";
@@ -32,8 +32,6 @@ export interface newSaleType extends saleType {
 async function orderList() {
   const session = await getServerSession();
   const user = session?.user;
-
-  console.log(session);
 
   let { data, postData } = await fetchData(user?.name as string);
 

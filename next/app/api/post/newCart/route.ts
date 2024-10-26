@@ -19,7 +19,7 @@ export async function POST(request: Request) {
     const db = (await clientPromise).db("sumrov");
     let result = await db.collection("cart").insertOne(body);
 
-    // console.log(result);
+    console.log(result);
 
     if (result) {
     } else {
