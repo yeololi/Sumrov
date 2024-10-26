@@ -48,7 +48,7 @@ const LoginForm = () => {
                 className="flex-col justify-center items-center gap-8 flex"
             >
                 <div className="flex-col justify-center items-center gap-[23px] flex">
-                    <div className="w-[336px] h-[65px] flex-col justify-center items-start gap-1 flex">
+                    <div className="w-[320px] h-[65px] flex-col justify-center items-start gap-1 flex">
                         <Label className="dark:text-white text-black text-[13px] font-medium font-pre">
                             Email
                         </Label>
@@ -59,7 +59,7 @@ const LoginForm = () => {
                             className="rounded-none dark:placeholder:text-neutral-400 dark:bg-zinc-800 border-neutral-300 dark:border-black"
                         />
                     </div>
-                    <div className="w-[336px] h-[65px] flex-col justify-center items-start gap-1 flex">
+                    <div className="w-[320px] h-[65px] flex-col justify-center items-start gap-1 flex">
                         <Label className="dark:text-white text-black text-[13px] font-medium font-pre">
                             Password
                         </Label>
