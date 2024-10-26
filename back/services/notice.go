@@ -136,3 +136,57 @@ func DeleteNotice(c *gin.Context, db *mongo.Client) {
 	// 삭제가 성공했음을 클라이언트에게 응답
 	c.JSON(http.StatusOK, gin.H{"message": "Post deleted successfully"})
 }
+
+func PatchNotice(c *gin.Context, db *mongo.Client) {
+	var cfeed *entity.NoticeDTO
+	puid := c.Param("uuid")
+
+	err := c.ShouldBindJSON(&cfeed)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	// KST 타임존 설정
+	location, err := time.LoadLocation("Asia/Seoul")
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "KST 타임존을 설정하는 중 오류가 발생했습니다.",
+		})
+		return
+	}
+
+	// 현재 KST 시간을 문자열로 변환
+	currentTime := time.Now().In(location).Format("2006-01-02 15:04:05")
+
+	// 업데이트할 Notice 데이터 구성
+	update := bson.M{
+		"$set": bson.M{
+			"title":       cfeed.Title,
+			"description": cfeed.Description,
+			"images":      cfeed.Images,
+			"date":        currentTime, // KST 시간을 문자열로 설정
+		},
+	}
+
+	collection := db.Database("sumrov").Collection("notice")
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	// uuid로 공지사항 찾고 업데이트
+	filter := bson.M{"uuid": puid}
+	result, err := collection.UpdateOne(ctx, filter, update)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "공지사항 업데이트 중 오류가 발생했습니다.",
+		})
+		return
+	}
+
+	// 결과 반환
+	c.JSON(http.StatusOK, gin.H{
+		"result": result.ModifiedCount,
+	})
+}
