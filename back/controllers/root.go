@@ -1,13 +1,10 @@
 package controllers
 
 import (
-	"back/entity"
 	"back/services"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/mongo"
 	"gorm.io/gorm"
-	"math/rand"
-	"net/http"
 )
 
 func NewController(mongo *mongo.Client, r *gin.Engine, rdb *gorm.DB) {
@@ -45,26 +42,29 @@ func NewController(mongo *mongo.Client, r *gin.Engine, rdb *gorm.DB) {
 		notice.POST("/", func(c *gin.Context) {
 			services.CreateNotice(c, mongo)
 		})
+		notice.PUT("/:uuid", func(c *gin.Context) {
+			services.PatchNotice(c, mongo)
+		})
 		notice.DELETE("/:uuid", func(c *gin.Context) {
 			services.DeleteNotice(c, mongo)
 		})
 	}
 
-	r.POST("/smtp", func(c *gin.Context) {
-		var mail *entity.Email
-		RandomNumber := rand.Intn(900000) + 100000
-
-		// JSON 요청 바인딩
-		err := c.ShouldBindJSON(&mail)
-		if err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		}
-
-		services.MailSend(mail.Eamil, RandomNumber)
-		c.JSON(http.StatusOK, gin.H{
-			"임시비밀번호": RandomNumber,
-		})
-	})
+	//r.POST("/smtp", func(c *gin.Context) {
+	//	var mail *entity.Email
+	//	RandomNumber := rand.Intn(900000) + 100000
+	//
+	//	// JSON 요청 바인딩
+	//	err := c.ShouldBindJSON(&mail)
+	//	if err != nil {
+	//		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	//	}
+	//
+	//	services.MailSend(mail.Eamil, RandomNumber)
+	//	c.JSON(http.StatusOK, gin.H{
+	//		"임시비밀번호": RandomNumber,
+	//	})
+	//})
 
 	sale := r.Group("sale")
 	{
