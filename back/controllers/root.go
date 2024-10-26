@@ -72,7 +72,7 @@ func NewController(mongo *mongo.Client, r *gin.Engine, rdb *gorm.DB) {
 			services.GetAllSale(c, rdb)
 		})
 		sale.GET("/:uuid", func(c *gin.Context) {
-			services.GetSaleById(c, rdb)
+			services.GetSaleById(c, rdb, mongo)
 		})
 		sale.GET("status", func(c *gin.Context) {
 			services.GetSaleStatus(c, rdb)
