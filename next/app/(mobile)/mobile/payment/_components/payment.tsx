@@ -465,7 +465,10 @@ const Payment = ({ data }: { data: cart[] }) => {
             주문 내용을 확인하였으며 약관에 동의합니다.
           </Label2>
         </div>
-        <Button className="w-[335px] h-[41px] rounded-none mb-[61px] text-[13px] font-medium font-pre text-white dark:text-black">
+        <Button
+          disabled={isLoading}
+          className="w-[335px] h-[41px] rounded-none mb-[61px] text-[13px] font-medium font-pre text-white dark:text-black"
+        >
           결제하기
         </Button>
       </form>
